@@ -1,7 +1,7 @@
 import { AuthApiData } from '../../interface/AuthApiData';
 import { FetchOptions } from '../../interface/FetchOptions';
 
-const login = async (email: string, password: string): Promise<AuthApiData> => {
+export const login = async (email: string, password: string): Promise<AuthApiData> => {
   const fetchOptions: FetchOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -15,4 +15,22 @@ const login = async (email: string, password: string): Promise<AuthApiData> => {
     }));
 };
 
-export default login;
+export const loginWithDemo = async (): Promise<AuthApiData> => {
+  console.log('Its working');
+
+  const fetchOptions: FetchOptions = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+  };
+  return await fetch(`/auth/login?isDemo=${true}`, fetchOptions)
+    .then((res) => res.json())
+    .catch(() => ({
+      error: { message: 'Unable to connect to server. Please try again' },
+    }));
+};
+
+export default {
+  login,
+  loginWithDemo,
+};

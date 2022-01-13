@@ -1,11 +1,11 @@
 import { FormikHelpers } from 'formik';
-import login from '../../helpers/APICalls/login';
-import LoginForm from './LoginForm/LoginForm';
+import AuthPageFooter from '../../components/AuthPageFooter/AuthPageFooter';
+import AuthPageWrapper from '../../components/AuthPageWrapper/AuthPageWrapper';
+import PageContainer from '../../components/PageContainer/PageContainer';
 import { useAuth } from '../../context/useAuthContext';
 import { useSnackBar } from '../../context/useSnackbarContext';
-import PageContainer from '../../components/PageContainer/PageContainer';
-import AuthPageWrapper from '../../components/AuthPageWrapper/AuthPageWrapper';
-import AuthPageFooter from '../../components/AuthPageFooter/AuthPageFooter';
+import { login } from '../../helpers/APICalls/login';
+import LoginForm from './LoginForm/LoginForm';
 
 export default function Login(): JSX.Element {
   const { updateLoginContext } = useAuth();
