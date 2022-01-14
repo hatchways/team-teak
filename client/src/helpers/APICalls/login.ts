@@ -16,11 +16,10 @@ export const login = async (email: string, password: string): Promise<AuthApiDat
 };
 
 export const loginWithDemo = async (): Promise<AuthApiData> => {
-  console.log('Its working');
-
   const fetchOptions: FetchOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email: 'DemoUser@gmail.com', password: 'DemoPassword' }),
     credentials: 'include',
   };
   return await fetch(`/auth/login?isDemo=${true}`, fetchOptions)
