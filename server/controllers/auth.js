@@ -67,8 +67,6 @@ exports.loginUser = asyncHandler(async (req, res, next) => {
   const user = await User.findOne({ email });
 
   if (user && (await user.matchPassword(password))) {
-    console.log("I reached here");
-
     const token = generateToken(user._id);
     const secondsInWeek = 604800;
 
