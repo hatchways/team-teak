@@ -1,12 +1,12 @@
 const mongoose = require("mongoose");
 
 const requestSchema = new mongoose.Schema({
-  user: {
+  userId: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
     ref: 'User'
   },
-  sitter: {
+  sitterId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
   },
@@ -17,10 +17,6 @@ const requestSchema = new mongoose.Schema({
   end: {
     type: Date,
     required: true,
-  },
-  address: {
-    type: String,
-    default: "",
   },
   accepetd: {
     type: Boolean,
