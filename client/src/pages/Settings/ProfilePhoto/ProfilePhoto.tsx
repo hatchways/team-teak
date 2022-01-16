@@ -1,60 +1,98 @@
-import { LocalizationProvider, DesktopDatePicker } from '@mui/lab';
 import { Button, CircularProgress, InputLabel } from '@mui/material';
 import { Box } from '@mui/system';
-import { Formik, FormikHelpers } from 'formik';
-import FormInput from '../../../components/FormInput/FormInput';
 import useStyles from './useStyles';
-import SettingHeader from '../../../components/SettingsHeader/SettingsHeader';
 import { User } from '../../../interface/User';
-import { Typography } from '@mui/material';
-import FormLabel from '@mui/material/FormLabel';
+import { Grid, Typography } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { styled } from '@mui/material/styles';
-import sampleProfileImage from '../../../images/landing/sampleProfilePhoto.jpeg';
+import { Avatar } from '@mui/material';
+
 const Input = styled('input')({
   display: 'none',
 });
 
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import { makeStyles } from '@mui/styles';
-import editProfile from '../../../helpers/APICalls/editProfile';
-import { useSnackBar } from '../../../context/useSnackbarContext';
-
 interface ProfilePhotoProps {
   header: string;
   currentUser?: User; // set to optional but always passed in from settings
+  imgPhoto: string;
 }
 
-const ProfilePhoto: React.FC<ProfilePhotoProps> = ({ header, currentUser }) => {
+const openFileSelector = () => {
+  document.getElementById('photoInput')?.click();
+};
+
+const ProfilePhoto: React.FC<ProfilePhotoProps> = ({ header, currentUser, imgPhoto }) => {
   const classes = useStyles();
-  const { updateSnackBarMessage } = useSnackBar();
 
   return (
-    <>
-      <SettingHeader header={header} />
-      <Box textAlign="center">
-        <Box className={classes.photoDisplay}>
-          <img className={classes.photoGeneral} src={sampleProfileImage} alt="Profile Photo" />
-        </Box>
-        <Typography variant="body1" className={classes.textDisplay}>
-          Be sure to use a photo that <br /> clearly shows your face
-        </Typography>
-        <Box className={classes.input}>
-          <FormLabel htmlFor="contained-button-file">
-            <Input accept="image/*" id="contained-button-file" multiple type="file" />
-            <Button variant="outlined" component="span" sx={{ textTransform: 'none', fontSize: 16, py: 2, px: 5 }}>
-              Upload a file from your device
-            </Button>
-          </FormLabel>
-        </Box>
+    <Box sx={{ textAlign: 'center' }}>
+      <Typography
+        variant="h2"
+        sx={{
+          fontWeight: 700,
+          fontSize: '20px',
+          marginBottom: 6,
+        }}
+      >
+        {header}
+      </Typography>
+
+      <Avatar
+        id="photo"
+        src={imgPhoto}
+        sx={{
+          width: 150,
+          height: 150,
+          marginLeft: 'auto',
+          marginRight: 'auto',
+        }}
+      />
+
+      <Typography
+        variant="h3"
+        sx={{
+          fontWeight: 400,
+          fontSize: '14px',
+          marginTop: '25px',
+          color: '#aaaaaa',
+          marginLeft: 25,
+          marginRight: 25,
+        }}
+      >
+        Be sure to use a photo that <br />
+        clearly shows your face
+      </Typography>
+
+      <Input id="photoInput" type="file" sx={{ display: 'block', visibility: 'hidden' }} />
+
+      <Button
+        sx={{
+          fontSize: '14px',
+          textTransform: 'none',
+          marginBottom: '30px',
+          height: 50,
+          width: 250,
+          border: '1px solid #f14140',
+        }}
+        onClick={openFileSelector}
+      >
+        Upload a file from your device
+      </Button>
+
+      <Box
+        sx={{
+          mr: 0,
+          height: 50,
+        }}
+      >
         <Button aria-label="delete">
-          <DeleteIcon sx={{ mr: 1, color: 'black' }} />
+          <DeleteIcon sx={{ mr: 0, color: 'black' }} />
           <Typography variant="body1" className={classes.textDisplay}>
             Delete photo
           </Typography>
         </Button>
       </Box>
-    </>
+    </Box>
   );
 };
 

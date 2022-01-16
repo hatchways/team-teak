@@ -18,7 +18,7 @@ const settingsMenu = [
   {
     name: 'Profile photo',
     to: '/profile/settings/profile-photo',
-    component: <ProfilePhoto header="Profile Photo" />,
+    component: <ProfilePhoto header="Profile Photo" imgPhoto="" />,
   },
   {
     name: 'Availability',
