@@ -13,28 +13,30 @@ import { SnackBarProvider } from './context/useSnackbarContext';
 import { Navbar } from './components/Navbar/Navbar';
 import Settings from './pages/Settings/Settings';
 import NotFound from './pages/NotFound/NotFound';
+import ProfileListing from './pages/ProfileListing/ProfileListing';
 
 function App(): JSX.Element {
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter>
-        <SnackBarProvider>
+        {/* <SnackBarProvider>
           <AuthProvider>
-            <SocketProvider>
-              <CssBaseline />
-              <Navbar />
-              <Switch>
-                <Route exact path="/login" component={Login} />
-                <Route exact path="/signup" component={Signup} />
-                <Route exact path="/dashboard" component={Dashboard} />
-                <Route path="/profile/settings" component={Settings} />
-                <Route path="*">
-                  <NotFound />
-                </Route>
-              </Switch>
-            </SocketProvider>
+        <SocketProvider>*/}
+        <CssBaseline />
+        <Navbar />
+        <Switch>
+          <Route path="/profile/listing" component={ProfileListing} />
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/signup" component={Signup} />
+          <Route exact path="/dashboard" component={Dashboard} />
+          <Route path="/profile/settings" component={Settings} />
+          <Route path="*">
+            <NotFound />
+          </Route>
+        </Switch>
+        {/* </SocketProvider>
           </AuthProvider>
-        </SnackBarProvider>
+        </SnackBarProvider> */}
       </BrowserRouter>
     </ThemeProvider>
   );
