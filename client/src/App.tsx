@@ -19,24 +19,25 @@ function App(): JSX.Element {
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter>
-        {/* <SnackBarProvider>
+        <SnackBarProvider>
           <AuthProvider>
-        <SocketProvider>*/}
+        <SocketProvider>
         <CssBaseline />
         <Navbar />
         <Switch>
-          <Route path="/profile/listing" component={ProfileListing} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/signup" component={Signup} />
           <Route exact path="/dashboard" component={Dashboard} />
           <Route path="/profile/settings" component={Settings} />
+          <Route path="/profile/listing" component={ProfileListing} />
+
           <Route path="*">
             <NotFound />
           </Route>
         </Switch>
-        {/* </SocketProvider>
+        </SocketProvider>
           </AuthProvider>
-        </SnackBarProvider> */}
+        </SnackBarProvider>
       </BrowserRouter>
     </ThemeProvider>
   );
