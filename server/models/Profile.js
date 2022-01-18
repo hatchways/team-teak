@@ -34,7 +34,7 @@ const profileSchema = new mongoose.Schema({
     type: String,
     default: "",
   },
-  status:{
+  accountType:{
     type:String,
     enum: ['petOwner','petSitter']
   },
