@@ -1,13 +1,14 @@
-import { cloneElement } from 'react';
-import { useAuth } from '../../context/useAuthContext';
-import { NavLink, Redirect, Route, Switch, useHistory } from 'react-router-dom';
 import { Box, CircularProgress, Grid, Link } from '@mui/material';
-import PageContainer from '../../components/PageContainer/PageContainer';
 import { makeStyles } from '@mui/styles';
-import SettingsWrapper from '../../components/SettingsWrapper/SettingsWrapper';
-import EditProfile from './EditProfile/EditProfile';
+import { cloneElement } from 'react';
+import { NavLink, Redirect, Route, Switch, useHistory } from 'react-router-dom';
+import PageContainer from '../../components/PageContainer/PageContainer';
 import SettingHeader from '../../components/SettingsHeader/SettingsHeader';
+import SettingsWrapper from '../../components/SettingsWrapper/SettingsWrapper';
+import { useAuth } from '../../context/useAuthContext';
+import EditProfile from './EditProfile/EditProfile';
 import ProfilePhoto from './ProfilePhoto/ProfilePhoto';
+
 
 const settingsMenu = [
   {

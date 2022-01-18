@@ -16,13 +16,11 @@ const StyledInput = styled(InputBase)(({ theme }) => ({
 
 interface FormInputProps {
   label: string;
-
   defaultValue?: any;
   id: string;
   select?: boolean;
   selectOptions?: Array<{ label: string; value: string }> | undefined;
   selectValue?: string;
-
   [inputProps: string]: any;
 }
 
