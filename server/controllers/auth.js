@@ -65,7 +65,8 @@ exports.loginUser = asyncHandler(async (req, res, next) => {
   const isDemo = req.query.isDemo;
 
   let email, password;
-  if (!isDemo || isDemo === undefined) {
+
+  if (!isDemo) {
     email = req.body.email;
     password = req.body.password;
   } else {
