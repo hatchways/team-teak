@@ -8,6 +8,8 @@ const generateToken = require("../utils/generateToken");
 // @access Public
 exports.registerUser = asyncHandler(async (req, res, next) => {
   const { name, email, password } = req.body;
+  const {accountType}= req.query;
+
 
   const emailExists = await User.findOne({ email });
 
@@ -32,7 +34,9 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
   if (user) {
     await Profile.create({
       userId: user._id,
-      name
+      name,
+      accountType: accountType ? accountType : 'petOwner'
+
     });
 
     const token = generateToken(user._id);
