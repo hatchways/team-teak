@@ -1,10 +1,11 @@
-import { useState, useContext, createContext, FunctionComponent, useEffect, useCallback } from 'react';
+import { createContext, FunctionComponent, useCallback, useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+
+import loginWithCookies from '../helpers/APICalls/loginWithCookies';
+import logoutAPI from '../helpers/APICalls/logout';
 import { AuthApiData, AuthApiDataSuccess } from '../interface/AuthApiData';
 import { User } from '../interface/User';
 import { Profile } from '../interface/Profile';
-import loginWithCookies from '../helpers/APICalls/loginWithCookies';
-import logoutAPI from '../helpers/APICalls/logout';
 
 interface IAuthContext {
   profile: Profile | null | undefined;

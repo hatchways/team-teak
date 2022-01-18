@@ -1,5 +1,5 @@
-import React from 'react';
 import { Box, Paper } from '@mui/material';
+import React from 'react';
 import AuthPageHeader from '../AuthPageHeader/AuthPageHeader';
 
 interface AuthPageWrapperProps {
