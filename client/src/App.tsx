@@ -7,10 +7,12 @@ import { AuthProvider } from './context/useAuthContext';
 import { SocketProvider } from './context/useSocketContext';
 import { SnackBarProvider } from './context/useSnackbarContext';
 import { Navbar } from './components/Navbar/Navbar';
-
-import RoutesComponent from './pages/routes/Routes';
+import { Route, Switch } from 'react-router-dom';
+import { getAllRoutes } from './pages/routes/route';
+import NotFound from './pages/NotFound/NotFound';
 
 function App(): JSX.Element {
+  const routes = getAllRoutes();
   return (
     <ThemeProvider theme={theme}>
       <SnackBarProvider>
@@ -18,7 +20,14 @@ function App(): JSX.Element {
           <SocketProvider>
             <CssBaseline />
             <Navbar />
-            <RoutesComponent />
+            <Switch>
+              {routes.map((item, i) => (
+                <Route key={i} path={item.resource} component={item.component} />
+              ))}
+              <Route path="*">
+                <NotFound />
+              </Route>
+            </Switch>
           </SocketProvider>
         </AuthProvider>
       </SnackBarProvider>
