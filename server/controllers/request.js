@@ -5,9 +5,9 @@ const asyncHandler = require('express-async-handler');
 // @route GET /request
 // @desc get requests related to a logged in user or sitter
 // @access Private
-exports.requestGet = asyncHandler(async (req, res) => {
+exports.getRequest = asyncHandler(async (req, res) => {
   const userId = req.user.id;
-  const getUser = await Request.find({userId: userId})
+  const getUser = await Request.find({userId: req.user.id});
   if(getUser){
     res.send(200).json({ success:{ message:  "get the " + getUser }});
   } else {
@@ -18,7 +18,7 @@ exports.requestGet = asyncHandler(async (req, res) => {
 // @route POST /request
 // @desc post requests with user id and sitter id
 // @access Private
-exports.requestPost = asyncHandler(async (req, res) => {
+exports.postRequest = asyncHandler(async (req, res) => {
   const { sitterId, start, end, offset } = req.body;
   const userId = req.user.id;
   const getUser = await Request.find({userId: userId});
@@ -34,7 +34,7 @@ exports.requestPost = asyncHandler(async (req, res) => {
 // @route PUT /request/:id?status=approved or declined
 // @desc update request status finding by id
 // @access Private
-exports.requestUpdate = asyncHandler(async (req, res, next) => {
+exports.updateRequest = asyncHandler(async (req, res, next) => {
     const { passRequest } = req.body;
     const getUser = await Request.findById(req.params.id);
     if(getUser == null ) {
