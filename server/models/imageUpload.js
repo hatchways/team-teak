@@ -9,6 +9,4 @@ const imageUploadSchema = new mongoose.Schema({
     },
 });
 
-// export default imageUpload;
-
 module.exports = ImageUrl = mongoose.model("imageUrl", imageUploadSchema);
