@@ -14,14 +14,13 @@ const Input = styled('input')({
 interface ProfilePhotoProps {
   header: string;
   currentUser?: User; // set to optional but always passed in from settings
-  imgPhoto: string;
 }
 
 const openFileSelector = () => {
   document.getElementById('photoInput')?.click();
 };
 
-const ProfilePhoto: React.FC<ProfilePhotoProps> = ({ header, currentUser, imgPhoto }) => {
+const ProfilePhoto: React.FC<ProfilePhotoProps> = ({ header, currentUser }) => {
   const classes = useStyles();
 
   return (
@@ -39,7 +38,6 @@ const ProfilePhoto: React.FC<ProfilePhotoProps> = ({ header, currentUser, imgPho
 
       <Avatar
         id="photo"
-        src={imgPhoto}
         sx={{
           width: 150,
           height: 150,
