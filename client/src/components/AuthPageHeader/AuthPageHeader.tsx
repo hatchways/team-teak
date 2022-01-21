@@ -14,6 +14,7 @@ const AuthPageHeader: React.FC<AuthPageHeaderProps> = ({ header }) => {
           fontWeight: 700,
           textAlign: 'center',
           marginBottom: 8,
+          width: '100%',
         }}
       >
         {header}
