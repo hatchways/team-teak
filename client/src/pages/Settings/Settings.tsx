@@ -9,7 +9,6 @@ import { useAuth } from '../../context/useAuthContext';
 import EditProfile from './EditProfile/EditProfile';
 import ProfilePhoto from './ProfilePhoto/ProfilePhoto';
 
-
 const settingsMenu = [
   {
     name: 'Edit profile',
@@ -19,7 +18,7 @@ const settingsMenu = [
   {
     name: 'Profile photo',
     to: '/profile/settings/profile-photo',
-    component: <ProfilePhoto header="Profile Photo" imgPhoto="" />,
+    component: <SettingHeader header="Profile Photo" />,
   },
   {
     name: 'Availability',
