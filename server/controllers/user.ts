@@ -4,7 +4,7 @@ const asyncHandler = require("express-async-handler");
 // @route POST /users
 // @desc Search for users
 // @access Private
-exports.searchUsers = asyncHandler(async (req, res, next) => {
+export default searchUsers = asyncHandler(async (req, res, next) => {
   const searchString = req.query.search;
 
   let users;

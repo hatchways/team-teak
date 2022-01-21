@@ -32,5 +32,5 @@ const requestSchema = new mongoose.Schema({
   },
 });
 
-module.exports = Profile = mongoose.model("Request", requestSchema);
+export default Profile = mongoose.model("Request", requestSchema);
 

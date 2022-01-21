@@ -6,7 +6,7 @@ const asyncHandler = require("express-async-handler");
 // @route PUT /profile/edit
 // @desc edit user profile
 // @access Public
-exports.editProfile = asyncHandler(async (req, res, next) => {
+export default editProfile = asyncHandler(async (req, res, next) => {
   const profile = await Profile.findOne({ userId: req.user.id });
 
   if (!profile) {
@@ -25,7 +25,7 @@ exports.editProfile = asyncHandler(async (req, res, next) => {
 // @route GET /profile/load
 // @desc Get user profile data
 // @access Private
-exports.loadProfile = asyncHandler(async (req, res, next) => {
+export default loadProfile = asyncHandler(async (req, res, next) => {
   const profile = await User.findById(req.user.id, "profile");
 
   if (!profile) {

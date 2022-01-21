@@ -1,5 +1,17 @@
 const mongoose = require("mongoose");
 
+export interface paymentType {
+  sitterId: string;
+  userId: string;
+  rate: Number;
+  hoursOfService: Number;
+  totalPayment: string;
+  customerId: string;
+  createdAt: string;
+  updatedAt: string;
+
+}
+
 const paymentSchema = new mongoose.Schema({
   sitterId: {
     type: mongoose.Schema.Types.ObjectId,
@@ -27,7 +39,9 @@ const paymentSchema = new mongoose.Schema({
     type: String,
     default: "",
   },
-  
+  {
+    timestamps: true,
+  },
 });
 
 
@@ -38,4 +52,4 @@ paymentSchema.pre("save", async function (next) {
     next();
   });
 
-module.exports = Payment = mongoose.model("Payment", paymentSchema);
+export default Payment = mongoose.model<paymentType>("Payment", paymentSchema);
