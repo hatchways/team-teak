@@ -6,12 +6,11 @@ const asyncHandler = require('express-async-handler');
 // @desc get requests related to a logged in user or sitter
 // @access Private
 exports.getRequest = asyncHandler(async (req, res) => {
-  const userId = req.user.id;
-  const getUser = await Request.find({userId: req.user.id});
-  if(getUser){
-    res.send(200).json({ success:{ message:  "get the " + getUser }});
+  const request = await Request.find({userId: req.user.id});
+  if(request){
+    res.send(200).json({ success:{ message:  `get the ${request}` }});
   } else {
-    res.status(404).send("user didn't exist.");
+    res.status(404).send("user id didn't exist.");
   }
 });
 
@@ -21,33 +20,25 @@ exports.getRequest = asyncHandler(async (req, res) => {
 exports.postRequest = asyncHandler(async (req, res) => {
   const { sitterId, start, end, offset } = req.body;
   const userId = req.user.id;
-  const getUser = await Request.find({userId: userId});
-
-  if(getUser){
-    res.status(409).send("user is exist, can not be duplicate");
-  } else {
-    const postUser = await Request.create({ userId, sitterId, start, end, offset});
-    res.send(201).json({ success:{ message:  "post the " + postUser + "success "}});
-  }
+  
+  const request = await Request.create({ userId, sitterId, start, end, offset});
+  res.send(201).json({ success:{ message:  `post the ${request}  success `}});
+  
+});
 
 
 // @route PUT /request/:id?status=approved or declined
 // @desc update request status finding by id
 // @access Private
 exports.updateRequest = asyncHandler(async (req, res, next) => {
-    const { passRequest } = req.body;
-    const getUser = await Request.findById(req.params.id);
-    if(getUser == null ) {
-      res.status(404).send("user didn't exist.");
-    }
-
-    if(passRequest){
-      getUser.accepted = accepted;
+    const request = await Request.findById(req.params.id);
+    if(!request) {
+      res.status(404).send("request didn't exist.");
     } else {
-      getUser.declined = !accepted;
+      const requestUpdate = await request.save();
+      res.status(200).json({ success:{ message:  `post the ${requestUpdate} success `}});
     }
 
-    const requestUpdate = await getUser.save();
-    res.status(200).json({ success:{ message:  "post the " + requestUpdate + "success "}});
+
+    
   });
-});
