@@ -9,103 +9,64 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
 import TextField from '@mui/material/TextField';
-import MenuItem from '@mui/material/MenuItem';
 import Checkbox from '@mui/material/Checkbox';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import 'date-fns';
-import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date';
-import DateFnsUtils from '@date-io/date-fns';
-import { MuiPickersUtilsProvider, DateTimePicker } from '@material-ui/pickers';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
-
+import DeleteIcon from '@mui/icons-material/Delete';
+import AddIcon from '@mui/icons-material/Add';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import { TimePicker } from '@material-ui/pickers';
+import { Button, Input, InputAdornment, IconButton, Dialog, DialogActions } from '@material-ui/core';
+import AccessTime from '@material-ui/icons/AccessTime';
 interface AvailibilityProps {
   header: string;
   // date?(date: Date): string | null;
 }
-function createData(date: string, value: number, availableTime: { value: string; label: string }[]) {
+function createData(date: string, value: number, availableTime: { value: string }[]) {
   return { date, value, availableTime };
 }
 const availableTime = [
   {
-    value: '10 am',
-    label: '10 am',
+    value: '',
   },
   {
-    value: '11 am',
-    label: '11 am',
-  },
-  {
-    value: '12 pm',
-    label: '12 pm',
-  },
-  {
-    value: '1 pm',
-    label: '1 pm',
-  },
-  {
-    value: '2 pm',
-    label: '2 pm',
-  },
-  {
-    value: '3 pm',
-    label: '3 pm',
-  },
-  {
-    value: '4 pm',
-    label: '4 pm',
-  },
-  {
-    value: '5 pm',
-    label: '5 pm',
-  },
-  {
-    value: '6 pm',
-    label: '6 pm',
-  },
-  {
-    value: '7 pm',
-    label: '7 pm',
-  },
-  {
-    value: '8 pm',
-    label: '8 pm',
-  },
-  {
-    value: '9 pm',
-    label: '9 pm',
-  },
-  {
-    value: '10 pm',
-    label: '10 pm',
+    value: '',
   },
 ];
 const rows = [
-  createData(',Monday', 0, availableTime),
-  createData(',Tuesday', 1, availableTime),
-  createData(',Wednesday', 2, availableTime),
-  createData(',Thursday', 3, availableTime),
-  createData(',Friday', 4, availableTime),
-  createData(',Saturday', 5, availableTime),
-  createData(',Sunday', 6, availableTime),
+  createData('SUN', 0, availableTime),
+  createData('MON', 1, availableTime),
+  createData('TUE', 2, availableTime),
+  createData('WED', 3, availableTime),
+  createData('THU', 4, availableTime),
+  createData('FRI', 5, availableTime),
+  createData('SAT', 6, availableTime),
 ];
 
 const Availability: React.FC<AvailibilityProps> = ({ header }) => {
   const classes = useStyles();
   const [checked, setChecked] = React.useState([1]);
-  const [selectedDate, setSelectedDate] = useState(new Date());
-  const [handleDateChange] = useState<MaterialUiPickersDate | null>(new Date());
-  const [date, setDate] = React.useState<Date | null>(new Date());
-  const [value, setValue] = React.useState(0);
 
-  // const handleDateChange = (date?: MaterialUiPickersDate, value?: string | null | undefined) => {
-  //   console.log(date);
-  //   setSelectedDate(date);
-  // };
+  const [isOpen, setIsOpen] = useState(false);
+  const [value, setValue] = useState('10:10');
+
+  const openDialog = () => setIsOpen(true);
+  const closeDialog = () => setIsOpen(false);
+
+  const handleDialogTimeChange = (newValue: any) => {
+    const hours = newValue.getHours().toString().padStart(2, '0');
+    const minutes = newValue.getMinutes().toString().padStart(2, '0');
+    const textValue = hours + ':' + minutes;
+    setValue(textValue);
+  };
+  const handleKeyboardTimeChange = (event: any) => setValue(event.target.value);
+
+  const createDateFromTextValue = (value: any) => {
+    const splitParts = value.split(':');
+    return new Date(1970, 1, 1, splitParts[0], splitParts[1]);
+  };
+
   console.log(checked);
 
   const handleToggle = (value: number) => () => {
@@ -121,15 +82,6 @@ const Availability: React.FC<AvailibilityProps> = ({ header }) => {
     setChecked(newChecked);
   };
 
-  const [startTime, setStartTime] = React.useState('10 am');
-  const [endTime, setEndtTime] = React.useState('10 pm');
-
-  const handleStartTimeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setStartTime(event.target.value);
-  };
-  const handleEndTimeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setEndtTime(event.target.value);
-  };
   return (
     <>
       <SettingHeader header={header} />
@@ -138,25 +90,8 @@ const Availability: React.FC<AvailibilityProps> = ({ header }) => {
           width: '100%',
           margin: '0 auto',
         }}
-      >
-        {/* <Button variant="contained" sx={{ py: 2, borderRadius: 2, ml: 4 }}>
-          <LocalActivityIcon sx={{ mr: 2 }} />
-          Working hours
-        </Button>
-        <Button variant="outlined" sx={{ py: 2, borderRadius: 16, ml: 5 }}>
-          <AddIcon sx={{ mr: 2 }} /> New schedule
-        </Button> */}
-      </Box>
-      <TextField
-        id="date"
-        label="Birthday"
-        type="date"
-        defaultValue="2017-05-24"
-        InputLabelProps={{
-          shrink: true,
-        }}
-      />
-      <br />
+      ></Box>
+
       <Box>
         <TableContainer>
           <Table aria-label="apointment table" className={classes.table}>
@@ -166,25 +101,13 @@ const Availability: React.FC<AvailibilityProps> = ({ header }) => {
                   <TableCell sx={{ border: 0 }}>
                     <ListItemButton role={undefined} dense>
                       <ListItemIcon>
-                        {/* <Checkbox
+                        <Checkbox
                           checked={checked.indexOf(row.value) !== -1}
                           onClick={handleToggle(row.value)}
                           edge="start"
                           tabIndex={-1}
                           disableRipple
-                        /> */}
-
-                        <FormControl>
-                          <RadioGroup
-                            aria-labelledby="demo-radio-buttons-group-label"
-                            defaultValue="monday"
-                            name="radio-buttons-group"
-                            onClick={handleToggle(row.value)}
-                            tabIndex={-1}
-                          >
-                            <FormControlLabel value="other" control={<Radio />} label="" />
-                          </RadioGroup>
-                        </FormControl>
+                        />
                       </ListItemIcon>
                       <ListItemText primary={<Typography sx={{ fontWeight: 700 }}>{row.date}</Typography>} />
                     </ListItemButton>
@@ -192,23 +115,37 @@ const Availability: React.FC<AvailibilityProps> = ({ header }) => {
                   <TableCell sx={{ display: 'flex', border: 0, alignItems: 'center', justifyContent: 'space-between' }}>
                     {checked.includes(row.value) ? (
                       <Box sx={{ display: 'flex', border: 0, alignItems: 'center', justifyContent: 'center' }}>
-                        <Typography sx={{ mx: 3 }}> FROM </Typography>
-                        <TextField
-                          id="outlined-select-time"
-                          select
-                          value={startTime}
-                          onChange={handleStartTimeChange}
-                          fullWidth
-                        >
-                          {availableTime.map((option) => (
-                            <MenuItem key={option.value} value={option.value}>
-                              <Typography variant="body1">{option.label}</Typography>
-                            </MenuItem>
-                          ))}
-                        </TextField>
-                        <Typography sx={{ mx: 3 }}> TO </Typography>
-
-                        <TextField
+                        <Input
+                          value={value}
+                          onChange={handleKeyboardTimeChange}
+                          endAdornment={
+                            <InputAdornment position="end">
+                              {/* <IconButton onClick={openDialog}></IconButton> */}
+                            </InputAdornment>
+                          }
+                        />
+                        <Typography sx={{ mx: 3 }}> - </Typography>
+                        <Input
+                          value={value}
+                          onChange={handleKeyboardTimeChange}
+                          endAdornment={
+                            <InputAdornment position="end">
+                              {/* <IconButton onClick={openDialog}></IconButton> */}
+                            </InputAdornment>
+                          }
+                        />
+                        <Dialog maxWidth="xs" open={isOpen}>
+                          <TimePicker value={createDateFromTextValue(value)} onChange={handleDialogTimeChange} />
+                          <DialogActions>
+                            <Button onClick={closeDialog} color="primary">
+                              Cancel
+                            </Button>
+                            <Button onClick={closeDialog} color="primary">
+                              Ok
+                            </Button>
+                          </DialogActions>
+                        </Dialog>
+                        {/* <TextField
                           id="outlined-select-time"
                           select
                           value={endTime}
@@ -216,17 +153,22 @@ const Availability: React.FC<AvailibilityProps> = ({ header }) => {
                           fullWidth
                         >
                           {availableTime.map((option) => (
-                            <MenuItem key={option.value} value={option.value}>
-                              <Typography variant="body1">{option.label}</Typography>
-                            </MenuItem>
+                            // <MenuItem key={option.value} value={option.value}>
+                            //   <Typography variant="body1">{option.label}</Typography>
+                            // </MenuItem>
                           ))}
-                        </TextField>
+                        </TextField> */}
+                        <DeleteIcon className={classes.icon} />
                       </Box>
                     ) : (
                       <Typography variant="body1" color="text.secondary" sx={{ mt: 2 }}>
                         Unavailable
                       </Typography>
                     )}
+                    <Box>
+                      <AddIcon />
+                      <ContentCopyIcon sx={{ mx: 5 }} />
+                    </Box>
                   </TableCell>
                 </TableRow>
               ))}
