@@ -1,118 +1,105 @@
 const mongoose = require("mongoose");
 
 const availabilitySchema = new mongoose.Schema({
-  date: {
-    type: Date,
-    required: true,
-  },
-  startTime: {
-    type: String,
-    required: true,
-  },
-  endTime: {
-    type: String,
-    required: true,
-  },
-  petSitterId: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-  },
-  available: {
-    type: Boolean,
-    required: true,
-    default: false,
-  },
-});
-
-module.exports = Availability = mongoose.model(
-  "availibility",
-  availabilitySchema
-);
-it;
-
-const mongoose = require("mongoose");
-
-const scheduleSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
   },
-  active: {
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: "User",
+  },
+  isActive: {
     type: Boolean,
     required: true,
+    default: false,
   },
-  periods: {
-    monday: {
-      startTime: {
-        type: String,
-        required: true,
-      },
-      endTime: {
-        type: String,
-        required: true,
-      },
+  createdOn: {
+    type: Date,
+    default: Date.now(),
+  },
+});
+
+const scheduleSchema = new mongoose.Schema({
+  availabilityId: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: "availability",
+  },
+  monday: {
+    startTime: {
+      type: String,
+      required: true,
     },
-    tuesday: {
-      startTime: {
-        type: String,
-        required: true,
-      },
-      endTime: {
-        type: String,
-        required: true,
-      },
+    endTime: {
+      type: String,
+      required: true,
     },
-    wednesday: {
-      startTime: {
-        type: String,
-        required: true,
-      },
-      endTime: {
-        type: String,
-        required: true,
-      },
+  },
+  tuesday: {
+    startTime: {
+      type: String,
+      required: true,
     },
-    thursday: {
-      startTime: {
-        type: String,
-        required: true,
-      },
-      endTime: {
-        type: String,
-        required: true,
-      },
+    endTime: {
+      type: String,
+      required: true,
     },
-    friday: {
-      startTime: {
-        type: String,
-        required: true,
-      },
-      endTime: {
-        type: String,
-        required: true,
-      },
+  },
+  wednesday: {
+    startTime: {
+      type: String,
+      required: true,
     },
-    saturday: {
-      startTime: {
-        type: String,
-        required: true,
-      },
-      endTime: {
-        type: String,
-        required: true,
-      },
+    endTime: {
+      type: String,
+      required: true,
     },
-    sunday: {
-      startTime: {
-        type: String,
-        required: true,
-      },
-      endTime: {
-        type: String,
-        required: true,
-      },
+  },
+  thursday: {
+    startTime: {
+      type: String,
+      required: true,
+    },
+    endTime: {
+      type: String,
+      required: true,
+    },
+  },
+  friday: {
+    startTime: {
+      type: String,
+      required: true,
+    },
+    endTime: {
+      type: String,
+      required: true,
+    },
+  },
+  saturday: {
+    startTime: {
+      type: String,
+      required: true,
+    },
+    endTime: {
+      type: String,
+      required: true,
+    },
+  },
+  sunday: {
+    startTime: {
+      type: String,
+      required: true,
+    },
+    endTime: {
+      type: String,
+      required: true,
     },
   },
 });
 
-module.exports = Schedule = mongoose.model("Schedule", scheduleSchema);
+module.exports = {
+  Availability: mongoose.model("availability", availabilitySchema),
+  Schedule: mongoose.model("schedule", scheduleSchema),
+};
