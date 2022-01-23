@@ -110,15 +110,10 @@ exports.loadUser = asyncHandler(async (req, res, next) => {
   const user = await User.findById(req.user.id);
   const profile = await Profile.findOne({ userId: req.user.id });
 
-  console.log("use loaduser");
-
-
   if (!user) {
     res.status(401);
     throw new Error("Not authorized");
   }
-  console.log("use logging");
-
 
   res.status(200).json({
     success: {
