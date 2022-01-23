@@ -7,6 +7,7 @@ interface Props {
 }
 
 const AvatarDisplay = ({ user }: Props): JSX.Element => {
+  console.log('avatar display here');
   return <Avatar alt="Profile Image" src={`https://robohash.org/${user.email}.png`} />;
 };
 
