@@ -36,13 +36,6 @@ const menuItems = [
     component: SignUp,
   },
   {
-    item: 'My Jobs',
-    resource: '/my-jobs',
-    canView: [AccountType.PET_SITTER],
-    authenticated: true,
-    component: NotFound,
-  },
-  {
     item: 'My Sitters',
     resource: '/sitters',
     canView: [AccountType.PET_OWNER],
@@ -58,7 +51,7 @@ const menuItems = [
   },
   {
     item: 'Manage Bookings',
-    resource: '/bookings',
+    resource: '/my-jobs',
     canView: [AccountType.PET_SITTER, AccountType.PET_OWNER],
     authenticated: true,
     component: BookingPage,
@@ -66,38 +59,6 @@ const menuItems = [
 ];
 
 export const getAllRoutes = () => menuItems;
-
-// export const getPetSitterRoutes = () => {
-//   const result = [];
-//   for (const item of menuItems) {
-//     if (item.canView?.length === 2) {
-//       result.push(item);
-//       continue;
-//     } else {
-//       if (item.canView[0] === 'pet_sitter') {
-//         result.push(item);
-//         continue;
-//       }
-//     }
-//   }
-//   return result;
-// };
-
-// export const getPetOwnerRoutes = () => {
-//   const result = [];
-//   for (const item of menuItems) {
-//     if (item.canView?.length === 2) {
-//       result.push(item);
-//       continue;
-//     } else {
-//       if (item.canView[0] === 'pet_owner') {
-//         result.push(item);
-//         continue;
-//       }
-//     }
-//   }
-//   return result;
-// };
 
 export const getNonAuthenticatedRoutes = () => {
   const result = [];

@@ -4,10 +4,10 @@ import { makeStyles } from '@mui/styles';
 const useStyles = makeStyles((theme: Theme) => ({
   calendar: {
     zIndex: '-2',
-    fontFamily: 'white',
     border: 'none',
     backgroundColor: 'white',
-    margin: '20px auto',
+    width: '100%',
+    fontFamily: theme.typography.fontFamily,
     '& .react-calendar__navigation__label': {
       color: theme.palette.primary.main,
       fontFamily: 'inherit',
@@ -15,6 +15,11 @@ const useStyles = makeStyles((theme: Theme) => ({
       backgroundColor: 'inherit',
       margin: '20px 100px',
       fontWeight: 'bold',
+      '@media(max-width: 767px)': {
+        margin: '20px 60px',
+        width: 'fit-content',
+        with: '90%',
+      },
     },
     '& .react-calendar__month-view__weekdays__weekday > abbr': {
       textDecoration: 'none',
@@ -25,6 +30,14 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     '& .react-calendar__navigation__next2-button': {
       display: 'none',
+    },
+    '& .react-calendar__navigation__next-button': {
+      border: 'none',
+      backgroundColor: 'white',
+    },
+    '& .react-calendar__navigation__prev-button': {
+      border: 'none',
+      backgroundColor: 'white',
     },
     '& .react-calendar__tile': {
       padding: '.90em .5em',
@@ -62,9 +75,14 @@ const useStyles = makeStyles((theme: Theme) => ({
       '0px 0px 1.9px rgba(0, 0, 0, 0.007),0px 0px 4.9px rgba(0, 0, 0, 0.014),0px 0px 9.9px rgba(0, 0, 0, 0.021),0px 0px 20.4px rgba(0, 0, 0, 0.031),0px 0px 56px rgba(0, 0, 0, 0.05)',
     marginBottom: theme.spacing(3),
     padding: '2px',
-    '@media(min-width: 600px)': {
+    '@media(min-width: 800px)': {
       padding: theme.spacing(3),
       width: '400px',
+    },
+    '@media(max-width: 767px)': {
+      margin: '0px auto',
+      width: 'fit-content',
+      with: '90%',
     },
   },
   activeTile: {

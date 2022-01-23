@@ -7,8 +7,8 @@ const CurrentBookingCard = (): JSX.Element => {
   return (
     <Box component="div" className={classes.cardWrapper}>
       <SettingsIcon className={classes.icon} />
-      <Typography component="div" className={classes.date}>
-        YOUR NEXT BOOKING
+      <Typography component="div" className={classes.title}>
+        your current booking
       </Typography>
       <Typography variant="h6" className={classes.date}>
         8 April 2020, 7-9 PM
