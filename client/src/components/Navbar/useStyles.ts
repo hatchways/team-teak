@@ -1,9 +1,10 @@
 import { Theme } from '@mui/material';
 import { makeStyles } from '@mui/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 export const useStyles = makeStyles((theme: Theme) => ({
   navbar: {
-    boxShadow: '4px 4px 13px 7px rgba(217,217,217,0.26)',
+    boxShadow: '2px 2px 10px 3px rgba(217,217,217,0.26)',
     padding: theme.spacing(2),
     background: 'white',
   },
@@ -21,6 +22,6 @@ export const useStyles = makeStyles((theme: Theme) => ({
     },
   },
   navbarLogo: {
-    width: 180,
+    width: 100,
   },
 }));

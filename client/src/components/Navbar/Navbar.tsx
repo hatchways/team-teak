@@ -5,6 +5,7 @@ import {
   Grid,
   IconButton,
   ListItemIcon,
+  useMediaQuery,
   ListItemText,
   Menu,
   MenuItem as DropdownMenuItem,
@@ -17,6 +18,7 @@ import { useAuth } from '../../context/useAuthContext';
 import lovingSitterLogo from '../../images/logo.svg';
 import { AccountType } from '../../types/AccountType';
 import { useStyles } from './useStyles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 
 const NavbarButton = styled(Button)({
   padding: '15px 0',
@@ -91,6 +93,9 @@ const MenuItem: React.FC<{
 };
 
 const Navbar: React.FC = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
   const location = useLocation();
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -128,65 +133,148 @@ const Navbar: React.FC = () => {
       alignItems="center"
       container
     >
-      <Grid xs={4} md={6} item>
+      <Grid xs={2} md={4} item>
         <img className={classes.navbarLogo} src={lovingSitterLogo} />
       </Grid>
-      <Grid xs={8} md={6} item>
-        <Grid container alignItems="center" gap={2} justifyContent="flex-end">
-          {renderMenuItems()}
-          {loggedInUser && (
-            <Grid xs={2} item>
-              <>
-                <IconButton
-                  size="large"
-                  aria-label="account profile picture"
-                  aria-controls="menu-navbar"
-                  arais-haspopup="true"
-                  onClick={handleMenuOpen}
-                  color="inherit"
-                >
-                  <img style={{ width: 50 }} src={`https://robohash.org/${loggedInUser.email}`} />
-                </IconButton>
-                <Menu
-                  id="menu-appbar"
-                  anchorEl={anchorEl}
-                  anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'right',
-                  }}
-                  keepMounted
-                  transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  open={open}
-                  onClose={handleClose}
-                >
-                  <DropdownMenuItem component={NavLink} to="/profile/settings" onClick={handleClose}>
-                    <ListItemIcon>
-                      <Settings fontSize="small" />
-                    </ListItemIcon>
-                    <ListItemText>Settings</ListItemText>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={handleClose}>
-                    <ListItemIcon>
-                      <Person fontSize="small" />
-                    </ListItemIcon>
-                    <ListItemText>Profile</ListItemText>
-                  </DropdownMenuItem>
-                  <Divider />
-                  <DropdownMenuItem onClick={handleLogout}>
-                    <ListItemIcon>
-                      <Logout fontSize="small" />
-                    </ListItemIcon>
-                    <ListItemText>Logout</ListItemText>
-                  </DropdownMenuItem>
-                </Menu>
-              </>
-            </Grid>
-          )}
+      {!isMobile ? (
+        <Grid xs={2} md={6} item>
+          <Grid container alignItems="center" gap={2} justifyContent="flex-end">
+            {renderMenuItems()}
+            {loggedInUser && (
+              <Grid xs={2} item>
+                <>
+                  <IconButton
+                    size="large"
+                    aria-label="account profile picture"
+                    aria-controls="menu-navbar"
+                    arais-haspopup="true"
+                    onClick={handleMenuOpen}
+                    color="inherit"
+                  >
+                    <img style={{ width: 50 }} src={`https://robohash.org/${loggedInUser.email}`} />
+                  </IconButton>
+                  <Menu
+                    id="menu-appbar"
+                    anchorEl={anchorEl}
+                    anchorOrigin={{
+                      vertical: 'bottom',
+                      horizontal: 'right',
+                    }}
+                    keepMounted
+                    transformOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right',
+                    }}
+                    open={open}
+                    onClose={handleClose}
+                  >
+                    <DropdownMenuItem component={NavLink} to="/profile/settings" onClick={handleClose}>
+                      <ListItemIcon>
+                        <Settings fontSize="small" />
+                      </ListItemIcon>
+                      <ListItemText>Settings</ListItemText>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={handleClose}>
+                      <ListItemIcon>
+                        <Person fontSize="small" />
+                      </ListItemIcon>
+                      <ListItemText>Profile</ListItemText>
+                    </DropdownMenuItem>
+                    <Divider />
+                    <DropdownMenuItem onClick={handleLogout}>
+                      <ListItemIcon>
+                        <Logout fontSize="small" />
+                      </ListItemIcon>
+                      <ListItemText>Logout</ListItemText>
+                    </DropdownMenuItem>
+                  </Menu>
+                </>
+              </Grid>
+            )}
+          </Grid>
         </Grid>
-      </Grid>
+      ) : (
+        <Grid xs={4} item>
+          <Grid container alignItems="center" gap={2} justifyContent="flex-end">
+            {loggedInUser && (
+              <Grid xs={1} item>
+                <>
+                  <IconButton
+                    size="small"
+                    aria-label="account profile picture"
+                    aria-controls="menu-navbar"
+                    arais-haspopup="true"
+                    onClick={handleMenuOpen}
+                    color="inherit"
+                  >
+                    <img style={{ width: 50 }} src={`https://robohash.org/${loggedInUser.email}`} />
+                  </IconButton>
+                  <Menu
+                    id="menu-appbar"
+                    anchorEl={anchorEl}
+                    anchorOrigin={{
+                      vertical: 'bottom',
+                      horizontal: 'right',
+                    }}
+                    keepMounted
+                    transformOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right',
+                    }}
+                    open={open}
+                    onClose={handleClose}
+                  >
+                    <DropdownMenuItem onClick={handleClose}>
+                      <ListItemIcon>
+                        <Logout fontSize="small" />
+                      </ListItemIcon>
+                      <ListItemText>Become a Sitter</ListItemText>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={handleClose}>
+                      <ListItemIcon>
+                        <Logout fontSize="small" />
+                      </ListItemIcon>
+                      <ListItemText>My Jobs</ListItemText>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={handleClose}>
+                      <ListItemIcon>
+                        <Logout fontSize="small" />
+                      </ListItemIcon>
+                      <ListItemText>My Sitters</ListItemText>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={handleClose}>
+                      <ListItemIcon>
+                        <Logout fontSize="small" />
+                      </ListItemIcon>
+                      <ListItemText>Message</ListItemText>
+                    </DropdownMenuItem>
+                    <Divider />
+                    <DropdownMenuItem component={NavLink} to="/profile/settings" onClick={handleClose}>
+                      <ListItemIcon>
+                        <Settings fontSize="small" />
+                      </ListItemIcon>
+                      <ListItemText>Settings</ListItemText>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={handleClose}>
+                      <ListItemIcon>
+                        <Person fontSize="small" />
+                      </ListItemIcon>
+                      <ListItemText>Profile</ListItemText>
+                    </DropdownMenuItem>
+                    <Divider />
+                    <DropdownMenuItem onClick={handleLogout}>
+                      <ListItemIcon>
+                        <Logout fontSize="small" />
+                      </ListItemIcon>
+                      <ListItemText>Logout</ListItemText>
+                    </DropdownMenuItem>
+                  </Menu>
+                </>
+              </Grid>
+            )}
+          </Grid>
+        </Grid>
+      )}
     </Grid>
   );
 };
