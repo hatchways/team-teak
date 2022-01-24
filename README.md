@@ -40,3 +40,15 @@ This is a little description about your project.
 2. Dashboard. Here is a description about what a user can expect to see
 
 ![Dashboard](demo/images/dashboard.png)
+
+### Demo User Set Up Process
+
+1. set `DEMO_USER_EMAIL=` and `DEMO_USER_PASSWORD=` environment variable;
+
+#### To create the demo user details
+
+2. run the `demo` script in the server directory
+
+#### To login with the demo account.
+
+3. click `login & demo` button on the user interface.

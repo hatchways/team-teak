@@ -99,7 +99,7 @@ const SignUpForm = ({ handleSubmit }: Props): JSX.Element => {
             sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}
           >
             <AuthButton type="submit" isSubmitting={isSubmitting} displayText="Sign Up" demo={false} />
-            <AuthButton displayText="Login With Demo" demo={true} />
+            <AuthButton displayText="Login & Demo" demo={true} />
           </Box>
         </form>
       )}

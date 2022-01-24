@@ -62,7 +62,17 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
 // @desc Login user
 // @access Public
 exports.loginUser = asyncHandler(async (req, res, next) => {
-  const { email, password } = req.body;
+  const isDemo = req.query.isDemo;
+
+  let email, password;
+
+  if (!isDemo) {
+    email = req.body.email;
+    password = req.body.password;
+  } else {
+    email = process.env.DEMO_USER_EMAIL;
+    password = process.env.DEMO_USER_PASSWORD;
+  }
 
   const user = await User.findOne({ email });
 
