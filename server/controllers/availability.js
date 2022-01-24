@@ -76,7 +76,7 @@ exports.registerAvailability = asyncHandler(async (req, res, next) => {
         },
       });
     } else {
-      // If there is a better way of doing a rollback please @Ethan, let me know!
+  
       try {
         await Availability.findByIdAndDelete(availabilityId);
       } catch (error) {
