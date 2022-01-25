@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Grid } from '@material-ui/core';
 import Header from './Header';
 import Content from './Content';
 import Button from '@material-ui/core/Button';
 
-const ProfileListing = () => {
+const ProfileListing: FC = () => {
   return (
     <Grid container direction="column">
       <Grid item>
