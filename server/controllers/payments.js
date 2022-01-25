@@ -22,7 +22,7 @@ exports.makePayment = asyncHandler(async (req, res, next) => {
     .catch((err) => err);
 
   if (!cardDetials.length) {
-    const exp = `${exp_month}/${exp_year.slice(-2)}`;
+    const exp = `${exp_month}/${exp_year.toString().slice(-2)}`;
 
     await CardDetails.create({
       userId,
@@ -35,7 +35,6 @@ exports.makePayment = asyncHandler(async (req, res, next) => {
       .then((res) => res)
       .catch((err) => err);
   }
-
   return await stripe.customers
     .create({
       email: email,
@@ -70,5 +69,9 @@ exports.getPaymentCards = asyncHandler(async (req, res, next) => {
     .then((res) => res)
     .catch((err) => err);
 
-  return res.status(200).send({ data: cardDetials });
+  return res.status(200).send({
+    success: {
+      data: cardDetials,
+    },
+  });
 });
