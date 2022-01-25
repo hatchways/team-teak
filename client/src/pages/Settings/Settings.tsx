@@ -6,6 +6,7 @@ import PageContainer from '../../components/PageContainer/PageContainer';
 import SettingHeader from '../../components/SettingsHeader/SettingsHeader';
 import SettingsWrapper from '../../components/SettingsWrapper/SettingsWrapper';
 import { useAuth } from '../../context/useAuthContext';
+import PaymentsPage from '../Payments/paymentsPage';
 import EditProfile from './EditProfile/EditProfile';
 
 const settingsMenu = [
@@ -27,7 +28,7 @@ const settingsMenu = [
   {
     name: 'Payment methods',
     to: '/profile/settings/payment-methods',
-    component: <SettingHeader header="Payment Methods" />,
+    component: <PaymentsPage />,
   },
 ];
 
