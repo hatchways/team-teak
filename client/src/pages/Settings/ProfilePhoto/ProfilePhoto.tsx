@@ -6,6 +6,7 @@ import { Grid, Typography } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { styled } from '@mui/material/styles';
 import { Avatar } from '@mui/material';
+import SettingHeader from '../../../components/SettingsHeader/SettingsHeader';
 
 const Input = styled('input')({
   display: 'none',
@@ -25,17 +26,7 @@ const ProfilePhoto: React.FC<ProfilePhotoProps> = ({ header, currentUser }) => {
 
   return (
     <Box sx={{ textAlign: 'center' }}>
-      <Typography
-        variant="h2"
-        sx={{
-          fontWeight: 700,
-          fontSize: '20px',
-          marginBottom: 6,
-        }}
-      >
-        {header}
-      </Typography>
-
+      <SettingHeader header="Availability" />
       <Avatar
         id="photo"
         sx={{
