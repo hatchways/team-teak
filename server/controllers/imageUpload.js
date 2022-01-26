@@ -9,32 +9,26 @@ const { cloudinary } = require('../utils/cloudinary');
 // @access Private
 exports.uploadPicture = asyncHandler(async (req, res, next) => {
  
-    // const {
-    //     fileString,
-    // } = req.body.data;
+    const userProfile = await Profile.findOne({ userId: req.user.id });
 
+    if(!userProfile){
+      res.status(404).send({
+        message: "user profile doesn't exist "});
+    }
 
-    // const imagePath = await imageUrl.findById(req.body.id);
     const fileString = req.body.files;
-    // if(fileString != null){
-    //     fileString = "";
-    //     await cloudinary.
-    // }
 
     try{
         const uploadedReponse = await cloudinary.uploader.upload(fileString, {
             upload_preset: 'ml_default'
         })
-        imageUrl.create({})
+        imageUrl.create({uploadedReponse});
 
       res.status(200).json({ success: { message: "image update successfully!" } });
-    //   res.json({message: " upload success "});
     } catch(err) {
 
       res.status(500).send({
         message: "update image fail "});
-        // res.json({message: " upload fail "});
-
     }
   
 });

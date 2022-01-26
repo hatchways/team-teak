@@ -1,5 +1,3 @@
-require("dotenv").config();
-
 const colors = require("colors");
 const path = require("path");
 const http = require("http");
