@@ -9,11 +9,14 @@ import {
   Menu,
   MenuItem as DropdownMenuItem,
   styled,
+  AppBar,
+  Toolbar,
 } from '@mui/material';
 import clsx from 'clsx';
 import React, { useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/useAuthContext';
+import { NotificationMenu } from './NotificationMenu';
 import lovingSitterLogo from '../../images/logo.svg';
 import { AccountType } from '../../types/AccountType';
 import { useStyles } from './useStyles';
@@ -83,7 +86,7 @@ const MenuItem: React.FC<{
 
   return (
     <Grid key={resource} sx={{ textAlign: 'center' }} xs={2} justifySelf="flex-end" item>
-      <NavLink className={classes.navbarItem} to={resource}>
+      <NavLink className={clsx(classes.navbarItem, location.pathname === '/' && classes.navbarItemLand)} to={resource}>
         {item}
       </NavLink>
     </Grid>
@@ -133,6 +136,8 @@ const Navbar: React.FC = () => {
       </Grid>
       <Grid xs={8} md={6} item>
         <Grid container alignItems="center" gap={2} justifyContent="flex-end">
+          {loggedInUser && <NotificationMenu />}
+
           {renderMenuItems()}
           {loggedInUser && (
             <Grid xs={2} item>

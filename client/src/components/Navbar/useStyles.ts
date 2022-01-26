@@ -20,6 +20,35 @@ export const useStyles = makeStyles((theme: Theme) => ({
       color: theme.palette.primary.main,
     },
   },
+  navbarItemLand: {
+    fontWeight: 700,
+    testDecoration: 'none',
+    color: 'white !important',
+    transition: 'color 120mx ease-in-out',
+    '& .MuiBotton-root': {
+      color: 'white',
+    },
+    '&:hover': {
+      color: theme.palette.primary.main,
+    },
+  },
+  unreadNotification: {
+    backgroundColor: 'green',
+    fontWeight: 700,
+    textDecoration: 'none',
+  },
+  readNotification: {
+    backgroundColor: theme.palette.grey[200],
+    fontWeight: 600,
+    textDecoration: 'none',
+  },
+  badge: {
+    '& .MuiBadge-standard': {
+      backgroundColor: theme.palette.grey[300],
+      left: '1px',
+      top: '-10px',
+    },
+  },
   navbarLogo: {
     width: 180,
   },
