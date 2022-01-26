@@ -15,9 +15,7 @@ const { validateAvailability } = require("../validate");
 
 router.route("/").get(protect, getAllSchedulesForCurrentUser);
 
-router
-  .route("/create")
-  .post([protect, validateAvailability], registerAvailability);
+router.route("/").post([protect, validateAvailability], createAvailability);
 
 router.route("/active").get(protect, getActiveSchedules);
 

@@ -29,9 +29,7 @@ exports.getAvailabilityData = async (conditions = {}) => {
         },
       },
     },
-  ])
-    .then((res) => res)
-    .catch((err) => err);
+  ]);
 
   return availability;
 };

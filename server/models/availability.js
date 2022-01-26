@@ -5,10 +5,10 @@ const availabilitySchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  userId: {
+  profileId: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
-    ref: "User",
+    ref: "Profile",
   },
   isActive: {
     type: Boolean,

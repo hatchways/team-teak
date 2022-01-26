@@ -1,13 +1,13 @@
 const { Schedule, Availability } = require("../models/availability");
+const Profile = require("../models/Profile");
 const asyncHandler = require("express-async-handler");
 const mongoose = require("mongoose");
-const match = require("nodemon/lib/monitor/match");
 const { getAvailabilityData } = require("../utils/availabilityMockupData");
 
-// @route POST /availability/create
-// @desc Registers pet sitter availability
+// @route POST /availability
+// @desc create pet sitter availability
 // @access Private
-exports.registerAvailability = asyncHandler(async (req, res, next) => {
+exports.createAvailability = asyncHandler(async (req, res, next) => {
   const {
     name,
     isActive,
@@ -22,11 +22,11 @@ exports.registerAvailability = asyncHandler(async (req, res, next) => {
 
   const userId = req.user.id;
 
+  const profiles = await Profile.find({ userId });
+  const profileId = profiles[0]._id;
+
   const hasActiveSchedule =
-    isActive &&
-    (await Availability.find({ userId, isActive })
-      .then((res) => res)
-      .catch((err) => err));
+    isActive && (await Availability.find({ userId, isActive }));
 
   if (hasActiveSchedule.length) {
     res.status(400);
@@ -35,11 +35,9 @@ exports.registerAvailability = asyncHandler(async (req, res, next) => {
 
   const availability = await Availability.create({
     name,
-    userId,
+    profileId,
     isActive,
-  })
-    .then((res) => res)
-    .catch((err) => err);
+  });
 
   if (availability) {
     const availabilityId = availability._id;
@@ -58,32 +56,22 @@ exports.registerAvailability = asyncHandler(async (req, res, next) => {
 
     if (schedule) {
       const { name, isActive } = availability;
-      const { monday, tuesday, wednesday, thursday, friday, saturday, sunday } =
-        schedule;
 
       return res.status(201).send({
         data: {
           id: availabilityId,
           name,
           isActive,
-          monday,
-          tuesday,
-          wednesday,
-          thursday,
-          friday,
-          saturday,
-          sunday,
+          ...schedule,
         },
       });
     } else {
-      // If there is a better way of doing a rollback please @Ethan, let me know!
       try {
         await Availability.findByIdAndDelete(availabilityId);
       } catch (error) {
         res.status(500);
         throw new Error("Server error!");
       }
-
       return res.status(400).send({ error: "Invalid data" });
     }
   } else {
@@ -131,7 +119,7 @@ exports.getActiveSchedules = asyncHandler(async (req, res, next) => {
     if (availability.length) {
       return res.status(200).send({ data: availability });
     } else {
-      res.status(404).send({ error: "No Active schedules available" });
+      return res.status(404).send({ error: "No Active schedules available" });
     }
   } catch (error) {
     res.status(500);
