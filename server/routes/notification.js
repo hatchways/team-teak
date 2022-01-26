@@ -8,13 +8,16 @@ const {
 const router = express.Router();
 
 const protect = require("../middleware/auth");
-const { validateNotification } = require("../validate");
+const {
+  validateNotification,
+  validateRequestParameter,
+} = require("../validate");
+
+router.route("/").post([protect, validateNotification], createNotification);
 
 router
-  .route("/create")
-  .post([protect, validateNotification], createNotification);
-
-router.route("/read/:notificationId").put(protect, markNotificationRead);
+  .route("/read/:notificationId")
+  .put([protect, validateRequestParameter], markNotificationRead);
 
 router.route("/").get(protect, fetctAllNotications);
 

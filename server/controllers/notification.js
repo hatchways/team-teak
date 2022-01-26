@@ -2,7 +2,7 @@ const NotificationSchema = require("../models/notification");
 const asyncHandler = require("express-async-handler");
 const mongoose = require("mongoose");
 
-// @route POST /notifications/create
+// @route POST /notifications/
 // @desc create notification
 // @access Private
 exports.createNotification = asyncHandler(async (req, res, next) => {
@@ -10,31 +10,18 @@ exports.createNotification = asyncHandler(async (req, res, next) => {
 
   const { id: userId } = req.user;
 
-  try {
-    mongoose.Types.ObjectId(recieverId);
-  } catch (error) {
-    throw new Error("Invalid id");
-  }
   const notification = await NotificationSchema.create({
     userId,
     type,
     title,
     description,
     recieverId,
-  })
-    .then((res) => res)
-    .catch((err) => err);
+  });
 
   if (notification) {
     return res.status(201).send({
       success: {
-        notification: {
-          id: notification._id,
-          type: notification.type,
-          title: notification.title,
-          description: notification.description,
-          isRead: notification.isRead,
-        },
+        notification,
       },
     });
   } else {
@@ -43,20 +30,13 @@ exports.createNotification = asyncHandler(async (req, res, next) => {
   }
 });
 
-// @route PUT /notifications/read/:notificationID
-// @desc create notification
+// @route PUT /notifications/read/:notificationId
+// @desc set notification to read
 // @access Private
 exports.markNotificationRead = asyncHandler(async (req, res, next) => {
   const notificationId = req.params.notificationId;
 
   const { id: userId } = req.user;
-
-  try {
-    mongoose.Types.ObjectId(notificationId);
-  } catch (error) {
-    res.status(404);
-    throw new Error("Invalid id");
-  }
 
   const notification = await NotificationSchema.findById(notificationId);
 
@@ -70,10 +50,7 @@ exports.markNotificationRead = asyncHandler(async (req, res, next) => {
       notificationId,
       { isRead: true },
       { new: true }
-    )
-      .select(["-__v"])
-      .then((res) => res)
-      .catch((err) => err);
+    ).select(["-__v"]);
 
     return res.status(200).send({
       message: "Notification read",
@@ -93,10 +70,7 @@ exports.fetctAllNotications = asyncHandler(async (req, res, next) => {
 
   const findAllByLoggedUser = await NotificationSchema.find({
     recieverId: userId,
-  })
-    .select(["-__v"])
-    .then((res) => res)
-    .catch((err) => err);
+  }).select(["-__v"]);
 
   return res.status(200).send({
     data: findAllByLoggedUser,
@@ -112,10 +86,7 @@ exports.fetctAllUnreadNotications = asyncHandler(async (req, res, next) => {
   const findAllByLoggedUser = await NotificationSchema.find({
     recieverId: userId,
     isRead: false,
-  })
-    .select(["-__v"])
-    .then((res) => res)
-    .catch((err) => err);
+  }).select(["-__v"]);
 
   return res.status(200).send({
     data: findAllByLoggedUser,
