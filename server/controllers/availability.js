@@ -1,8 +1,6 @@
 const Availability = require("../models/availability");
 const Profile = require("../models/Profile");
 const asyncHandler = require("express-async-handler");
-const mongoose = require("mongoose");
-const { getAvailabilityData } = require("../utils/availabilityMockupData");
 
 // @route POST /availability
 // @desc create pet sitter availability
