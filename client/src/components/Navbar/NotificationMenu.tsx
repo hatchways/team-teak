@@ -1,15 +1,24 @@
 import React, { useState, useEffect, Fragment } from 'react';
-import { Grid, Menu, List, Badge, Button } from '@mui/material';
+import { Grid, Menu, ListItemIcon, Badge, MenuItem as DropdownMenuItem, styled, List } from '@mui/material';
+import { Logout, Person, Settings } from '@mui/icons-material';
+import MenuItem from '@material-ui/core/MenuItem';
+
 import { useStyles } from './useStyles';
 import getNotifications from '../../helpers/APICalls/notifications';
 import NotificationInterface from '../../interface/Notification';
 import { useSnackBar } from '../../context/useSnackbarContext';
-import CircularProgress from '@mui/material/CircularProgress';
+import Stack from '@mui/material/Stack';
 import Notification from './Notification/Notification';
+import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
+import Tooltip from '@mui/material/Tooltip';
 
 type Notifications = NotificationInterface[];
 
-export const NotificationMenu: React.FC = () => {
+interface NotificationsProps {
+  unReadNotifications: string;
+}
+
+export const NotificationMenu: React.FC<NotificationsProps> = ({ unReadNotifications }) => {
   const classes = useStyles();
   const [notifications, setNotifications] = useState<Notifications>([]);
   const { updateSnackBarMessage } = useSnackBar();
@@ -23,7 +32,7 @@ export const NotificationMenu: React.FC = () => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = () => {
+  const handleMenuClose = () => {
     setAnchorEl(null);
   };
 
@@ -39,7 +48,7 @@ export const NotificationMenu: React.FC = () => {
         setNotifications(notifications);
 
         const unreadNotifications = notifications.filter(
-          (notification: NotificationInterface) => notification.read !== true,
+          (notification: NotificationInterface) => notification.isRead !== true,
         );
 
         setUnreadNotificationCount(unreadNotifications.length);
@@ -52,52 +61,45 @@ export const NotificationMenu: React.FC = () => {
     });
   }, [updateSnackBarMessage]);
 
+  const unRead = `there have ${unReadNotifications} notifaction`;
+  const isRead = `no notifaction`;
+
   return (
     <Grid xs={2} item>
-      {isSubmitting ? (
-        <CircularProgress style={{ color: 'white' }} />
-      ) : (
-        <Button
+      <>
+        <Tooltip title={unReadNotifications ? unRead : isRead}>
+          <Stack spacing={1} direction="row" sx={{ color: 'action.active' }}>
+            <Badge color="secondary" badgeContent={unReadNotifications} onClick={handleMenuOpen} showZero>
+              <NotificationsActiveIcon />
+            </Badge>
+          </Stack>
+        </Tooltip>
+        <Menu
           id="notification-menu"
-          aria-label="Notification Menu"
-          aria-controls="notifications"
-          arais-haspopup="true"
-          onClick={handleMenuOpen}
-          color="inherit"
-          className={classes.navbarItem}
+          anchorEl={anchorEl}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'right',
+          }}
+          keepMounted
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+          open={open}
+          onClose={handleMenuClose}
         >
-          {'Notifications'}
-          <Badge
-            invisible={unreadNotificationCount !== 0 ? false : true}
-            badgeContent={unreadNotificationCount}
-            className={classes.badge}
-          ></Badge>
-        </Button>
-      )}
-
-      <Menu
-        id="notification-menu"
-        anchorEl={anchorEl}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'right',
-        }}
-        keepMounted
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
-        }}
-        open={open}
-        onClose={handleClose}
-      >
-        <List sx={{ width: '100%', minWidth: 360, bgcolor: 'background.paper' }}>
-          {notifications.map((notification) => (
-            <Fragment key={notification._id}>
-              <Notification notification={notification} />
-            </Fragment>
-          ))}
-        </List>
-      </Menu>
+          <List sx={{ width: '100%', minWidth: 360, bgcolor: 'background.paper' }}>
+            {notifications.map((notification) => {
+              if (!notification.isRead) {
+                <Fragment key={notification.user}>
+                  <Notification notification={notification} />
+                </Fragment>;
+              }
+            })}
+          </List>
+        </Menu>
+      </>
     </Grid>
   );
 };

@@ -3,8 +3,6 @@ export default interface Notification {
   type: string;
   title: string;
   description: string;
-  read: boolean;
-  _id: string;
-  createdAt: string;
-  updatedAt: string;
+  isRead: boolean;
+  createdOn: Date;
 }

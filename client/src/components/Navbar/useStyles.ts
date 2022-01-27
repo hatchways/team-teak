@@ -3,7 +3,7 @@ import { makeStyles } from '@mui/styles';
 
 export const useStyles = makeStyles((theme: Theme) => ({
   navbar: {
-    boxShadow: '4px 4px 13px 7px rgba(217,217,217,0.26)',
+    boxShadow: '4px 4px 5px 7px rgba(217,217,217,0.26)',
     padding: theme.spacing(2),
     background: 'white',
   },
@@ -12,8 +12,8 @@ export const useStyles = makeStyles((theme: Theme) => ({
     background: 'none',
   },
   navbarItem: {
-    color: theme.palette.grey[900],
-    fontWeight: 700,
+    color: theme.palette.grey[600],
+    fontWeight: 500,
     textDecoration: 'none',
     transition: 'color 120ms ease-in-out',
     '&:hover': {
@@ -21,7 +21,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     },
   },
   navbarItemLand: {
-    fontWeight: 700,
+    fontWeight: 500,
     testDecoration: 'none',
     color: 'white !important',
     transition: 'color 120mx ease-in-out',
@@ -34,12 +34,12 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
   unreadNotification: {
     backgroundColor: 'green',
-    fontWeight: 700,
+    fontWeight: 500,
     textDecoration: 'none',
   },
   readNotification: {
     backgroundColor: theme.palette.grey[200],
-    fontWeight: 600,
+    fontWeight: 500,
     textDecoration: 'none',
   },
   badge: {

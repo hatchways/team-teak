@@ -15,9 +15,9 @@ export default function Notification({ notification }: NotificationProps): React
   return (
     <ListItem
       className={classes.root}
-      key={notification._id}
+      key={notification.type}
       component={NavLink}
-      to={`/messages/${notification._id}`}
+      to={`/messages/${notification.type}`}
       alignItems="flex-start"
     >
       <ListItemAvatar>
@@ -30,7 +30,7 @@ export default function Notification({ notification }: NotificationProps): React
             <Typography sx={{ display: 'inline' }} component="span" variant="body2" color="text.primary">
               {`${notification.description}`}
               <Divider />
-              {`${moment(notification.updatedAt).format('MM-DD-YYYY')}`}
+              {`${moment(notification.createdOn).format('MM-DD-YYYY')}`}
             </Typography>
           </React.Fragment>
         }

@@ -22,7 +22,7 @@ import { AccountType } from '../../types/AccountType';
 import { useStyles } from './useStyles';
 
 const NavbarButton = styled(Button)({
-  padding: '15px 0',
+  padding: '5px 0',
 });
 
 const menuItems = [
@@ -56,6 +56,7 @@ const menuItems = [
     canView: [AccountType.PET_SITTER, AccountType.PET_OWNER],
     authenticated: true,
   },
+
   {
     item: (
       <NavbarButton variant="outlined" size="large" fullWidth>
@@ -86,7 +87,7 @@ const MenuItem: React.FC<{
 
   return (
     <Grid key={resource} sx={{ textAlign: 'center' }} xs={2} justifySelf="flex-end" item>
-      <NavLink className={clsx(classes.navbarItem, location.pathname === '/' && classes.navbarItemLand)} to={resource}>
+      <NavLink className={classes.navbarItem} to={resource}>
         {item}
       </NavLink>
     </Grid>
@@ -114,7 +115,7 @@ const Navbar: React.FC = () => {
   };
 
   const renderMenuItems = () => {
-    // TODO: conditionally render based on profile type
+    // user info display when user login
     return menuItems.map((menu) => {
       if (menu.authenticated) {
         return loggedInUser && <MenuItem key={menu.resource} {...menu} />;
@@ -135,13 +136,14 @@ const Navbar: React.FC = () => {
         <img className={classes.navbarLogo} src={lovingSitterLogo} />
       </Grid>
       <Grid xs={8} md={6} item>
-        <Grid container alignItems="center" gap={2} justifyContent="flex-end">
-          {loggedInUser && <NotificationMenu />}
-
+        <Grid container alignItems="center" justifyContent="flex-end">
           {renderMenuItems()}
           {loggedInUser && (
-            <Grid xs={2} item>
+            <Grid xs={4} item>
               <>
+                <IconButton size="large" aria-label="account profile picture">
+                  {loggedInUser && <NotificationMenu unReadNotifications={'2'} />}
+                </IconButton>
                 <IconButton
                   size="large"
                   aria-label="account profile picture"
@@ -152,6 +154,7 @@ const Navbar: React.FC = () => {
                 >
                   <img style={{ width: 50 }} src={`https://robohash.org/${loggedInUser.email}`} />
                 </IconButton>
+
                 <Menu
                   id="menu-appbar"
                   anchorEl={anchorEl}
