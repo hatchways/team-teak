@@ -1,19 +1,46 @@
 const mongoose = require("mongoose");
 
-const availabilitySchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
+const daySchedule = new mongoose.Schema({
+  isAvailable: {
+    type: Boolean,
+    default: false,
   },
+  startTime: {
+    type: Number,
+    min: 0,
+    max: 23,
+    required: () => this.isAvailable,
+  },
+  endTime: {
+    type: Number,
+    min: 0,
+    max: 23,
+    required: () => this.isAvailable,
+  },
+});
+
+const availabilitySchema = new mongoose.Schema({
   profileId: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
     ref: "Profile",
   },
+  name: {
+    type: String,
+    default: "",
+  },
   isActive: {
     type: Boolean,
-    required: true,
     default: false,
+  },
+  schedules: {
+    monday: daySchedule,
+    tuesday: daySchedule,
+    wednesday: daySchedule,
+    thursday: daySchedule,
+    friday: daySchedule,
+    saturday: daySchedule,
+    sunday: daySchedule,
   },
   createdOn: {
     type: Date,
@@ -21,85 +48,15 @@ const availabilitySchema = new mongoose.Schema({
   },
 });
 
-const scheduleSchema = new mongoose.Schema({
-  availabilityId: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-    ref: "availability",
-  },
-  monday: {
-    startTime: {
-      type: String,
-      required: true,
-    },
-    endTime: {
-      type: String,
-      required: true,
-    },
-  },
-  tuesday: {
-    startTime: {
-      type: String,
-      required: true,
-    },
-    endTime: {
-      type: String,
-      required: true,
-    },
-  },
-  wednesday: {
-    startTime: {
-      type: String,
-      required: true,
-    },
-    endTime: {
-      type: String,
-      required: true,
-    },
-  },
-  thursday: {
-    startTime: {
-      type: String,
-      required: true,
-    },
-    endTime: {
-      type: String,
-      required: true,
-    },
-  },
-  friday: {
-    startTime: {
-      type: String,
-      required: true,
-    },
-    endTime: {
-      type: String,
-      required: true,
-    },
-  },
-  saturday: {
-    startTime: {
-      type: String,
-      required: true,
-    },
-    endTime: {
-      type: String,
-      required: true,
-    },
-  },
-  sunday: {
-    startTime: {
-      type: String,
-      required: true,
-    },
-    endTime: {
-      type: String,
-      required: true,
-    },
-  },
-});
+function endTimeValidator(value) {
+  return value > this.startTime;
+}
 
-module.exports = {
-  Availability: mongoose.model("availability", availabilitySchema),
-  Schedule: mongoose.model("schedule", scheduleSchema),
-};
+daySchedule
+  .path("endTime")
+  .validate(endTimeValidator, "End Time should be greater start time");
+
+module.exports = Availability = mongoose.model(
+  "Availability",
+  availabilitySchema
+);

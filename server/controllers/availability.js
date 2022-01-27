@@ -1,4 +1,4 @@
-const { Schedule, Availability } = require("../models/availability");
+const Availability = require("../models/availability");
 const Profile = require("../models/Profile");
 const asyncHandler = require("express-async-handler");
 const mongoose = require("mongoose");
@@ -7,18 +7,8 @@ const { getAvailabilityData } = require("../utils/availabilityMockupData");
 // @route POST /availability
 // @desc create pet sitter availability
 // @access Private
-exports.createAvailability = asyncHandler(async (req, res, next) => {
-  const {
-    name,
-    isActive,
-    monday,
-    tuesday,
-    wednesday,
-    thursday,
-    friday,
-    saturday,
-    sunday,
-  } = req.body;
+exports.createAvailabilitySchedule = asyncHandler(async (req, res, next) => {
+  const { name, isActive, schedules } = req.body;
 
   const userId = req.user.id;
 
@@ -26,7 +16,7 @@ exports.createAvailability = asyncHandler(async (req, res, next) => {
   const profileId = profiles[0]._id;
 
   const hasActiveSchedule =
-    isActive && (await Availability.find({ userId, isActive }));
+    isActive && (await Availability.find({ profileId, isActive }));
 
   if (hasActiveSchedule.length) {
     res.status(400);
@@ -37,45 +27,14 @@ exports.createAvailability = asyncHandler(async (req, res, next) => {
     name,
     profileId,
     isActive,
+    schedules,
   });
 
   if (availability) {
-    const availabilityId = availability._id;
-
-    const schedule = await Schedule.create({
-      availabilityId,
-      isActive,
-      monday,
-      tuesday,
-      wednesday,
-      thursday,
-      friday,
-      saturday,
-      sunday,
-    });
-
-    if (schedule) {
-      const { name, isActive } = availability;
-
-      return res.status(201).send({
-        data: {
-          id: availabilityId,
-          name,
-          isActive,
-          ...schedule,
-        },
-      });
-    } else {
-      try {
-        await Availability.findByIdAndDelete(availabilityId);
-      } catch (error) {
-        res.status(500);
-        throw new Error("Server error!");
-      }
-      return res.status(400).send({ error: "Invalid data" });
-    }
+    return res.status(201).send({ success: availability });
   } else {
-    return res.status(400).send({ error: "Invalid data" });
+    res.status(400);
+    throw new Error("invalid data");
   }
 });
 
@@ -85,25 +44,13 @@ exports.createAvailability = asyncHandler(async (req, res, next) => {
 exports.getSpecificSchedule = asyncHandler(async (req, res, next) => {
   const scheduleId = req.params.scheduleId;
 
-  try {
-    mongoose.Types.ObjectId(scheduleId);
-  } catch (error) {
-    throw new Error("Invalid id");
-  }
+  const schedule = await Availability.findById(scheduleId).select(["-__v"]);
 
-  try {
-    const conditions = { _id: mongoose.Types.ObjectId(scheduleId) };
-
-    const availability = await getAvailabilityData(conditions);
-
-    if (availability.length) {
-      return res.status(200).send({ data: availability });
-    } else {
-      res.status(404).send({ error: "Schedule not found" });
-    }
-  } catch (error) {
-    res.status(500);
-    throw new Error();
+  if (schedule) {
+    return res.status(200).send({ success: schedule });
+  } else {
+    res.status(404);
+    throw new Error("Schedule not found");
   }
 });
 
@@ -111,19 +58,16 @@ exports.getSpecificSchedule = asyncHandler(async (req, res, next) => {
 // @desc returns a list of active schedule for all sitters available
 // @access Private
 exports.getActiveSchedules = asyncHandler(async (req, res, next) => {
-  try {
-    const conditions = { isActive: true };
+  const schedule = await Availability.findOne()
+    .where("isActive")
+    .equals(true)
+    .select(["-__v"]);
 
-    const availability = await getAvailabilityData(conditions);
-
-    if (availability.length) {
-      return res.status(200).send({ data: availability });
-    } else {
-      return res.status(404).send({ error: "No Active schedules available" });
-    }
-  } catch (error) {
-    res.status(500);
-    throw new Error("Server error");
+  if (schedule.length) {
+    return res.status(200).send({ success: schedule });
+  } else {
+    res.status(404);
+    throw new Error("No active schedule not found");
   }
 });
 
@@ -131,26 +75,54 @@ exports.getActiveSchedules = asyncHandler(async (req, res, next) => {
 // @desc returns a list of all scedules for logged in user
 // @access Private
 exports.getAllSchedulesForCurrentUser = asyncHandler(async (req, res, next) => {
+  const schedule = await Availability.find().select(["-__v"]);
+
+  if (schedule.length) {
+    return res.status(200).send({ success: schedule });
+  } else {
+    res.status(404);
+    throw new Error("No schedules yet");
+  }
+});
+
+// @route PATCH /availability/:scheduleId/activate
+// @desc make a schedule active
+// @access Private
+exports.activateSchedule = asyncHandler(async (req, res, next) => {
+  const scheduleId = req.params.scheduleId;
+
   const userId = req.user.id;
 
-  try {
-    mongoose.Types.ObjectId(userId);
-  } catch (error) {
-    throw new Error("Invalid id");
+  const profiles = await Profile.find({ userId });
+  const profileId = profiles[0]._id;
+
+  // find and deactivate the current active schedule
+  const activeSchedule = await Availability.findOne()
+    .where("isActive")
+    .equals(true);
+  if (activeSchedule) {
+    activeSchedule.set({ isActive: false });
+    await activeSchedule.save();
   }
 
-  try {
-    const conditions = { userId: mongoose.Types.ObjectId(userId) };
+  // actvate the schedule with the given id
+  const schedule = await Availability.findOne({ _id: scheduleId });
+  if (schedule) {
+    schedule.set({ isActive: true });
+    await schedule.save();
 
-    const availability = await getAvailabilityData(conditions);
+    const profile = await Profile.findOne({ _id: profileId });
+    profile.set({ activeScheduleId: schedule._id });
 
-    if (availability.length) {
-      return res.status(200).send({ data: availability });
-    } else {
-      res.status(404).send({ error: "Schedule not found" });
-    }
-  } catch (error) {
-    res.status(500);
-    throw new Error();
+    const updatedProfile = await profile.save();
+
+    return res.status(200).send({
+      success: {
+        profile: updatedProfile,
+      },
+    });
+  } else {
+    res.status(404);
+    throw new Error("Schedule not found");
   }
 });
