@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import NotificationInterface from '../../../interface/Notification';
 import moment from 'moment';
 import { Divider, ListItemText, ListItem, Avatar, Typography, ListItemAvatar } from '@mui/material';
-import { useStyles } from './useStyles';
+import { useStyles } from './makeStyles';
 import { NavLink } from 'react-router-dom';
 
 interface NotificationProps {
@@ -27,7 +27,7 @@ export default function Notification({ notification }: NotificationProps): React
         primary={`${notification.title}`}
         secondary={
           <React.Fragment>
-            <Typography sx={{ display: 'inline' }} component="span" variant="body2" color="text.primary">
+            <Typography sx={{ display: 'inline' }} component="span" variant="body1" color="text.primary">
               {`${notification.description}`}
               <Divider />
               {`${moment(notification.createdOn).format('MM-DD-YYYY')}`}
