@@ -11,23 +11,13 @@ const logger = require("morgan");
 
 const authRouter = require("./routes/auth");
 const userRouter = require("./routes/user");
-const profileRouter = require('./routes/profile');
+const profileRouter = require("./routes/profile");
 
 const { json, urlencoded } = express;
 
 connectDB();
 const app = express();
 const server = http.createServer(app);
-
-const io = socketio(server, {
-  cors: {
-    origin: "*",
-  },
-});
-
-io.on("connection", (socket) => {
-  console.log("connected");
-});
 
 if (process.env.NODE_ENV === "development") {
   app.use(logger("dev"));
@@ -37,10 +27,7 @@ app.use(urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(join(__dirname, "public")));
 
-app.use((req, res, next) => {
-  req.io = io;
-  next();
-});
+require("./utils/socket")(server, app);
 
 app.use("/auth", authRouter);
 app.use("/users", userRouter);
