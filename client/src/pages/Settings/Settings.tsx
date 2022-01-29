@@ -6,6 +6,7 @@ import PageContainer from '../../components/PageContainer/PageContainer';
 import SettingHeader from '../../components/SettingsHeader/SettingsHeader';
 import SettingsWrapper from '../../components/SettingsWrapper/SettingsWrapper';
 import { useAuth } from '../../context/useAuthContext';
+import StripeConnect from '../StripeConnect/StripeConnect';
 import EditProfile from './EditProfile/EditProfile';
 
 const settingsMenu = [
@@ -27,7 +28,7 @@ const settingsMenu = [
   {
     name: 'Payment methods',
     to: '/profile/settings/payment-methods',
-    component: <SettingHeader header="Payment Methods" />,
+    component: <StripeConnect />,
   },
 ];
 
@@ -46,7 +47,7 @@ export default function Settings(): JSX.Element {
   if (loggedInUser === undefined) return <CircularProgress />;
   if (!loggedInUser || !profile) {
     history.push('/login');
-    // loading for a split seconds until history.push works
+
     return <CircularProgress />;
   }
 

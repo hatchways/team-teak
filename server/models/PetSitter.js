@@ -6,15 +6,10 @@ const petSitterSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  availabilityId: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-    ref: "Availability",
-  },
   activatedAvailabilitySchedule: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
-    ref: "Schedule",
+    ref: "Availability",
   },
   rate: {
     type: Number,
