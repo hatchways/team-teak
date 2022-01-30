@@ -7,6 +7,7 @@ import SettingHeader from '../../components/SettingsHeader/SettingsHeader';
 import SettingsWrapper from '../../components/SettingsWrapper/SettingsWrapper';
 import { useAuth } from '../../context/useAuthContext';
 import EditProfile from './EditProfile/EditProfile';
+import CustomBooking from './CustomBooking/CustomBookingForm/CustomBooking';
 
 const settingsMenu = [
   {

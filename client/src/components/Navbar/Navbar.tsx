@@ -168,6 +168,12 @@ const Navbar: React.FC = () => {
                     </ListItemIcon>
                     <ListItemText>Settings</ListItemText>
                   </DropdownMenuItem>
+                  <DropdownMenuItem component={NavLink} to="/custom/booking" onClick={handleClose}>
+                    <ListItemIcon>
+                      <Settings fontSize="small" />
+                    </ListItemIcon>
+                    <ListItemText>Custom Booking</ListItemText>
+                  </DropdownMenuItem>
                   <DropdownMenuItem onClick={handleClose}>
                     <ListItemIcon>
                       <Person fontSize="small" />
