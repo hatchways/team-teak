@@ -55,10 +55,6 @@ interface CustomBookingProps {
 }
 
 const CustomBooking = ({ header }: CustomBookingProps): JSX.Element => {
-  // const CustomBooking: React.FC<CustomBookingProps> = ({ header }) => {
-  const classes = useStyles();
-  const { updateSnackBarMessage } = useSnackBar();
-
   const TAX_RATE = 0.0625;
 
   function ccyFormat(num: number) {

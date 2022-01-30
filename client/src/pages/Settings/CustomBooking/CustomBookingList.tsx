@@ -1,14 +1,8 @@
 import { Box, CircularProgress, Grid, Link, Divider } from '@mui/material';
-import { makeStyles } from '@mui/styles';
-import { cloneElement } from 'react';
 import { NavLink, Redirect, Route, Switch, useHistory } from 'react-router-dom';
 import PageContainer from '../../../components/PageContainer/PageContainer';
-import SettingHeader from '../../../components/SettingsHeader/SettingsHeader';
-import SettingsWrapper from '../../../components/SettingsWrapper/SettingsWrapper';
 import { useAuth } from '../../../context/useAuthContext';
-import EditProfile from './../EditProfile/EditProfile';
 import CustomBooking from './CustomBookingForm/CustomBooking';
-import ButtonBase from '@mui/material/ButtonBase';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Button from '@mui/material/Button';
 import useStyles from './makeStyles';
