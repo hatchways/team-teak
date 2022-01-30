@@ -8,11 +8,11 @@ import { SocketProvider } from './context/useSocketContext';
 import { SnackBarProvider } from './context/useSnackbarContext';
 import { Navbar } from './components/Navbar/Navbar';
 import { Route, Switch } from 'react-router-dom';
-import { getAllRoutes } from './pages/routes/route';
+import { getRoutesAccordingToAccountType } from './pages/routes/route';
 import NotFound from './pages/NotFound/NotFound';
 
 function App(): JSX.Element {
-  const routes = getAllRoutes();
+  const routes = getRoutesAccordingToAccountType();
   return (
     <ThemeProvider theme={theme}>
       <SnackBarProvider>

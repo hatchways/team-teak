@@ -1,23 +1,25 @@
-import { Component } from 'react';
 import BookingPage from '../BookingPage/BookingPage';
 import Dashboard from '../Dashboard/Dashboard';
 import Login from '../Login/Login';
 import SignUp from '../SignUp/SignUp';
 import { AccountType } from '../../types/AccountType';
 import NotFound from '../NotFound/NotFound';
+import { useAuth } from '../../context/useAuthContext';
+
+const { profile } = useAuth();
 
 const menuItems = [
   {
     item: 'Login',
     resource: '/login',
-    canView: null,
+    canView: [AccountType.PET_OWNER, AccountType.PET_SITTER],
     authenticated: false,
     component: Login,
   },
   {
     item: 'Sign up',
     resource: '/signup',
-    canView: null,
+    canView: [AccountType.PET_OWNER, AccountType.PET_SITTER],
     authenticated: false,
     component: SignUp,
   },
@@ -67,43 +69,16 @@ const menuItems = [
 
 export const getAllRoutes = () => menuItems;
 
-// export const getPetSitterRoutes = () => {
-//   const result = [];
-//   for (const item of menuItems) {
-//     if (item.canView?.length === 2) {
-//       result.push(item);
-//       continue;
-//     } else {
-//       if (item.canView[0] === 'pet_sitter') {
-//         result.push(item);
-//         continue;
-//       }
-//     }
-//   }
-//   return result;
-// };
-
-// export const getPetOwnerRoutes = () => {
-//   const result = [];
-//   for (const item of menuItems) {
-//     if (item.canView?.length === 2) {
-//       result.push(item);
-//       continue;
-//     } else {
-//       if (item.canView[0] === 'pet_owner') {
-//         result.push(item);
-//         continue;
-//       }
-//     }
-//   }
-//   return result;
-// };
-
-export const getNonAuthenticatedRoutes = () => {
-  const result = [];
-
-  for (const item of menuItems) {
-    if (!item.authenticated) result.push(item);
+export const getRoutesAccordingToAccountType = () => {
+  const { accountType } = profile;
+  let routes = [];
+  for (const route of menuItems) {
+    if (route.canView?.length > 1) {
+      routes.push(route);
+    } else if (accountType === route.canView[0]) {
+      routes.push(route);
+    } else continue;
   }
-  return result;
+
+  return routes;
 };
