@@ -4,9 +4,6 @@ import Login from '../Login/Login';
 import SignUp from '../SignUp/SignUp';
 import { AccountType } from '../../types/AccountType';
 import NotFound from '../NotFound/NotFound';
-import { useAuth } from '../../context/useAuthContext';
-
-const { profile } = useAuth();
 
 const menuItems = [
   {
@@ -69,9 +66,8 @@ const menuItems = [
 
 export const getAllRoutes = () => menuItems;
 
-export const getRoutesAccordingToAccountType = () => {
-  const { accountType } = profile;
-  let routes = [];
+export const getRoutesAccordingToAccountType = (accountType: string) => {
+  const routes = [];
   for (const route of menuItems) {
     if (route.canView?.length > 1) {
       routes.push(route);
