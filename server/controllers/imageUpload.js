@@ -19,12 +19,11 @@ exports.uploadPicture = asyncHandler(async (req, res, next) => {
     const fileString = req.body.files;
 
     try{
-        const uploadedReponse = await cloudinary.uploader.upload(fileString, {
-            upload_preset: 'ml_default'
-        })
-        imageUrl.create({uploadedReponse});
+        const imageUrlPath = await cloudinary.uploader.upload(fileString);
+        
+        const imageUrlStringPath = imageUrlPath.url;
 
-      res.status(200).json({ success: { message: "image update successfully!" } });
+      res.status(200).json({ success: { message: "image update successfully!" }, data:{ imageUrlStringPath, } });
     } catch(err) {
 
       res.status(500).send({
