@@ -19,7 +19,7 @@ exports.createConversation = asyncHandler(async (req, res, next) => {
     });
 
     const existConversation = await Conversation.findOne({
-        otherUser:{ $all: [`${req.user.id}, ${receiver}`]}
+        otherUsers:{ $all: [`${req.user.id}, ${receiver}`]}
     });
 
     if(existConversation){
@@ -34,7 +34,7 @@ exports.createConversation = asyncHandler(async (req, res, next) => {
         });
     } else {
         const conversation = await Conversation.create({
-            otherUser: [req.user.id, receiver],
+            otherUsers: [req.user.id, receiver],
           });
       
           conversation.messages.push(message);
@@ -118,7 +118,7 @@ exports.sendMessage = asyncHandler(async (req, res, next) => {
     const conversations = await Conversation.find({
       otherUsers: { $in: req.user.id },
     }).populate({
-        path: "conversation",
+        path: "messages",
         sort: { updatedAt: "desc" },
       });
     
