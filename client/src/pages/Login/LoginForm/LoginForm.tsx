@@ -81,7 +81,7 @@ export default function Login({ handleSubmit }: Props): JSX.Element {
             sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}
           >
             <AuthButton type="submit" isSubmitting={isSubmitting} demo={false} displayText="Login" />
-            <AuthButton displayText="Login With Demo" demo={true} />
+            <AuthButton displayText="Login & Demo" demo={true} />
           </Box>
         </form>
       )}
