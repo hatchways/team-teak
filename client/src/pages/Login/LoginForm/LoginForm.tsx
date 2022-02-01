@@ -1,10 +1,9 @@
-import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
-import CircularProgress from '@mui/material/CircularProgress';
 import { Formik, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
-import useStyles from './useStyles';
+import AuthButton from '../../../components/AuthButton/AuthButton';
 import FormInput from '../../../components/FormInput/FormInput';
+import useStyles from './useStyles';
 
 interface Props {
   handleSubmit: (
@@ -75,17 +74,14 @@ export default function Login({ handleSubmit }: Props): JSX.Element {
             onChange={handleChange}
           />
 
-          <Box textAlign="center" marginTop={5}>
-            <Button
-              type="submit"
-              size="large"
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-              disableElevation
-            >
-              {isSubmitting ? <CircularProgress style={{ color: 'white' }} /> : 'Login'}
-            </Button>
+          <Box
+            component="div"
+            textAlign="center"
+            marginTop={5}
+            sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}
+          >
+            <AuthButton type="submit" isSubmitting={isSubmitting} demo={false} displayText="Login" />
+            <AuthButton displayText="Login & Demo" demo={true} />
           </Box>
         </form>
       )}

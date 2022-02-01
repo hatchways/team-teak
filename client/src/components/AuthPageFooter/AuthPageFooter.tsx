@@ -1,4 +1,4 @@
-import { Typography, Box, Link } from '@mui/material';
+import { Box, Link, Typography } from '@mui/material';
 import { Link as RouteLink } from 'react-router-dom';
 
 interface AuthPageFooterProps {
