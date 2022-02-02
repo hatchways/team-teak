@@ -11,6 +11,10 @@ const profileSchema = new mongoose.Schema(
       required: true,
       ref: "User",
     },
+   activeScheduleId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Availability",
+    },
     name: {
       type: String,
       default: "",
