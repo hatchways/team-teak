@@ -8,6 +8,7 @@ import SettingsWrapper from '../../components/SettingsWrapper/SettingsWrapper';
 import { useAuth } from '../../context/useAuthContext';
 import StripeConnect from '../StripeConnect/StripeConnect';
 import EditProfile from './EditProfile/EditProfile';
+import ProfilePhoto from './ProfilePhoto/ProfilePhoto';
 
 const settingsMenu = [
   {
@@ -18,7 +19,7 @@ const settingsMenu = [
   {
     name: 'Profile photo',
     to: '/profile/settings/profile-photo',
-    component: <SettingHeader header="Profile Photo" />,
+    component: <ProfilePhoto header="Profile Photo" />,
   },
   {
     name: 'Availability',
