@@ -4,11 +4,11 @@ const requestSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
-    ref: 'User'
+    ref: "User",
   },
   sitterId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    ref: "User",
   },
   start: {
     type: Date,
@@ -33,4 +33,3 @@ const requestSchema = new mongoose.Schema({
 });
 
 module.exports = Profile = mongoose.model("Request", requestSchema);
-
