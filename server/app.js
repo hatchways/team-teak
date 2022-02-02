@@ -17,8 +17,12 @@ const notificationRouter = require("./routes/notification");
 const { json, urlencoded } = express;
 
 connectDB();
+const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
+const PublicKey = process.env.STRIPE_PUBLIC_KEY;
+
 const app = express();
 const server = http.createServer(app);
+const stripe = require("stripe")(stripeSecretKey);
 
 const io = socketio(server, {
   cors: {
