@@ -1,4 +1,4 @@
-const { check, validationResult } = require("express-validator");
+const { check, validationResult, param } = require("express-validator");
 
 exports.validateRegister = [
   check("name", "Please enter a name").not().isEmpty(),
@@ -7,7 +7,7 @@ exports.validateRegister = [
     "password",
     "Please enter a password with 6 or more characters"
   ).isLength({
-    min: 6
+    min: 6,
   }),
   (req, res, next) => {
     const errors = validationResult(req);
@@ -16,7 +16,7 @@ exports.validateRegister = [
     if (!errors.isEmpty())
       return res.status(400).json({ errors: errors.array() });
     next();
-  }
+  },
 ];
 
 exports.validateLogin = [
@@ -28,5 +28,30 @@ exports.validateLogin = [
     if (!errors.isEmpty())
       return res.status(400).json({ errors: errors.array() });
     next();
-  }
+  },
+];
+
+exports.validateAvailability = [
+  check("name", "Name is required").not().isEmpty(),
+  check("isActive", "isActive is not required").isBoolean(),
+
+  (req, res, next) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty())
+      return res.status(400).json({ errors: errors.array() });
+    next();
+  },
+];
+
+exports.validateScheduleId = [
+  param("scheduleId", "Invalid id").isMongoId(),
+
+  (req, res, next) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty())
+      return res.status(400).json({ errors: errors.array() });
+    next();
+  },
 ];
