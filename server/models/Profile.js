@@ -38,6 +38,10 @@ const profileSchema = new mongoose.Schema({
     type: String,
     default: "",
   },
+  activeScheduleId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Availability",
+  },
 });
 
 module.exports = Profile = mongoose.model("Profile", profileSchema);
