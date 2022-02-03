@@ -1,4 +1,4 @@
-import { Box, CircularProgress, Grid, Link } from '@mui/material';
+import { Box, CircularProgress, Grid, Link, Hidden } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { cloneElement } from 'react';
 import { NavLink, Redirect, Route, Switch, useHistory } from 'react-router-dom';
@@ -8,6 +8,8 @@ import SettingsWrapper from '../../components/SettingsWrapper/SettingsWrapper';
 import { useAuth } from '../../context/useAuthContext';
 import EditProfile from './EditProfile/EditProfile';
 import Availability from './Availability/Availability';
+import DestopAvailability from '../../components/Availability/DesktopAvailability';
+import DesktopAvailability from '../../components/Availability/DesktopAvailability';
 
 const settingsMenu = [
   {
@@ -53,8 +55,8 @@ export default function Settings(): JSX.Element {
 
   return (
     <PageContainer>
-      <Grid sx={{ width: '75%', margin: '0 auto' }} container>
-        <Grid xs={3} item>
+      <Grid sx={{ width: '100%', margin: '0 auto' }} container>
+        <Grid xs={12} md={3} item>
           {settingsMenu.map((item) => (
             <Box
               sx={{
@@ -81,31 +83,11 @@ export default function Settings(): JSX.Element {
             </Box>
           ))}
         </Grid>
-        <Grid xs={9} item>
-          <Switch>
-            <Route exact path="/profile/settings">
-              <Redirect to="/profile/settings/edit-profile" />
-            </Route>
-            <SettingsWrapper>
-              {settingsMenu.map((item) => (
-                <Route
-                  key={item.name}
-                  path={item.to}
-                  render={(props) =>
-                    cloneElement(item.component, {
-                      ...props,
-                      currentUser: loggedInUser,
-                      currentProfile: profile,
-                    })
-                  }
-                />
-              ))}
-            </SettingsWrapper>
-            <Route path="*">
-              <Redirect to="/not-found" />
-            </Route>
-          </Switch>
-        </Grid>
+        <Hidden only="xs">
+          <Grid md={9} item>
+            <DesktopAvailability />
+          </Grid>
+        </Hidden>
       </Grid>
     </PageContainer>
   );
