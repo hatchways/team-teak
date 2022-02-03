@@ -2,7 +2,6 @@ const Conversation = require("../models/Conversation");
 const Message = require("../models/Message");
 const asyncHandler = require("express-async-handler");
 
-
 // @route POST /conversation/createConversation
 // @desc create a new conversation
 // @access Public
@@ -10,7 +9,7 @@ exports.createConversation = asyncHandler(async (req, res, next) => {
     const { content, receiver } = req.body;
 
     if(!content || !receiver){
-        res.status(400).send("there is deescription or receiver");
+        res.status(400).send("deescription or receiver can't be null");
     }
 
     const newMessage = await Message.create({
@@ -50,10 +49,10 @@ exports.createConversation = asyncHandler(async (req, res, next) => {
     });
 
 
-// @route GET /conversation/getConversationByUserId
+// @route GET /conversation/getAllMessageByConversation
 // @desc get all messages from a single conversation
 // @access Public
- exports.getAllMessages = asyncHandler(async (req, res, next) => {
+ exports.getAllMessageByConversation = asyncHandler(async (req, res, next) => {
 
     const { conversationByUserId } = req.params;
 
@@ -62,56 +61,45 @@ exports.createConversation = asyncHandler(async (req, res, next) => {
     sort: { updatedAt: "desc" },
   });
 
-  if (
-    conversation.participants[0].toString() === req.user.id ||
-    conversation.participants[1].toString() === req.user.id
-  ) {
     res.status(200).json({
       success: {
         conversation,
       },
     });
-  } else {
-    res.status(401).send("Not authorized account");
-  }
+  
 });
 
 // @route POST /conversation/sendMessage
 // @desc send a message to a conversation
 // @access Private
 exports.sendMessage = asyncHandler(async (req, res, next) => {
-    const { conversationByUserId, description  } = req.body;
+    const { conversationByUserId, content  } = req.body;
   
-    if (!description || !receiver || !conversationByUserId) {
+    if (!content || !conversationByUserId) {
       res.status(400).send("Bad request");
     }
 
     const conversation = await Conversation.findById(conversationByUserId);
 
-    if (
-      conversation.participants[0].toString() === req.user.id ||
-      conversation.participants[1].toString() === req.user.id
-    ) {
-      const message = await Message.create({
-        sender: req.user.id,
-        description,
-      });
-  
-      conversation.messages.push(message);
-  
-      await conversation.save();
-  
-      res.status(200).json({
-        success: {
-          conversation,
-        },
-      });
-    } else {
-      res.status(401).send("Not authorized account");
-    }
+    
+    const message = await Message.create({
+      sender: req.user.id,
+      content,
+    });
+
+    conversation.messages.push(message);
+
+    await conversation.save();
+
+    res.status(200).json({
+      success: {
+        conversation,
+      },
+    });
+    
   });
   
-  // @route GET /conversation/getAllConversation
+  // @route GET /conversation/getAllConversations
   // @desc get all conversations for a user
   // @access Private
   exports.getAllConversations = asyncHandler(async (req, res, next) => {
