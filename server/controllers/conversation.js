@@ -12,19 +12,27 @@ exports.createConversation = asyncHandler(async (req, res, next) => {
         res.status(400).send("deescription or receiver can't be null");
     }
 
+
     const newMessage = await Message.create({
         sender: req.user.id,
         content,
     });
 
+
     const existConversation = await Conversation.findOne({
-        otherUsers:{ $all: [`${req.user.id}, ${receiver}`]}
+        otherUsers:{ $all: [`${req.user.id}`, `${receiver}`]}
     });
+    
+    console.log(newMessage);
+
+    console.log(existConversation);
+
 
     if(existConversation){
-        existConversation.message.push(newMessage);
+        existConversation.messages.push(newMessage);
 
         await existConversation.save();
+        console.log("hhhhhhh");
 
         res.status(200).json({
             success: {
@@ -39,7 +47,8 @@ exports.createConversation = asyncHandler(async (req, res, next) => {
           conversation.messages.push(message);
       
           await conversation.save();
-      
+          console.log("aaaaa");
+
           res.status(200).json({
             success: {
               conversation,

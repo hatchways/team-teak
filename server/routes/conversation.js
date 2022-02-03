@@ -6,14 +6,14 @@ const {
   sendMessage,
   getAllConversations,
   getAllMessageByConversation,
-} = require('../controllers/conversation');
+} = require('../controllers/Conversation');
 
-router.route('/conversation/createConversation').post(protect, createConversation);
+router.route('/createConversation').post(protect, createConversation);
 
-router.route('/conversation/sendMessage').post(protect, sendMessage);
+router.route('/sendMessage').post(protect, sendMessage);
 
-router.route('/conversation/getAllConversations').get(protect, getAllConversations);
+router.route('/getAllConversations').get(protect, getAllConversations);
 
-router.route('/conversation/getAllMessageByConversation').get(protect, getAllMessageByConversation);
+router.route('/getAllMessageByConversation').get(protect, getAllMessageByConversation);
 
 module.exports = router;
