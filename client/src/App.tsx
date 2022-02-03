@@ -11,7 +11,6 @@ import { SnackBarProvider } from './context/useSnackbarContext';
 import { Navbar } from './components/Navbar/Navbar';
 import { getAllRoutes } from './pages/routes/route';
 import NotFound from './pages/NotFound/NotFound';
-import ProfileListing from './pages/ProfileListing/ProfileListing';
 
 function App(): JSX.Element {
   const routes = getAllRoutes();
