@@ -3,23 +3,20 @@ const imageUrl = require("../models/imageUpload");
 const asyncHandler = require('express-async-handler');
 const util = require('util');
 const { cloudinary } = require('../utils/cloudinary');
+const { dataUri } = require("../middleware/multer");
 
 // @route POST /upload
 // @desc insert user profile
 // @access Private
 exports.uploadPicture = asyncHandler(async (req, res, next) => {
  
-    const userProfile = await Profile.findOne({ userId: req.user.id });
-
-    if(!userProfile){
-      res.status(404).send({
-        message: "user profile doesn't exist "});
-    }
-
+    const userId = req.user.id;
     const fileString = req.body.files;
 
     try{
-        const imageUrlPath = await cloudinary.uploader.upload(fileString);
+        const file = dataUri(req.file).content;
+
+        const imageUrlPath = await cloudinary.uploader.upload(file, { folder: `profile_image/${userId}`});
         
         const imageUrlStringPath = imageUrlPath.url;
 

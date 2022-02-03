@@ -13,7 +13,6 @@ const authRouter = require("./routes/auth");
 const userRouter = require("./routes/user");
 const profileRouter = require('./routes/profile');
 const imageUploadRouter = require("./routes/imageUpload");
-const profileRouter = require("./routes/profile");
 const notificationRouter = require("./routes/notification");
 const availabilityRouter = require("./routes/availability");
 
