@@ -8,12 +8,11 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Login from './pages/Login/Login';
 import Signup from './pages/SignUp/SignUp';
 import Dashboard from './pages/Dashboard/Dashboard';
-import ProfilePhoto from './pages/Settings/ProfilePhoto/Prof
+import ProfilePhoto from './pages/Settings/ProfilePhoto/ProfilePhoto';
 import { AuthProvider } from './context/useAuthContext';
 import { SocketProvider } from './context/useSocketContext';
 import { SnackBarProvider } from './context/useSnackbarContext';
 import { Navbar } from './components/Navbar/Navbar';
-import { Route, Switch } from 'react-router-dom';
 import { getAllRoutes } from './pages/routes/route';
 import NotFound from './pages/NotFound/NotFound';
 
