@@ -26,13 +26,13 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
   const user = await User.create({
     name,
     email,
-    password
+    password,
   });
 
   if (user) {
     await Profile.create({
       userId: user._id,
-      name
+      name,
     });
 
     const token = generateToken(user._id);
@@ -40,7 +40,7 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
 
     res.cookie("token", token, {
       httpOnly: true,
-      maxAge: secondsInWeek * 1000
+      maxAge: secondsInWeek * 1000,
     });
 
     res.status(201).json({
@@ -48,9 +48,9 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
         user: {
           id: user._id,
           name: user.name,
-          email: user.email
-        }
-      }
+          email: user.email,
+        },
+      },
     });
   } else {
     res.status(400);
@@ -62,9 +62,20 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
 // @desc Login user
 // @access Public
 exports.loginUser = asyncHandler(async (req, res, next) => {
-  const { email, password } = req.body;
+  const isDemo = req.query.isDemo;
+
+  let email, password;
+
+  if (!isDemo) {
+    email = req.body.email;
+    password = req.body.password;
+  } else {
+    email = process.env.DEMO_USER_EMAIL;
+    password = process.env.DEMO_USER_PASSWORD;
+  }
 
   const user = await User.findOne({ email });
+  const profile = await Profile.findOne({ userId: user.id });
 
   if (user && (await user.matchPassword(password))) {
     const token = generateToken(user._id);
@@ -72,7 +83,7 @@ exports.loginUser = asyncHandler(async (req, res, next) => {
 
     res.cookie("token", token, {
       httpOnly: true,
-      maxAge: secondsInWeek * 1000
+      maxAge: secondsInWeek * 1000,
     });
 
     res.status(200).json({
@@ -80,9 +91,11 @@ exports.loginUser = asyncHandler(async (req, res, next) => {
         user: {
           id: user._id,
           name: user.name,
-          email: user.email
-        }
-      }
+          email: user.email,
+        },
+        profile,
+
+      },
     });
   } else {
     res.status(401);
@@ -107,10 +120,10 @@ exports.loadUser = asyncHandler(async (req, res, next) => {
       user: {
         id: user._id,
         name: user.name,
-        email: user.email
+        email: user.email,
       },
-      profile
-    }
+      profile,
+    },
   });
 });
 

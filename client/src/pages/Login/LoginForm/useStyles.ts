@@ -22,12 +22,14 @@ const useStyles = makeStyles((theme: Theme) => ({
   submit: {
     margin: theme.spacing(3, 2, 2),
     padding: 10,
-    width: 160,
+    width: 150,
     height: 56,
     borderRadius: theme.shape.borderRadius,
     marginTop: 49,
     fontSize: 16,
     fontWeight: 'bold',
+    marginRight: '10px',
+    marginLeft: '10px',
   },
 }));
 
