@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const options = {
-  discriminatorKey: "userType",
+  discriminatorKey: "type",
 };
 
 const profileSchema = new mongoose.Schema(
