@@ -35,6 +35,18 @@ exports.validateNotification = [
   check("title", "Title is required").not().isEmpty(),
   check("description", "Description is required").not().isEmpty(),
   check("recieverId", "Reciever is required").isMongoId(),
+  (req, res, next) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty())
+      return res.status(400).json({ errors: errors.array() });
+    next();
+  },
+];
+
+exports.validateAvailability = [
+  check("name", "Name is required").not().isEmpty(),
+  check("isActive", "isActive is not required").isBoolean(),
 
   (req, res, next) => {
     const errors = validationResult(req);
@@ -47,6 +59,17 @@ exports.validateNotification = [
 
 exports.validateRequestParameter = [
   param("notificationId", "Invalid id").isMongoId(),
+  (req, res, next) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty())
+      return res.status(400).json({ errors: errors.array() });
+    next();
+  },
+];
+
+exports.validateScheduleId = [
+  param("scheduleId", "Invalid id").isMongoId(),
 
   (req, res, next) => {
     const errors = validationResult(req);
