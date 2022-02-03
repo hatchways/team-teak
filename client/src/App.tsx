@@ -3,40 +3,40 @@ import './index.css';
 import { CssBaseline } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import { theme } from './themes/theme';
+
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Login from './pages/Login/Login';
 import Signup from './pages/SignUp/SignUp';
 import Dashboard from './pages/Dashboard/Dashboard';
-import ProfilePhoto from './pages/Settings/ProfilePhoto/ProfilePhoto';
+import ProfilePhoto from './pages/Settings/ProfilePhoto/Prof
 import { AuthProvider } from './context/useAuthContext';
 import { SocketProvider } from './context/useSocketContext';
 import { SnackBarProvider } from './context/useSnackbarContext';
 import { Navbar } from './components/Navbar/Navbar';
-import Settings from './pages/Settings/Settings';
+import { Route, Switch } from 'react-router-dom';
+import { getAllRoutes } from './pages/routes/route';
 import NotFound from './pages/NotFound/NotFound';
 
 function App(): JSX.Element {
+  const routes = getAllRoutes();
   return (
     <ThemeProvider theme={theme}>
-      <BrowserRouter>
-        <SnackBarProvider>
-          <AuthProvider>
-            <SocketProvider>
-              <CssBaseline />
-              <Navbar />
-              <Switch>
-                <Route exact path="/login" component={Login} />
-                <Route exact path="/signup" component={Signup} />
-                <Route exact path="/dashboard" component={Dashboard} />
-                <Route path="/profile/settings" component={Settings} />
-                <Route path="*">
-                  <NotFound />
-                </Route>
-              </Switch>
-            </SocketProvider>
-          </AuthProvider>
-        </SnackBarProvider>
-      </BrowserRouter>
+      <SnackBarProvider>
+        <AuthProvider>
+          <SocketProvider>
+            <CssBaseline />
+            <Navbar />
+            <Switch>
+              {routes.map((item, i) => (
+                <Route key={i} path={item.resource} component={item.component} />
+              ))}
+              <Route path="*">
+                <NotFound />
+              </Route>
+            </Switch>
+          </SocketProvider>
+        </AuthProvider>
+      </SnackBarProvider>
     </ThemeProvider>
   );
 }
