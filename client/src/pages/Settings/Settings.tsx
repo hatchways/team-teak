@@ -10,6 +10,7 @@ import EditProfile from './EditProfile/EditProfile';
 import Availability from './Availability/Availability';
 import DestopAvailability from '../../components/Availability/DesktopAvailability';
 import DesktopAvailability from '../../components/Availability/DesktopAvailability';
+import ProfilePhoto from './ProfilePhoto/ProfilePhoto';
 
 const settingsMenu = [
   {
@@ -20,7 +21,7 @@ const settingsMenu = [
   {
     name: 'Profile photo',
     to: '/profile/settings/profile-photo',
-    component: <SettingHeader header="Profile Photo" />,
+    component: <ProfilePhoto header="Profile Photo" />,
   },
   {
     name: 'Availability',
