@@ -3,7 +3,7 @@ import * as Yup from 'yup';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import { Typography, Button, CircularProgress } from '@mui/material';
-import FormikDatePicker from '../../../../components/FormikDatePicker/FormikDatePicker';
+import FormikDatePicker from '../../../components/FormikDatePicker/FormikDatePicker';
 import useStyles from './useStyles';
 import { useTheme } from '@mui/system';
 

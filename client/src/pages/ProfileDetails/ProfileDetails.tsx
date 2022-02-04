@@ -1,19 +1,19 @@
 import { Grid, Box, Typography, Rating, Divider } from '@mui/material';
-import PageContainer from '../../../components/PageContainer/PageContainer';
-import AvatarDisplay from '../../../components/AvatarDisplay/AvatarDisplay';
+import PageContainer from '../../components/PageContainer/PageContainer';
+import AvatarDisplay from '../../components/AvatarDisplay/AvatarDisplay';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import RequestForm from './RequestForm/RequestForm';
 import useStyles from './useStyles';
 import { useEffect, useState } from 'react';
 
-const mockProfile = {
-  name: 'Norma Byers',
-  description: 'Loving pet sitter',
-  location: 'Toronto, Ontario',
-  aboutMe:
-    'Animals are my passion! I will look after your pets with loving care. I have some availability for pet care in my home as well. I have 10 yrs experience at the Animal Hospital, and have owned multiple pets for many years, including numerous rescues. Kindly email, text or call me and I will respond promptly!',
-  payRate: 14,
-  rating: 4,
+const testProfileDetail = {
+  name: 'fa nki',
+  description: 'pet lover',
+  location: 'Vancouver, Canada',
+  introduction:
+    'I grew up with animals my whole life. I have a passion for pets of all sizes and species. I am excited to be able to help you by caring for your pets while you are away. Your babies will be cared for and loved just as if they were my own.',
+  hourlyRate: 16,
+  rating: 3.7,
 };
 
 export default function ProfileDetails(): JSX.Element {
@@ -33,7 +33,7 @@ export default function ProfileDetails(): JSX.Element {
   return (
     <PageContainer>
       <Grid
-        maxWidth={windowWidth < 600 ? 400 : windowWidth < 1200 ? 600 : 1200}
+        maxWidth={windowWidth < 800 ? 400 : windowWidth < 1200 ? 600 : 1200}
         m={'auto'}
         justifyContent="space-around"
         container
@@ -54,25 +54,25 @@ export default function ProfileDetails(): JSX.Element {
               width={windowWidth < 600 ? 100 : 150}
               height={windowWidth < 600 ? 100 : 150}
               loggedIn
-              user={{ name: 'example', email: 'example@example.com' }}
+              user={{ name: 'pet lover', email: 'example@example.com' }}
             />
           </Box>
           <Box m={windowWidth < 600 ? '1rem 0' : '5rem 0 1rem 0'} textAlign="center">
             <Typography fontWeight="bold" component="h1" fontSize="1.4rem">
-              {mockProfile.name}
+              {testProfileDetail.name}
             </Typography>
             <Typography fontWeight="bold" color="rgba(0,0,0,0.3)">
-              {mockProfile.description}
+              {testProfileDetail.description}
             </Typography>
           </Box>
           <Typography margin="auto" mb={4} display="flex" alignItems="center" color="rgba(0,0,0,0.3)" fontWeight="bold">
-            <LocationOnIcon color="primary" /> &nbsp; {mockProfile.location}
+            <LocationOnIcon color="primary" /> &nbsp; {testProfileDetail.location}
           </Typography>
           <Box m={windowWidth < 600 ? `${5} ${4}` : 5}>
             <Typography mb={1} fontSize="1.1rem" component="h2" fontWeight="bold">
               About me
             </Typography>
-            <Typography>{mockProfile.aboutMe}</Typography>
+            <Typography>{testProfileDetail.introduction}</Typography>
           </Box>
         </Grid>
         {windowWidth < 1200 ? <Divider sx={{ width: '95%' }} /> : null}
@@ -86,9 +86,9 @@ export default function ProfileDetails(): JSX.Element {
           flexDirection="column"
         >
           <Typography fontSize="1.1rem" component="p" fontWeight="bold" m="3rem auto 1rem auto">
-            ${mockProfile.payRate}/hr
+            ${testProfileDetail.hourlyRate}/hr
           </Typography>
-          <Rating sx={{ margin: 'auto' }} value={mockProfile.rating} precision={0.5} readOnly />
+          <Rating sx={{ margin: 'auto' }} value={testProfileDetail.rating} precision={0.5} readOnly />
           <RequestForm />
         </Grid>
       </Grid>
