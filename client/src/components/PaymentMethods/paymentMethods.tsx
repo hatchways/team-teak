@@ -6,14 +6,8 @@ import SettingHeader from '../SettingsHeader/SettingsHeader';
 
 const PaymentMethods = (): JSX.Element => {
   const createPaymentProfile = async () => {
-    console.log('Am called');
-
     const result = await PaymentMethod();
 
-    console.log(result);
-    // console.log(result);
-
-    // <Redirect to={`${result.url}`} />;
     window.location.href = result.url;
   };
 

@@ -8,25 +8,35 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET);
 // @desc This will create a payment method
 // @access Private
 exports.createPaymentMethod = asyncHandler(async (req, res, next) => {
-  // get current user id
   const userId = req.user.id;
 
   const userProfle = await Profile.findOne({ userId });
 
-  const session = await stripe.checkout.sessions.create({
-    success_url: "http://localhost:3000/dashboard",
-    cancel_url: "http://localhost:3000/settings/payment-methods",
-    payment_method_types: ["card"],
-    mode: "setup",
-    customer: userProfle.stripeAccountId,
-  });
+  let session;
+  try {
+    session = await stripe.checkout.sessions.create({
+      success_url: "http://localhost:3000/dashboard",
+      cancel_url: "http://localhost:3000/settings/payment-methods",
+      payment_method_types: ["card"],
+      mode: "setup",
+      customer: userProfle.stripeAccountId,
+    });
+  } catch (error) {
+    res.status(400);
+    throw new Error("Checkout session not created");
+  }
 
   const { url, id } = session;
 
   res.send({ url });
 
-  const setupIntent = await stripe.setupIntents.create({
-    customer: userProfle.stripeAccountId,
-    payment_method_types: ["card"],
-  });
+  try {
+    const setupIntent = await stripe.setupIntents.create({
+      customer: userProfle.stripeAccountId,
+      payment_method_types: ["card"],
+    });
+  } catch (error) {
+    res.status(400);
+    throw new Error("Payment Intent not created");
+  }
 });
