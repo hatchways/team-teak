@@ -3,6 +3,10 @@ import SettingHeader from '../../components/SettingsHeader/SettingsHeader';
 import stripeConnect from '../../helpers/APICalls/stripeConnect';
 
 const StripeConnect = (): JSX.Element => {
+  const createStripeAccount = async () => {
+    await stripeConnect();
+  };
+
   return (
     <>
       <SettingHeader header="Payment Methods" />
@@ -11,7 +15,7 @@ const StripeConnect = (): JSX.Element => {
           variant="outlined"
           sx={{ padding: '20px', fontWeight: 'bold' }}
           onClick={() => {
-            stripeConnect();
+            createStripeAccount();
           }}
         >
           Stripe Connect

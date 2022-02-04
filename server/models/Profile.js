@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const options = {
-  discriminatorKey: "userType",
+  discriminatorKey: "type",
 };
 
 const profileSchema = new mongoose.Schema(
@@ -10,6 +10,10 @@ const profileSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: "User",
+    },
+    activeScheduleId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Availability",
     },
     name: {
       type: String,
@@ -40,7 +44,7 @@ const profileSchema = new mongoose.Schema(
       default: "",
     },
   },
-  options
+  { ...options }
 );
 
 module.exports = Profile = mongoose.model("Profile", profileSchema);

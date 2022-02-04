@@ -13,12 +13,18 @@ const authRouter = require("./routes/auth");
 const userRouter = require("./routes/user");
 const profileRouter = require("./routes/profile");
 const stripeConnectRouter = require("./routes/stripeConnect");
+const notificationRouter = require("./routes/notification");
+const availabilityRouter = require("./routes/availability");
 
 const { json, urlencoded } = express;
 
 connectDB();
+const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
+const PublicKey = process.env.STRIPE_PUBLIC_KEY;
+
 const app = express();
 const server = http.createServer(app);
+const stripe = require("stripe")(stripeSecretKey);
 
 const io = socketio(server, {
   cors: {
@@ -47,6 +53,8 @@ app.use("/auth", authRouter);
 app.use("/users", userRouter);
 app.use("/profile", profileRouter);
 app.use("/stripe", stripeConnectRouter);
+app.use("/notification", notificationRouter);
+app.use("/availability", availabilityRouter);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "/client/build")));
