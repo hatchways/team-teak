@@ -8,14 +8,20 @@ const ProfileListing = (): JSX.Element => {
   const classes = useStyles();
   return (
     <Box>
-      <Grid container rowSpacing={5} alignItems="center">
+      <Grid container spacing={7} alignItems="center" justifyContent="center">
         {staticData.map((sitter, id) => {
           return (
-            <Grid item key={id} lg={4}>
+            <Grid item key={id}>
               <Card
                 sx={{
-                  width: '450px',
+                  width: '300px',
+                  height: '375px',
                   margin: '0 auto',
+                  boxShadow: [
+                    '0px 0px 1px -1px rgba(0, 0, 0, 0.048)',
+                    '0px 0px 3.4px -1px rgba(0, 0, 0, 0.072)',
+                    '0px 0px 15px -1px rgba(0, 0, 0, 0.12)',
+                  ],
                 }}
               >
                 <CardMedia
@@ -23,15 +29,27 @@ const ProfileListing = (): JSX.Element => {
                   component="img"
                   sx={{
                     borderRadius: '50%',
-                    width: '150px',
-                    height: '150px',
-                    margin: '20px auto',
+                    width: '100px',
+                    height: '100px',
+                    marginTop: '20px',
+                    marginBottom: '10px',
+                    marginLeft: 'auto',
+                    marginRight: 'auto',
                   }}
                 />
-                <CardContent className={classes.content}>
-                  <Typography variant="h4">{sitter.maintitle}</Typography>
-                  <Typography variant="subtitle1">{sitter.title}</Typography>
-                  <Typography variant="body1">{sitter.description}</Typography>
+                <CardContent sx={{ textAlign: 'center' }}>
+                  <Typography sx={{ fontWeight: 800 }} variant="h5">
+                    {sitter.maintitle}
+                  </Typography>
+                  <Typography sx={{ fontWeight: 300, fontSize: '12px' }} variant="h6">
+                    {sitter.title}
+                  </Typography>
+                  <Typography
+                    sx={{ fontWeight: 500, fontSize: '15px', width: '200px', margin: '0 auto' }}
+                    variant="body1"
+                  >
+                    {sitter.description}
+                  </Typography>
                 </CardContent>
                 <CardContent>
                   <Grid
@@ -39,18 +57,22 @@ const ProfileListing = (): JSX.Element => {
                     alignItems="center"
                     display="grid"
                     sx={{
-                      gridTemplateColumns: '5% 70% 25%',
+                      gridTemplateColumns: '10% 65% 25%',
                       gridTemplateRows: '50px',
                     }}
                   >
                     <Grid item>
-                      <LocationOnIcon />
+                      <LocationOnIcon className={classes.icon} />
                     </Grid>
                     <Grid item>
-                      <Typography variant="body2">{sitter.country}</Typography>
+                      <Typography sx={{ fontWeight: 300, fontSize: '12px' }} variant="body2">
+                        {sitter.country}
+                      </Typography>
                     </Grid>
                     <Grid item sx={{ justifySelf: 'end' }}>
-                      <Typography variant="subtitle2">{sitter.price}</Typography>
+                      <Typography variant="subtitle2" sx={{ fontWeight: 800, fontSize: '16px' }}>
+                        {sitter.price}
+                      </Typography>
                     </Grid>
                   </Grid>
                 </CardContent>

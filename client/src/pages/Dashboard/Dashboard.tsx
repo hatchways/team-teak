@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 import { CircularProgress, Grid, Typography } from '@mui/material';
 import PageContainer from '../../components/PageContainer/PageContainer';
 import ProfileListing from '../../components/ProfileListing/ProfileListing';
+import Search from '../../components/ProfileListing/Search';
 
 export default function Dashboard(): JSX.Element {
   const { loggedInUser } = useAuth();
@@ -29,6 +30,7 @@ export default function Dashboard(): JSX.Element {
           <Typography sx={{ textAlign: 'center' }} variant="h4">
             Search Profiles
           </Typography>
+          <Search />
           <ProfileListing />
         </Grid>
       </Grid>
