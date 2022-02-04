@@ -6,37 +6,29 @@ const asyncHandler = require("express-async-handler");
 // @desc create a new conversation
 // @access Public
 exports.createConversation = asyncHandler(async (req, res, next) => {
-    const { content, receiver } = req.body;
+    const { content, otherUsers } = req.body;
 
-    if(!content || !receiver){
-        res.status(400).send("deescription or receiver can't be null");
+    if(!content || !otherUsers){
+        res.status(400).send("content or otherUsers can't be null");
     }
-
 
     const newMessage = await Message.create({
         sender: req.user.id,
         content,
     });
 
-
     const existConversation = await Conversation.findOne({
-        otherUsers:{ $all: [`${req.user.id}`, `${receiver}`]}
+      otherUsers:{ $all: [`${req.user.id}`, `${otherUsers}`]}
     });
-    
-    console.log(newMessage);
-
-    console.log(existConversation);
-
 
     if(existConversation){
         existConversation.messages.push(newMessage);
 
         await existConversation.save();
-        console.log("hhhhhhh");
 
         res.status(200).json({
             success: {
-                oldConversation: existingConversation,
+                contactId: otherUsers[1]._id,
             }
         });
     } else {
@@ -47,11 +39,13 @@ exports.createConversation = asyncHandler(async (req, res, next) => {
           conversation.messages.push(message);
       
           await conversation.save();
-          console.log("aaaaa");
 
           res.status(200).json({
-            success: {
-              conversation,
+              success: {
+                conversation: {
+                  name: existConversation.name,
+                  email: existConversation.email,
+              }
             },
           });
         }
@@ -63,16 +57,16 @@ exports.createConversation = asyncHandler(async (req, res, next) => {
 // @access Public
  exports.getAllMessageByConversation = asyncHandler(async (req, res, next) => {
 
-    const { conversationByUserId } = req.params;
-
-  const conversation = await Conversation.findById(conversationByUserId).populate({
-    path: "messages",
-    sort: { updatedAt: "desc" },
-  });
+    const conversations = await Conversation.find({
+      otherUsers: { $in: req.user.id },
+    }).populate({
+        path: "messages",
+        sort: { updatedAt: "desc" },
+      });
 
     res.status(200).json({
       success: {
-        conversation,
+        message: conversations[0].messages,
       },
     });
   
@@ -82,14 +76,15 @@ exports.createConversation = asyncHandler(async (req, res, next) => {
 // @desc send a message to a conversation
 // @access Private
 exports.sendMessage = asyncHandler(async (req, res, next) => {
-    const { conversationByUserId, content  } = req.body;
+    const { otherUsers, content  } = req.body;
   
-    if (!content || !conversationByUserId) {
+    if (!content || !otherUsers) {
       res.status(400).send("Bad request");
     }
 
-    const conversation = await Conversation.findById(conversationByUserId);
-
+    const conversation = await Conversation.findOne({
+      otherUsers:{ $all: [`${req.user.id}`, `${otherUsers}`]}
+    });
     
     const message = await Message.create({
       sender: req.user.id,
@@ -102,7 +97,7 @@ exports.sendMessage = asyncHandler(async (req, res, next) => {
 
     res.status(200).json({
       success: {
-        conversation,
+        message: message.content,
       },
     });
     
