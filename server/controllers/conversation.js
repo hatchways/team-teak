@@ -28,7 +28,7 @@ exports.createConversation = asyncHandler(async (req, res, next) => {
 
         res.status(200).json({
             success: {
-                contactId: otherUsers[1]._id,
+                contactId: otherUsers,
             }
         });
     } else {
