@@ -10,11 +10,6 @@ const messageSchema = new mongoose.Schema({
           type: String,
           default: "",
         },
-        isRead: {
-          type: Boolean,
-          required: true,
-          default: false,
-        },
       },
 {conversationTime: true}
 );
