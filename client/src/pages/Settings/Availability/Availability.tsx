@@ -38,6 +38,7 @@ import TimePicker from '@mui/lab/TimePicker';
 interface AvailibilityProps {
   header: string;
 }
+
 function availabilityList(date: string, value: number) {
   return { date, value };
 }
@@ -73,12 +74,38 @@ const Availability: React.FC<AvailibilityProps> = ({ header }) => {
   return (
     <>
       <SettingHeader header={header} />
-      <Box>
-        <Button color="info" variant="contained" sx={{ py: 2, borderRadius: 2, ml: 4 }}>
+
+      <Box sx={{ m: 3 }}>
+        <Button
+          color="info"
+          variant="contained"
+          sx={{
+            py: 2,
+            borderRadius: 2,
+            ml: 4,
+            margin: 1,
+            width: {
+              xs: 200,
+              sm: 180,
+            },
+          }}
+        >
           <EventNoteSharpIcon sx={{ mr: 1 }} />
           Working hours
         </Button>
-        <Button variant="outlined" sx={{ py: 2, borderRadius: 50, ml: 5 }}>
+        <Button
+          variant="outlined"
+          sx={{
+            py: 2,
+            borderRadius: 50,
+            ml: 5,
+            margin: 1,
+            width: {
+              xs: 200,
+              sm: 180,
+            },
+          }}
+        >
           <AddIcon sx={{ mr: 1 }} /> New schedule
         </Button>
       </Box>

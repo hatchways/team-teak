@@ -83,11 +83,9 @@ export default function Settings(): JSX.Element {
             </Box>
           ))}
         </Grid>
-        <Hidden only="xs">
-          <Grid md={9} item>
-            <DesktopAvailability />
-          </Grid>
-        </Hidden>
+        <Grid xs={12} md={9} item>
+          <DesktopAvailability />
+        </Grid>
       </Grid>
     </PageContainer>
   );
