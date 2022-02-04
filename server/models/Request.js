@@ -32,4 +32,5 @@ const requestSchema = new mongoose.Schema({
   },
 });
 
-module.exports = Profile = mongoose.model("Request", requestSchema);
+module.exports = RequestSchema = mongoose.model("Request", requestSchema);
+
