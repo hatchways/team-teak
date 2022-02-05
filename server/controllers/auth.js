@@ -75,6 +75,7 @@ exports.loginUser = asyncHandler(async (req, res, next) => {
   }
 
   const user = await User.findOne({ email });
+  const profile = await Profile.findOne({ userId: user.id });
 
   if (user && (await user.matchPassword(password))) {
     const token = generateToken(user._id);
@@ -92,6 +93,8 @@ exports.loginUser = asyncHandler(async (req, res, next) => {
           name: user.name,
           email: user.email,
         },
+        profile,
+
       },
     });
   } else {
