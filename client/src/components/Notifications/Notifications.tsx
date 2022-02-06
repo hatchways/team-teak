@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Grid, Link, Popper, Badge } from '@mui/material';
 import NotificaitonContent from '../NotificationContent/NotificationContent';
 import { fetctAllUnreadNotications, markNotificationsAsRead } from '../../helpers/APICalls/getNotifications';
@@ -17,7 +17,7 @@ import { User } from '../../interface/User';
 const Notificaitons = (): JSX.Element => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [unReadNotification, setUnReadNotification] = useState<Notifications[] | undefined>();
-  const [notificationsApiData, setnotificationsApiData] = useState<NotificationsApiData[] | undefined>();
+  // const [notificationsApiData, setnotificationsApiData] = useState<NotificationsApiData[] | undefined>();
 
   const { updateSnackBarMessage } = useSnackBar();
   const { updateLoginContext } = useAuth();
@@ -27,9 +27,6 @@ const Notificaitons = (): JSX.Element => {
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(anchorEl ? null : event.currentTarget);
 
-    console.log(' )))))ppppp ' + loggedInUser?.email);
-    console.log(' )))))ppppp ' + notifications?.description);
-
     markNotificationsAsRead(`${profile?.userId}`);
     if (anchorEl) {
       setUnReadNotification([]);
@@ -38,23 +35,27 @@ const Notificaitons = (): JSX.Element => {
 
   const open = Boolean(anchorEl);
   const id = open ? 'notification' : undefined;
+  const total = useRef(0);
+  const unread = useRef();
 
   useEffect(() => {
     const fetchUnReadData = async () => {
       const getData = await fetctAllUnreadNotications();
-      console.log(' ============777 ' + getData);
+      total.current = Object.keys(getData.data).length;
+      unread.current = getData.data;
 
       if (getData.error) {
         updateSnackBarMessage(getData.error.message);
       }
-      setUnReadNotification(getData.success?.notifications);
+      if (getData == undefined || getData) {
+        setUnReadNotification(getData.data[0].recieverId);
+      }
     };
     fetchUnReadData();
   }, [updateSnackBarMessage]);
 
-  console.log(' ============ ' + markNotificationsAsRead);
-
-  console.log(' ============ ' + unReadNotification);
+  // console.log(' ============aasff pop1i ' + unread());
+  console.log(' ============aasff pop1i2222 ' + unReadNotification);
 
   return (
     <Grid sx={{ textAlign: 'center' }} xs={2} justifySelf="flex-end" item>
@@ -72,16 +73,14 @@ const Notificaitons = (): JSX.Element => {
         onClick={handleClick}
       >
         {unReadNotification === undefined || unReadNotification === null || unReadNotification?.length === 0 ? (
-          <Badge color="secondary" badgeContent={unReadNotification} showZero>
+          <Badge color="secondary" badgeContent={0} showZero>
             <NotificationsActiveIcon />
           </Badge>
         ) : (
-          <>
-            <Badge color="secondary" badgeContent={unReadNotification} showZero>
-              <NotificationsActiveIcon />
-            </Badge>
+          <Badge color="secondary" badgeContent={total.current} showZero>
+            <NotificationsActiveIcon />
             <FiberManualRecordIcon sx={{ color: '#64dd17', fontSize: 14, pb: '3px' }} />
-          </>
+          </Badge>
         )}
       </Link>
       <Popper id={id} open={open} anchorEl={anchorEl}>

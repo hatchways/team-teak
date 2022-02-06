@@ -1,8 +1,7 @@
 import { Key, ReactNode } from 'react';
 
 export interface Notifications {
-  success: any;
-  error: any;
+  error: string;
   _id: string;
   userId: string;
   recieverId: string;
@@ -15,7 +14,4 @@ export interface Notifications {
 export interface NotificationsApiData {
   notifications?: Notifications[];
   error?: { message: string };
-  success?: {
-    notifications: NotificationsApiData[];
-  };
 }

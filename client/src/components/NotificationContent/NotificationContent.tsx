@@ -5,26 +5,24 @@ import BookingProfile from '../BookingProfile/BookingProfile';
 import BookingWrapper from '../BookingWrapper/BookingWrapper';
 import { format } from 'date-fns';
 import { Notifications, NotificationsApiData } from '../../interface/Notifications';
+import { fetctAllUnreadNotications, markNotificationsAsRead } from '../../helpers/APICalls/getNotifications';
 
 interface NotificationContentProps {
   unReadNotification: Notifications[] | undefined | null;
 }
 
 const NotificaitonContent = ({ unReadNotification }: NotificationContentProps): JSX.Element => {
-  const [unReadNotification1, setUnReadNotification1] = useState<Notifications[] | undefined>();
-
   console.log('{{{{{{ ' + unReadNotification);
-  console.log('{{{{{{ ' + unReadNotification1);
 
   return (
-    <Box sx={{ minWidth: 550, p: 2 }}>
+    <Box sx={{ minWidth: 500, p: 2 }}>
       <Box
         sx={{
           width: 0,
           height: 0,
           borderLeft: '8px solid transparent',
           borderRight: '8px solid transparent',
-          borderBottom: '9px solid black',
+          borderBottom: '5px solid black',
           margin: '0 auto',
           pb: '1px',
         }}

@@ -77,9 +77,7 @@ exports.loginUser = asyncHandler(async (req, res, next) => {
 
   const user = await User.findOne({ email });
   const profile = await Profile.findOne({ userId: user.id });
-  const notifications = await Notification.find({userId: user.id});
-
-  // console.log(notifications);
+  const notifications = await Notification.find({recieverId: user.id});
 
 
   if (user && (await user.matchPassword(password))) {
@@ -115,9 +113,8 @@ exports.loginUser = asyncHandler(async (req, res, next) => {
 exports.loadUser = asyncHandler(async (req, res, next) => {
   const user = await User.findById(req.user.id);
   const profile = await Profile.findOne({ userId: req.user.id });
-  const notifications = await Notification.findById({userId: req.user.id});
+  const notifications = await Notification.findById({recieverId: req.user.id});
 
-  console.log(notifications);
 
   if (!user) {
     res.status(401);

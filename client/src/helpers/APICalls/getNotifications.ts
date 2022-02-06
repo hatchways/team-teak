@@ -26,7 +26,7 @@ export async function fetctAllNotications(): Promise<Notifications> {
     }));
 }
 
-export async function fetctAllUnreadNotications(): Promise<Notifications> {
+export async function fetctAllUnreadNotications() {
   const fetchOptions: FetchOptions = {
     method: 'GET',
     credentials: 'include',
