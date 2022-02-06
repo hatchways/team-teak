@@ -37,3 +37,25 @@ exports.loadProfile = asyncHandler(async (req, res, next) => {
     },
   });
 });
+
+// @route GET /users
+// @desc Search for profiles
+// @access Private
+exports.searchProfiles = asyncHandler(async (req, res, next) => {
+  const location = req.query.search;
+  const date = req.query.date;
+
+  let profile;
+  if (location) {
+    profile = await Profile.find({
+      address: location,
+    });
+  }
+
+  if (!profile) {
+    res.status(404);
+    throw new Error("No users found in search");
+  }
+
+  res.status(200).json({ users: profile });
+});
