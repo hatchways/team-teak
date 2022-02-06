@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction, useEffect } from 'react';
+
 import { Box, Grid, TextField, InputAdornment } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import DateRangeIcon from '@mui/icons-material/DateRange';
@@ -6,11 +7,19 @@ import CloseIcon from '@mui/icons-material/Close';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DatePicker from '@mui/lab/DatePicker';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
+
 import { useStyles } from './useStyles';
 
-const Search = (): JSX.Element => {
-  const [value, setValue] = React.useState<Date | null>(null);
+interface Props {
+  setLocation: Dispatch<SetStateAction<string | null>>;
+  location: string | null;
+  setDate: Dispatch<SetStateAction<Date | null>>;
+  date: Date | null;
+}
+
+const Search = ({ location, date, setLocation, setDate }: Props): JSX.Element => {
   const classes = useStyles();
+
   return (
     <Box>
       <Grid container justifyContent="center" className={classes.searchContainer}>
@@ -18,6 +27,8 @@ const Search = (): JSX.Element => {
           <TextField
             id="search sitters"
             name="Search for Sitters"
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
             variant="outlined"
             type="search"
             placeholder="Toronto, Ontario"
@@ -42,11 +53,11 @@ const Search = (): JSX.Element => {
         <Grid item>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DatePicker
-              value={value}
               inputFormat="d MMMM yyyy"
-              onChange={(newValue) => {
-                setValue(newValue);
+              onChange={(date) => {
+                setDate(date);
               }}
+              value={date}
               renderInput={(params) => (
                 <TextField
                   {...params}
@@ -69,7 +80,7 @@ const Search = (): JSX.Element => {
                 ),
                 endAdornment: (
                   <InputAdornment position="end">
-                    <CloseIcon className={classes.closeIcon} onClick={() => setValue(null)} />
+                    <CloseIcon className={classes.closeIcon} onClick={() => setDate(null)} />
                   </InputAdornment>
                 ),
               }}
