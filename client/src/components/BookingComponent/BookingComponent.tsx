@@ -59,7 +59,7 @@ export default function BookingComponents({ booking, isNextBooking, isPastBookin
             alignItems: 'center',
           }}
         >
-          <Typography sx={{ fontSize: '.7rem', fontWeight: 'bold' }}>Your next booking:</Typography>
+          <Typography sx={{ fontSize: '.6rem', fontWeight: 'bold' }}>Your next booking:</Typography>
           <RequestStatusButton onStatusChange={handleStatusChange} booking={booking} />
         </Box>
         <Typography sx={{ textTransform: 'none', fontWeight: 'bold' }}>{date()}</Typography>

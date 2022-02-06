@@ -2,7 +2,7 @@ import { Grid, Box, Typography, Rating, Divider } from '@mui/material';
 import PageContainer from '../../components/PageContainer/PageContainer';
 import AvatarDisplay from '../../components/AvatarDisplay/AvatarDisplay';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
-import RequestForm from './RequestForm/RequestForm';
+import RequestForm from './RequestFormSubmit/RequestFormSubmit';
 import useStyles from './useStyles';
 import { useEffect, useState } from 'react';
 

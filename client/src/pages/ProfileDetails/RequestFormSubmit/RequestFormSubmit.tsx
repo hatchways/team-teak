@@ -7,7 +7,7 @@ import FormikDatePicker from '../../../components/FormikDatePicker/FormikDatePic
 import useStyles from './useStyles';
 import { useTheme } from '@mui/system';
 
-export default function RequestForm(): JSX.Element {
+export default function RequestFormSubmit(): JSX.Element {
   const theme = useTheme();
 
   const handleSubmit = (

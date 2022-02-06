@@ -4,7 +4,7 @@ import { makeStyles } from '@mui/styles';
 const useStyles = makeStyles((theme: Theme) => ({
   coverImage: {
     position: 'relative',
-    backgroundImage: 'url("https://images.pexels.com/photos/38537/woodland-road-falling-leaf-natural-38537.jpeg")',
+    backgroundImage: 'url("https://image.shutterstock.com/image-photo/human-dog-girl-her-friend-260nw-1494711500.jpg")',
     backgroundSize: 'cover',
     minHeight: 200,
     '& > *': {
