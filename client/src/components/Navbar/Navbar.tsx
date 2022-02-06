@@ -16,7 +16,7 @@ import clsx from 'clsx';
 import React, { useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/useAuthContext';
-import { NotificationMenu } from './NotificationMenu';
+import Notifications from '../Notifications/Notifications';
 import lovingSitterLogo from '../../images/logo.svg';
 import { AccountType } from '../../types/AccountType';
 import { useStyles } from './useStyles';
@@ -141,8 +141,8 @@ const Navbar: React.FC = () => {
           {loggedInUser && (
             <Grid xs={4} item>
               <>
-                <IconButton size="large" aria-label="account profile picture">
-                  {loggedInUser && <NotificationMenu unReadNotifications={'2'} />}
+                <IconButton size="large" aria-label="account notification picture">
+                  {loggedInUser && <Notifications />}
                 </IconButton>
                 <IconButton
                   size="large"

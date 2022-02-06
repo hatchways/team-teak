@@ -16,7 +16,7 @@ const {
 router.route("/").post([protect, validateNotification], createNotification);
 
 router
-  .route("/read/:notificationId")
+  .route("/read/:userId")
   .put([protect, validateRequestParameter], markNotificationRead);
 
 router.route("/").get(protect, fetctAllNotications);

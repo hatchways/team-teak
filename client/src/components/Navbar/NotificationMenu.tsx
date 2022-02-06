@@ -5,14 +5,14 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 import { useStyles } from './useStyles';
 import getNotifications from '../../helpers/APICalls/notifications';
-import NotificationInterface from '../../interface/Notification';
+import { Notifications } from '../../interface/Notifications';
 import { useSnackBar } from '../../context/useSnackbarContext';
 import Stack from '@mui/material/Stack';
-import Notification from './Notification/Notification';
+import Notification from '../Notifications/Notifications';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import Tooltip from '@mui/material/Tooltip';
 
-type Notifications = NotificationInterface[];
+// type Notifications = NotificationInterface[];
 
 interface NotificationsProps {
   unReadNotifications: string;
@@ -20,7 +20,7 @@ interface NotificationsProps {
 
 export const NotificationMenu: React.FC<NotificationsProps> = ({ unReadNotifications }) => {
   const classes = useStyles();
-  const [notifications, setNotifications] = useState<Notifications>([]);
+  // const [notifications, setNotifications] = useState<Notifications>([]);
   const { updateSnackBarMessage } = useSnackBar();
   const [isSubmitting, setSubmitting] = useState(false);
 
@@ -45,13 +45,11 @@ export const NotificationMenu: React.FC<NotificationsProps> = ({ unReadNotificat
         updateSnackBarMessage(data.error.message);
       } else if (data.success) {
         const notifications = data.success.notifications;
-        setNotifications(notifications);
+        // setNotifications(notifications);
 
-        const unreadNotifications = notifications.filter(
-          (notification: NotificationInterface) => notification.isRead !== true,
-        );
+        // const unreadNotifications = notifications.filter((notification: Notifications) => notification.isRead !== true);
 
-        setUnreadNotificationCount(unreadNotifications.length);
+        // setUnreadNotificationCount(unreadNotifications.length);
         setSubmitting(false);
       } else {
         console.error({ data });
@@ -89,15 +87,15 @@ export const NotificationMenu: React.FC<NotificationsProps> = ({ unReadNotificat
           open={open}
           onClose={handleMenuClose}
         >
-          <List sx={{ width: '100%', minWidth: 360, bgcolor: 'background.paper' }}>
-            {notifications.map((notification) => {
+          {/* <List sx={{ width: '100%', minWidth: 360, bgcolor: 'background.paper' }}>
+            {notifications.map((notification: { isRead: any; user: React.Key | null | undefined }) => {
               if (!notification.isRead) {
                 <Fragment key={notification.user}>
                   <Notification notification={notification} />
                 </Fragment>;
               }
             })}
-          </List>
+          </List> */}
         </Menu>
       </>
     </Grid>

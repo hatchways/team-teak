@@ -1,5 +1,6 @@
 const User = require("../models/User");
 const Profile = require("../models/Profile");
+const Notification = require("../models/Notification");
 const asyncHandler = require("express-async-handler");
 const generateToken = require("../utils/generateToken");
 
@@ -76,6 +77,10 @@ exports.loginUser = asyncHandler(async (req, res, next) => {
 
   const user = await User.findOne({ email });
   const profile = await Profile.findOne({ userId: user.id });
+  const notifications = await Notification.find({userId: user.id});
+
+  // console.log(notifications);
+
 
   if (user && (await user.matchPassword(password))) {
     const token = generateToken(user._id);
@@ -94,6 +99,7 @@ exports.loginUser = asyncHandler(async (req, res, next) => {
           email: user.email,
         },
         profile,
+        notifications,
 
       },
     });
@@ -109,6 +115,9 @@ exports.loginUser = asyncHandler(async (req, res, next) => {
 exports.loadUser = asyncHandler(async (req, res, next) => {
   const user = await User.findById(req.user.id);
   const profile = await Profile.findOne({ userId: req.user.id });
+  const notifications = await Notification.findById({userId: req.user.id});
+
+  console.log(notifications);
 
   if (!user) {
     res.status(401);
@@ -123,6 +132,7 @@ exports.loadUser = asyncHandler(async (req, res, next) => {
         email: user.email,
       },
       profile,
+      notifications,
     },
   });
 });

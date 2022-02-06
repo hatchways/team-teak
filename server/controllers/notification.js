@@ -1,4 +1,4 @@
-const NotificationSchema = require("../models/notification");
+const NotificationSchema = require("../models/Notification");
 const asyncHandler = require("express-async-handler");
 const mongoose = require("mongoose");
 
@@ -34,18 +34,29 @@ exports.createNotification = asyncHandler(async (req, res, next) => {
 // @desc set notification to read
 // @access Private
 exports.markNotificationRead = asyncHandler(async (req, res, next) => {
-  const notificationId = req.params.notificationId;
+  const notificationByUserId = req.params.userId;
+
+  console.log(notificationByUserId);
+
 
   const { id: userId } = req.user;
 
-  const notification = await NotificationSchema.findById(notificationId);
+  const notification = await NotificationSchema.find({
+    userId: notificationByUserId,
+    isRead: false,
+  });
+
+  console.log("aaa" + notification);
+  console.log(userId);
+
 
   if (notification) {
-    if (userId !== notification.recieverId.toString()) {
-      res.status(400);
-      throw new Error("Not authorised to read this");
-    }
+    // if (userId !== notification[0].recieverId) {
+    //   res.status(400);
+    //   throw new Error("Not authorised to read this");
+    // }
 
+    const notificationId = notification[0]._id;
     const updatedNotification = await NotificationSchema.findByIdAndUpdate(
       notificationId,
       { isRead: true },
@@ -62,7 +73,7 @@ exports.markNotificationRead = asyncHandler(async (req, res, next) => {
   }
 });
 
-// @route GET /notifications/
+// @route GET /notifications/all
 // @desc get all notifications
 // @access Private
 exports.fetctAllNotications = asyncHandler(async (req, res, next) => {
@@ -83,10 +94,16 @@ exports.fetctAllNotications = asyncHandler(async (req, res, next) => {
 exports.fetctAllUnreadNotications = asyncHandler(async (req, res, next) => {
   const { id: userId } = req.user;
 
+  console.log(userId);
+  // console.log(id);
+
   const findAllByLoggedUser = await NotificationSchema.find({
     recieverId: userId,
     isRead: false,
-  }).select(["-__v"]);
+  });
+
+  console.log(findAllByLoggedUser);
+
 
   return res.status(200).send({
     data: findAllByLoggedUser,
