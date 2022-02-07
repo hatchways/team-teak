@@ -12,8 +12,6 @@ interface NotificationContentProps {
 }
 
 const NotificaitonContent = ({ unReadNotification }: NotificationContentProps): JSX.Element => {
-  console.log('{{{{{{ ' + unReadNotification);
-
   return (
     <Box sx={{ minWidth: 500, p: 2 }}>
       <Box

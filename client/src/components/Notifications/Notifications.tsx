@@ -47,15 +47,13 @@ const Notificaitons = (): JSX.Element => {
       if (getData.error) {
         updateSnackBarMessage(getData.error.message);
       }
-      if (getData == undefined || getData) {
+
+      if (getData.data[0] != undefined) {
         setUnReadNotification(getData.data[0].recieverId);
       }
     };
     fetchUnReadData();
   }, [updateSnackBarMessage]);
-
-  // console.log(' ============aasff pop1i ' + unread());
-  console.log(' ============aasff pop1i2222 ' + unReadNotification);
 
   return (
     <Grid sx={{ textAlign: 'center' }} xs={2} justifySelf="flex-end" item>
