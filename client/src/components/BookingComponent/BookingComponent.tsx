@@ -19,14 +19,14 @@ export default function BookingComponents({ booking, isNextBooking, isPastBookin
   const [status, setStatus] = useState<string>(booking.requestStatus);
 
   const date = () => {
-    const startTime = booking.startDate.getHours();
-    const endTime = booking.endDate.getHours();
+    const startDateTime = booking.startDate.getHours();
+    const endDateTime = booking.endDate.getHours();
 
     const formattedDate = `${booking.startDate.getDate()} ${booking.startDate.toLocaleString('default', {
       month: 'long',
-    })} ${booking.startDate.getFullYear()}, ${startTime > 12 ? startTime - 12 : startTime} ${
-      startTime >= 12 ? 'PM' : 'AM'
-    } - ${endTime > 12 ? endTime - 12 : endTime} ${endTime >= 12 ? 'PM' : 'AM'}`;
+    })} ${booking.startDate.getFullYear()}, ${startDateTime > 12 ? startDateTime - 12 : startDateTime} ${
+      startDateTime >= 12 ? 'PM' : 'AM'
+    } - ${endDateTime > 12 ? endDateTime - 12 : endDateTime} ${endDateTime >= 12 ? 'PM' : 'AM'}`;
     return formattedDate;
   };
 
@@ -59,10 +59,10 @@ export default function BookingComponents({ booking, isNextBooking, isPastBookin
             alignItems: 'center',
           }}
         >
-          <Typography sx={{ fontSize: '.6rem', fontWeight: 'bold' }}>Your next booking:</Typography>
+          <Typography sx={{ fontSize: '.3rem', fontWeight: 'bold' }}>Your next booking:</Typography>
           <RequestStatusButton onStatusChange={handleStatusChange} booking={booking} />
         </Box>
-        <Typography sx={{ textTransform: 'none', fontWeight: 'bold' }}>{date()}</Typography>
+        <Typography sx={{ fontWeight: 'bold' }}>{date()}</Typography>
       </>
     ) : (
       <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>

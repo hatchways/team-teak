@@ -26,7 +26,7 @@ interface Props {
   [inputProps: string]: any;
 }
 
-export default function FormikDatePicker({
+export default function CustomRequestFormSubmit({
   dateField,
   date,
   setFieldValue,
@@ -93,7 +93,11 @@ export default function FormikDatePicker({
               }}
             >
               <Select
-                sx={{ fontSize: '1rem', fontWeight: 'bold', '& .MuiOutlinedInput-notchedOutline': { border: 'none' } }}
+                sx={{
+                  fontSize: '1.5rem',
+                  fontWeight: 'bold',
+                  '& .MuiOutlinedInput-notchedOutline': { border: 'none' },
+                }}
                 onChange={handleChange}
                 value={date.getHours().toString()}
                 inputProps={{ 'aria-label': 'Without label' }}

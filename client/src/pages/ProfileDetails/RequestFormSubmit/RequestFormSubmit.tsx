@@ -3,7 +3,7 @@ import * as Yup from 'yup';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import { Typography, Button, CircularProgress } from '@mui/material';
-import FormikDatePicker from '../../../components/FormikDatePicker/FormikDatePicker';
+import FormikDatePicker from '../../../components/CustomRequestFormSubmit/CustomRequestFormSubmit';
 import useStyles from './useStyles';
 import { useTheme } from '@mui/system';
 
@@ -30,7 +30,7 @@ export default function RequestFormSubmit(): JSX.Element {
         startDate: Yup.date()
           .required('Start date is required')
           .min(initialDate(), 'You must select a date starting from today')
-          .test('first', 'Starting date must be sooner than ending date', (date, context) => {
+          .test('first', 'Starting date must be earlier than ending date', (date, context) => {
             if (date) {
               return date < context.parent.endDate;
             }
@@ -38,7 +38,7 @@ export default function RequestFormSubmit(): JSX.Element {
           }),
         endDate: Yup.date()
           .required('End date is required')
-          .test('second', 'Ending date must be after the start date', (date, context) => {
+          .test('second', 'Ending date must be later the start date', (date, context) => {
             if (date) {
               return date > context.parent.startDate;
             }
@@ -52,7 +52,7 @@ export default function RequestFormSubmit(): JSX.Element {
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <FormikDatePicker
               onChange={handleChange}
-              inputId="drop-in"
+              inputId="dropIn"
               label="Drop In"
               date={values.startDate}
               setFieldValue={setFieldValue}
@@ -63,7 +63,7 @@ export default function RequestFormSubmit(): JSX.Element {
               {errors.startDate}
             </Typography>
             <FormikDatePicker
-              inputId="drop-off"
+              inputId="dropOff"
               label="Drop Off"
               date={values.endDate}
               setFieldValue={setFieldValue}

@@ -7,7 +7,7 @@ import useStyles from './useStyles';
 import { useEffect, useState } from 'react';
 
 const testProfileDetail = {
-  name: 'fa nki',
+  name: 'grey nki',
   description: 'pet lover',
   location: 'Vancouver, Canada',
   introduction:
@@ -68,7 +68,7 @@ export default function ProfileDetails(): JSX.Element {
           <Typography margin="auto" mb={4} display="flex" alignItems="center" color="rgba(0,0,0,0.3)" fontWeight="bold">
             <LocationOnIcon color="primary" /> &nbsp; {testProfileDetail.location}
           </Typography>
-          <Box m={windowWidth < 600 ? `${5} ${4}` : 5}>
+          <Box m={windowWidth < 600 ? `${5} ` : 5}>
             <Typography mb={1} fontSize="1.1rem" component="h2" fontWeight="bold">
               About me
             </Typography>

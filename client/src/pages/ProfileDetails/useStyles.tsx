@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     minHeight: 200,
     '& > *': {
       position: 'absolute',
-      top: -35,
+      top: -235,
       left: 'calc(50% - 55px)',
       border: '5px solid ghostwhite',
     },
