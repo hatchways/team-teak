@@ -11,7 +11,7 @@ const StyledInput = styled(InputBase)(({ theme }) => ({
   '& .MuiInputBase-input': {
     fontSize: 16,
     width: '100%',
-    padding: '15px',
+    padding: '10px',
   },
 }));
 

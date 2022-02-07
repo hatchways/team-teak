@@ -7,12 +7,13 @@ import useStyles from './useStyles';
 import { useEffect, useState } from 'react';
 
 const testProfileDetail = {
-  name: 'grey nki',
+  name: 'grey naki',
   description: 'pet lover',
   location: 'Vancouver, Canada',
   introduction:
     'I grew up with animals my whole life. I have a passion for pets of all sizes and species. I am excited to be able to help you by caring for your pets while you are away. Your babies will be cared for and loved just as if they were my own.',
   hourlyRate: 16,
+  photoUrl: 'https://images-na.ssl-images-amazon.com/images/I/61HtctiMZqL.jpg',
   rating: 3.7,
 };
 
@@ -45,7 +46,7 @@ export default function ProfileDetails(): JSX.Element {
           lg={6}
           item
           borderRadius={2}
-          boxShadow={windowWidth < 1200 ? 0 : 4}
+          boxShadow={windowWidth < 1200 ? 2 : 4}
           container
           flexDirection="column"
         >
@@ -54,10 +55,11 @@ export default function ProfileDetails(): JSX.Element {
               width={windowWidth < 600 ? 100 : 150}
               height={windowWidth < 600 ? 100 : 150}
               loggedIn
+              photoUrl={testProfileDetail.photoUrl}
               user={{ name: 'pet lover', email: 'example@example.com' }}
             />
           </Box>
-          <Box m={windowWidth < 600 ? '1rem 0' : '5rem 0 1rem 0'} textAlign="center">
+          <Box m={windowWidth < 600 ? '6rem 0 2rem 0' : '5rem 0 1rem 0'} textAlign="center">
             <Typography fontWeight="bold" component="h1" fontSize="1.4rem">
               {testProfileDetail.name}
             </Typography>
@@ -68,20 +70,20 @@ export default function ProfileDetails(): JSX.Element {
           <Typography margin="auto" mb={4} display="flex" alignItems="center" color="rgba(0,0,0,0.3)" fontWeight="bold">
             <LocationOnIcon color="primary" /> &nbsp; {testProfileDetail.location}
           </Typography>
-          <Box m={windowWidth < 600 ? `${5} ` : 5}>
-            <Typography mb={1} fontSize="1.1rem" component="h2" fontWeight="bold">
+          <Box m={windowWidth < 600 ? `${2} ${3}` : 5}>
+            <Typography margin="10px 10px" mb={1} fontSize="1.1rem" component="h2" fontWeight="bold">
               About me
             </Typography>
-            <Typography>{testProfileDetail.introduction}</Typography>
+            <Typography margin="10px 10px">{testProfileDetail.introduction}</Typography>
           </Box>
         </Grid>
-        {windowWidth < 1200 ? <Divider sx={{ width: '95%' }} /> : null}
+        {windowWidth < 1200 ? <Divider sx={{ width: '100%' }} /> : null}
         <Grid
           xs={12}
           lg={4}
           item
           borderRadius={2}
-          boxShadow={windowWidth < 1200 ? 'none' : 4}
+          boxShadow={windowWidth < 1200 ? 2 : 4}
           container
           flexDirection="column"
         >

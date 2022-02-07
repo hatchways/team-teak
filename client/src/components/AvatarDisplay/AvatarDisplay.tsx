@@ -11,10 +11,10 @@ interface Props {
 
 const AvatarDisplay = ({ user, width, height, photoUrl }: Props): JSX.Element => {
   if (photoUrl !== '') {
-    return <Avatar sx={{ width, height }} alt="Profile Image" src={photoUrl} />;
+    return <Avatar sx={{ width, height }} alt="Profile Image" src={photoUrl} style={{ top: '180px' }} />;
   } else {
     return (
-      <Avatar sx={{ width, height }} alt="Profile Image">
+      <Avatar sx={{ width, height }} alt="Profile Image " style={{ top: '180px' }}>
         {user.name[0]}
       </Avatar>
     );
