@@ -26,7 +26,7 @@ function App(): JSX.Element {
                 <Route key={i} path={item.resource} component={item.component} />
               ))}
               <Route path="*">
-                <NotFound />
+                <NotFound message={`Sorry we couldn't get that page.`} />
               </Route>
             </Switch>
           </SocketProvider>

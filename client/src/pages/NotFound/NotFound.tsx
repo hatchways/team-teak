@@ -10,7 +10,11 @@ const useStyles = makeStyles({
   },
 });
 
-export default function NotFound(): JSX.Element {
+interface Props {
+  message: string;
+}
+
+export default function NotFound({ message }: Props): JSX.Element {
   const classes = useStyles();
 
   return (
@@ -23,7 +27,7 @@ export default function NotFound(): JSX.Element {
           }}
           variant="h2"
         >
-          Sorry we couldn&apos;t get that page.
+          {message}
         </Typography>
         <Box sx={{ width: 600, margin: '20px auto' }}>
           <img className={classes.image} src={dogNotFound} />
