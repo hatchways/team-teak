@@ -9,9 +9,9 @@ import ProfileListing from '../../components/ProfileListing/ProfileListing';
 import Search from '../../components/ProfileListing/Search';
 
 export default function Dashboard(): JSX.Element {
-  const [date, setDate] = React.useState<Date | null>(null);
-  const [location, setLocation] = React.useState<string | null>(null);
-  const [debouncedLocation] = useDebounce(location, 2000);
+  const [date, setDate] = React.useState<string>('');
+  const [location, setLocation] = React.useState<string | null>('');
+  const [debouncedLocation] = useDebounce(location, 1000);
 
   const { loggedInUser } = useAuth();
   const { initSocket } = useSocket();
