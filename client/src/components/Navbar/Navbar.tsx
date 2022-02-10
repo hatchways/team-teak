@@ -16,6 +16,7 @@ import { NavLink, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/useAuthContext';
 import lovingSitterLogo from '../../images/logo.svg';
 import { AccountType } from '../../types/AccountType';
+import { PetSitter, Profile } from '../../interface/Profile';
 import { useStyles } from './useStyles';
 
 const NavbarButton = styled(Button)({
@@ -44,7 +45,7 @@ const menuItems = [
   {
     item: 'My Sitters',
     resource: '/sitters',
-    canView: [AccountType.PET_OWNER],
+    canView: [AccountType.PET_OWNER, AccountType.PET_SITTER],
     authenticated: true,
   },
   {
@@ -94,7 +95,7 @@ const Navbar: React.FC = () => {
   const location = useLocation();
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const { loggedInUser, logout } = useAuth();
+  const { loggedInUser, logout, profile } = useAuth();
   const open = Boolean(anchorEl);
 
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -111,10 +112,11 @@ const Navbar: React.FC = () => {
   };
 
   const renderMenuItems = () => {
-    // TODO: conditionally render based on profile type
     return menuItems.map((menu) => {
       if (menu.authenticated) {
-        return loggedInUser && <MenuItem key={menu.resource} {...menu} />;
+        if (!profile) return loggedInUser && <MenuItem key={menu.resource} {...menu} />;
+        if (profile.type && menu?.canView?.includes(profile.type))
+          return loggedInUser && <MenuItem key={menu.resource} {...menu} />;
       } else {
         return !loggedInUser && <MenuItem key={menu.resource} {...menu} />;
       }
