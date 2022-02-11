@@ -174,7 +174,6 @@ const Navbar: React.FC = () => {
                     </ListItemIcon>
                     <ListItemText>Custom Booking</ListItemText>
                   </DropdownMenuItem>
-                  <DropdownMenuItem onClick={handleClose}>
                   <DropdownMenuItem component={NavLink} to="/profile/settings/profile-photo" onClick={handleClose}>
                     <ListItemIcon>
                       <Person fontSize="small" />
