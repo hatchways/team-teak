@@ -1,7 +1,10 @@
 const User = require("../models/User");
 const Profile = require("../models/Profile");
+const PetSitter = require("../models/PetSitter");
 const asyncHandler = require("express-async-handler");
 const generateToken = require("../utils/generateToken");
+
+
 
 // @route POST /auth/register
 // @desc Register user
@@ -29,11 +32,24 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
     password,
   });
 
+  const isPetSitter = req.query.accountType === "petSitter" ? true : false;
+
+
   if (user) {
-    await Profile.create({
+    if (isPetSitter) {
+      await PetSitter.create({
+        userId: user._id,
+        name,
+      });
+    } else {
+    const profile = await Profile.create({
       userId: user._id,
       name,
     });
+
+
+  }
+
 
     const token = generateToken(user._id);
     const secondsInWeek = 604800;
@@ -127,11 +143,7 @@ exports.loadUser = asyncHandler(async (req, res, next) => {
   });
 });
 
-// @route GET /auth/logout
-// @desc Logout user
-// @access Public
-exports.logoutUser = asyncHandler(async (req, res, next) => {
-  res.clearCookie("token");
 
-  res.send("You have successfully logged out");
-});
+
+
+
