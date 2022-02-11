@@ -4,11 +4,11 @@ const requestSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
-    ref: "User",
+    ref: "profiles",
   },
   sitterId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
+    ref: "profiles",
   },
   start: {
     type: Date,
@@ -17,6 +17,11 @@ const requestSchema = new mongoose.Schema({
   end: {
     type: Date,
     required: true,
+  },
+  status: {
+    type: String,
+    enum: ["PENDING", "ACCEPTED", "CANCELLED"],
+    default: "PENDING",
   },
   accepetd: {
     type: Boolean,
@@ -32,4 +37,4 @@ const requestSchema = new mongoose.Schema({
   },
 });
 
-module.exports = RequestSchema = mongoose.model("Request", requestSchema);
+module.exports = Request = mongoose.model("Request", requestSchema);
