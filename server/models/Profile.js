@@ -44,7 +44,7 @@ const profileSchema = new mongoose.Schema(
       default: "",
     },
   },
-  options
+  { ...options }
 );
 
 module.exports = Profile = mongoose.model("Profile", profileSchema);
