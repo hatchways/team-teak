@@ -69,11 +69,9 @@ export const getAllRoutes = () => menuItems;
 export const getRoutesAccordingToAccountType = (accountType: string) => {
   const routes = [];
   for (const route of menuItems) {
-    if (route.canView?.length > 1) {
+    if (route.canView?.includes(accountType)) {
       routes.push(route);
-    } else if (accountType === route.canView[0]) {
-      routes.push(route);
-    } else continue;
+    }
   }
 
   return routes;
