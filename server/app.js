@@ -11,6 +11,9 @@ const logger = require("morgan");
 
 const authRouter = require("./routes/auth");
 const userRouter = require("./routes/user");
+const profileRouter = require("./routes/profile");
+const stripeConnectRouter = require("./routes/stripeConnect");
+
 const profileRouter = require('./routes/profile');
 const imageUploadRouter = require("./routes/imageUpload");
 const notificationRouter = require("./routes/notification");
@@ -52,7 +55,11 @@ app.use((req, res, next) => {
 app.use("/auth", authRouter);
 app.use("/users", userRouter);
 app.use("/profile", profileRouter);
+
+app.use("/stripe", stripeConnectRouter);
+
 app.use("/imageUpload", imageUploadRouter);
+
 app.use("/notification", notificationRouter);
 app.use("/availability", availabilityRouter);
 
