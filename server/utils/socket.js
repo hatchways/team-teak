@@ -31,6 +31,6 @@ module.exports = async (server, app) => {
     socket.handshake.user = currentUser;
     next();
   }).on("connection", (socket) => {
-    console.log({ token: socket.handshake.token, user: socket.handshake.user }); // bar
+    console.log({ token: socket.handshake.token, user: socket.handshake.user });
   });
 };
