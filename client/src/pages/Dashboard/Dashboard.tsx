@@ -18,7 +18,7 @@ export default function Dashboard(): JSX.Element {
 
   useEffect(() => {
     const socket = socketIOClient('http://localhost:3000');
-    socket.on('message', (data) => {
+    socket.on('connection', (data) => {
       setResponse(data);
     });
     socket.disconnect();

@@ -26,29 +26,11 @@ module.exports = async (server, app) => {
     next();
   });
 
-  io.on("authorization", (handshake, callback) => {
-    handshake.token = token;
-    handshake.user = currentUser;
-    callback(null, true);
-  });
-
-  io.sockets.on("connection", (socket) => {
+  io.use((socket, next) => {
+    socket.handshake.token = token;
+    socket.handshake.user = currentUser;
+    next();
+  }).on("connection", (socket) => {
     console.log({ token: socket.handshake.token, user: socket.handshake.user }); // bar
-  });
-
-  let interval;
-
-  io.on("connection", (socket) => {
-    if (interval) {
-      clearInterval(interval);
-    }
-    interval = setInterval(() => getAndEmitMessage(socket), 1000);
-    socket.on("disconnect", () => {
-      clearInterval(interval);
-    });
-
-    const getAndEmitMessage = (socket) => {
-      socket.emit("message", currentUser);
-    };
   });
 };
