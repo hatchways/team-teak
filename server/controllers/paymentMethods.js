@@ -37,6 +37,6 @@ exports.createPaymentMethod = asyncHandler(async (req, res, next) => {
     });
   } catch (error) {
     res.status(400);
-    throw new Error("Payment Intent not created");
+    throw new Error("SetupIntent not created");
   }
 });
