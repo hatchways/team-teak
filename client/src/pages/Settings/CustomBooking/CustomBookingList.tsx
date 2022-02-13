@@ -21,15 +21,16 @@ import useStyles from './makeStyles';
 import PropTypes from 'prop-types';
 import CustomBookingMockData from '../../../mockData/CustomBookingMockData';
 import { TicketList } from '../../Settings/CustomBooking/TicketList/TicketList';
+import useArray from 'react-use-array';
+import { useMount } from 'react-use';
+
 const allStatus = ['all', ...new Set(CustomBookingMockData.map((item) => item.status))];
 
 interface formValues {
   paymentMethodRadio: any;
 }
 
-//////////////////////
-
-//////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////    /////////////////////
 
 function TabPanel(props: any) {
   const { children, value, index, ...other } = props;
@@ -71,8 +72,8 @@ export default function CustomBookingList(): JSX.Element {
   );
   const [bookingHours, setBookingHours] = React.useState(4);
   const [mockData, setMockData] = React.useState(CustomBookingMockData);
+  const [filterStatusList, setFilterStatusList] = React.useState([]);
 
-  const [filterStatusList, setFilterStatusList] = React.useState(allStatus);
   const [paymentStatus, setPaymentStatus] = React.useState('Current');
 
   const platformFee = 5;
@@ -95,21 +96,20 @@ export default function CustomBookingList(): JSX.Element {
 
   /////////////////////////////////////////////////////////////////////////////////
 
-  const switchStatus = (status: never) => {
-    const eachStatus = CustomBookingMockData.filter((item) => item.status === status);
-    setMockData(eachStatus);
-  };
-
   const handleChangeTabs = (event: never, newValue: never) => {
     setTabValue(newValue);
   };
 
-  const makePaymentRadioButton = (card: string) => {
-    return <FormControlLabel value={card.toString()} control={<Radio />} label={card} />;
-  };
+  const switchStatus = (status: any) => {
+    if (status === 'all') {
+      setMockData(CustomBookingMockData);
+      return;
+    }
 
-  const ccyFormat = (num: number) => {
-    return `${num.toFixed(2)}`;
+    console.log(' ====== ');
+
+    const eachStatus = CustomBookingMockData.filter((item) => item.status === status);
+    setMockData(eachStatus);
   };
 
   // const BookingPreview = (
@@ -149,23 +149,6 @@ export default function CustomBookingList(): JSX.Element {
   //   );
   // };
 
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const [param, setParam] = React.useState({
-    name: '',
-    personId: '',
-  });
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const [list, setList] = React.useState([]);
-
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  React.useEffect(() => {
-    fetch('').then(async (res) => {
-      if (res.ok) {
-        setList(await res.json());
-      }
-    });
-  }, [param]);
-
   return (
     <PageContainer>
       <Grid sx={{ width: '95%', margin: '0 auto' }} container>
@@ -180,7 +163,7 @@ export default function CustomBookingList(): JSX.Element {
           >
             <Grid item>
               <Box sx={{ borderColor: 'divider' }}>
-                <Tabs
+                {/* <Tabs
                   scrollButtons={false}
                   value={tabValue}
                   aria-label="outlined button group"
@@ -191,7 +174,23 @@ export default function CustomBookingList(): JSX.Element {
                   <Tab label="Current" />
                   <Tab label="Past-Due" />
                   <Tab label="Paid" />
-                </Tabs>
+                </Tabs> */}
+                <ButtonGroup variant="contained" size="large" className="btngrp" color="primary" fullWidth={true}>
+                  <Button
+                    className="filter-btn"
+                    onClick={() => {
+                      setMockData(CustomBookingMockData);
+                    }}
+                  >
+                    Current
+                  </Button>
+                  <Button className="filter-btn" onClick={() => switchStatus('past-due')}>
+                    Past-Due
+                  </Button>
+                  <Button className="filter-btn" onClick={() => switchStatus('paid')}>
+                    Paid
+                  </Button>
+                </ButtonGroup>
               </Box>
             </Grid>
 
@@ -201,7 +200,11 @@ export default function CustomBookingList(): JSX.Element {
 
             <Box sx={{ mt: '2rem' }} />
 
-            <TicketList param={param} setParam={setParam} />
+            <TicketList
+              tickListProp={{
+                ticketLists: [],
+              }}
+            />
 
             {/* <TabPanel value={tabValue} index={0}>
               <Box maxHeight="600px" sx={{ marginBottom: '1rem', overflowY: 'scroll' }}>

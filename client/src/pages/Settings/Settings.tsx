@@ -7,7 +7,7 @@ import SettingHeader from '../../components/SettingsHeader/SettingsHeader';
 import SettingsWrapper from '../../components/SettingsWrapper/SettingsWrapper';
 import { useAuth } from '../../context/useAuthContext';
 import EditProfile from './EditProfile/EditProfile';
-import CustomBooking from './CustomBooking/CustomBookingForm/CustomBooking';
+import CustomBookingList from './CustomBooking/CustomBookingForm/CustomBooking';
 import ProfilePhoto from './ProfilePhoto/ProfilePhoto';
 
 const settingsMenu = [
@@ -30,6 +30,11 @@ const settingsMenu = [
     name: 'Payment methods',
     to: '/profile/settings/payment-methods',
     component: <SettingHeader header="Payment Methods" />,
+  },
+  {
+    name: 'Custom booking',
+    to: '/custom/booking',
+    component: <CustomBookingList header="Custom Booking" />,
   },
 ];
 

@@ -3,6 +3,8 @@ import { useAuth } from '../../context/useAuthContext';
 import { useSnackBar } from '../../context/useSnackbarContext';
 import { loginWithDemo } from '../../helpers/APICalls/login';
 import useStyles from '../../pages/Login/LoginForm/useStyles';
+import CustomBookingMockData from '../../mockData/CustomBookingMockData';
+import * as React from 'react';
 
 // function TabPanel(props: any) {
 //   const { children, value, index, ...other } = props;
@@ -40,6 +42,19 @@ const TabPanel = ({ children, index, value }: Props): JSX.Element => {
   const { updateLoginContext } = useAuth();
   const { updateSnackBarMessage } = useSnackBar();
   const classes = useStyles();
+  const [mockData, setMockData] = React.useState(CustomBookingMockData);
+
+  const switchStatus = (status: any) => {
+    if (status === 'all') {
+      setMockData(CustomBookingMockData);
+      return;
+    }
+
+    const eachStatus = CustomBookingMockData.filter((item) => item.status === status);
+    setMockData(eachStatus);
+  };
+
+  /////////
 
   const handleLoginDemoUser = () => {
     loginWithDemo().then((data) => {
@@ -56,18 +71,29 @@ const TabPanel = ({ children, index, value }: Props): JSX.Element => {
   };
 
   return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-    >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
+    // <div
+    //   role="tabpanel"
+    //   hidden={value !== index}
+    //   id={`simple-tabpanel-${index}`}
+    //   aria-labelledby={`simple-tab-${index}`}
+    // >
+    //   {value === index && (
+    //     <Box sx={{ p: 3 }}>
+    //       <Typography>{children}</Typography>
+    //     </Box>
+    //   )}
+    // </div>
+    <>
+      <Button className="filter-btn" onClick={() => switchStatus('current')}>
+        current
+      </Button>
+      <Button className="filter-btn" onClick={() => switchStatus('past-due')}>
+        past-due
+      </Button>
+      <Button className="filter-btn" onClick={() => switchStatus('paid')}>
+        paid
+      </Button>
+    </>
   );
 };
 

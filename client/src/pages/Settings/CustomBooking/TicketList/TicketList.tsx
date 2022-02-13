@@ -15,22 +15,27 @@ import { useEffect, useState } from 'react';
 
 import { CustomBooking } from '../../../../interface/CustomBooking';
 
-interface TickListProp {
-  // name: string;
-  // description?: string; // set to optional but always passed in from settings
-  // photo?: string;
-  // start: Date;
-  // end: Date;
-  // hours: number;
-  // rate: number;
-  // status: string;
-  ticketSitterList: CustomBooking[];
-
-  setTicketSitterList: React.Dispatch<React.SetStateAction<CustomBooking[]>>;
+interface ITickListProp {
+  tickListProp: TickeetListDataPropType;
 }
 
-export const TicketList = ({ param}:{param:any}, setParam }) => {
-  const [ticketSitterList, setTicketSitterList] = useState([]);
+type TickeetListDataPropType = {
+  ticketLists: TickeetListPropType[];
+};
+
+type TickeetListPropType = {
+  name: string;
+  description?: string; // set to optional but always passed in from settings
+  photo?: string;
+  start: Date;
+  end: Date;
+  hours: number;
+  rate: number;
+  status: string;
+};
+
+export const TicketList = (props: ITickListProp) => {
+  const { ticketLists } = props.tickListProp;
   const classes = useStyles();
   const [tabValue, setTabValue] = React.useState(0);
 
@@ -53,65 +58,35 @@ export const TicketList = ({ param}:{param:any}, setParam }) => {
   };
 
   return (
-    <Box
-      sx={{
-        width: '95%',
-        height: '100%',
-        padding: '20px',
-        backgroundColor: '#fff',
-      }}
-    >
-      <Grid item>
-        <Box sx={{ borderColor: 'divider' }}>
-          <Tabs
-            scrollButtons={false}
-            value={tabValue}
-            aria-label="outlined button group"
-            onChange={() => {
-              handleChangeTabs;
-            }}
-          >
-            <Tab label="Current" />
-            <Tab label="Past-Due" />
-            <Tab label="Paid" />
-          </Tabs>
-        </Box>
-      </Grid>
-
-      <Box sx={{ mt: '2rem' }} />
-
-      <Divider />
-
-      <Box maxHeight="600px" sx={{ marginBottom: '1rem', overflowY: 'scroll' }}>
-        {ticketSitterList.map((item) => (
-          <Box
+    <Box maxHeight="600px" sx={{ marginBottom: '1rem', overflowY: 'scroll' }}>
+      {ticketLists.map((item) => {
+        <Box
+          sx={{
+            margin: '5px 0',
+            border: 'solid black 1px',
+            backgroundColor: '#A9A9A9',
+            height: '100px',
+          }}
+          key={item.photo}
+        >
+          <Link
             sx={{
-              margin: '5px 0',
-              border: 'solid black 1px',
-              backgroundColor: '#A9A9A9',
-              height: '100px',
+              fontSize: 20,
+              color: '#fff',
+              textDecoration: 'none',
+              '&:hover': {
+                color: '#000',
+              },
             }}
-            key={param.name}
+            component={NavLink}
+            activeClassName={classes.activeLink}
+            to={item.name}
           >
-            <Link
-              sx={{
-                fontSize: 20,
-                color: '#fff',
-                textDecoration: 'none',
-                '&:hover': {
-                  color: '#000',
-                },
-              }}
-              component={NavLink}
-              activeClassName={classes.activeLink}
-              to={item.url}
-            >
-              {item.description}
-              {item.rate}
-            </Link>
-          </Box>
-        ))}
-      </Box>
+            {item.description}
+            {item.rate}
+          </Link>
+        </Box>;
+      })}
     </Box>
   );
 };

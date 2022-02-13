@@ -1,4 +1,13 @@
-const CustomBookingMockData = [
+const CustomBookingMockData: {
+  name: string;
+  description: string;
+  photo: string;
+  start: string;
+  end: string;
+  hours: number;
+  rate: number;
+  status: string;
+}[] = [
   {
     name: 'Kelly Low',
     description: 'Most popular dog-sitter',
