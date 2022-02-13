@@ -6,7 +6,7 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET);
 
 // @route POST /payments/
 // @desc add payment
-// @access Public
+// @access Private
 exports.addPayment = asyncHandler(async (req, res, next) => {
   const userId = req.user.id;
   const { sitterId, rate, startTime, endTime } = req.body;
@@ -81,7 +81,7 @@ exports.makePayment = asyncHandler(async (req, res, next) => {
       description: `Made a payment of ${totalPayment}`,
     });
   } catch (error) {
-    res.status(400);
+    res.status(500);
     throw new Error("Payment was not completed");
   }
 
