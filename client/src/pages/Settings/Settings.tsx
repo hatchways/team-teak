@@ -7,6 +7,7 @@ import PaymentMethods from '../../components/PaymentMethods/paymentMethods';
 import SettingHeader from '../../components/SettingsHeader/SettingsHeader';
 import SettingsWrapper from '../../components/SettingsWrapper/SettingsWrapper';
 import { useAuth } from '../../context/useAuthContext';
+import StripeConnect from '../StripeConnect/StripeConnect';
 import EditProfile from './EditProfile/EditProfile';
 import ProfilePhoto from './ProfilePhoto/ProfilePhoto';
 
@@ -48,7 +49,7 @@ export default function Settings(): JSX.Element {
   if (loggedInUser === undefined) return <CircularProgress />;
   if (!loggedInUser || !profile) {
     history.push('/login');
-    // loading for a split seconds until history.push works
+
     return <CircularProgress />;
   }
 
