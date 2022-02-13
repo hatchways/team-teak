@@ -30,7 +30,7 @@ exports.stripeConnect = asyncHandler(async (req, res, next) => {
     });
   } catch (err) {
     res.status(400);
-    throw new Error("Stripe ccount not created", err);
+    throw new Error("Stripe account not created", err);
   }
 
   try {
