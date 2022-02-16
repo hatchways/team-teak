@@ -3,6 +3,7 @@ import { makeStyles } from '@mui/styles';
 import { cloneElement } from 'react';
 import { NavLink, Redirect, Route, Switch, useHistory } from 'react-router-dom';
 import PageContainer from '../../components/PageContainer/PageContainer';
+import PaymentMethods from '../../components/PaymentMethods/paymentMethods';
 import SettingHeader from '../../components/SettingsHeader/SettingsHeader';
 import SettingsWrapper from '../../components/SettingsWrapper/SettingsWrapper';
 import { useAuth } from '../../context/useAuthContext';
@@ -29,7 +30,7 @@ const settingsMenu = [
   {
     name: 'Payment methods',
     to: '/profile/settings/payment-methods',
-    component: <StripeConnect />,
+    component: <PaymentMethods />,
   },
   {
     name: 'Billings',
