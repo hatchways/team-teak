@@ -5,6 +5,7 @@ import Login from '../Login/Login';
 import SignUp from '../SignUp/SignUp';
 import { AccountType } from '../../types/AccountType';
 import NotFound from '../NotFound/NotFound';
+import Settings from '../Settings/Settings';
 
 const menuItems = [
   {
@@ -55,6 +56,13 @@ const menuItems = [
     canView: [AccountType.PET_SITTER, AccountType.PET_OWNER],
     authenticated: true,
     component: BookingPage,
+  },
+  {
+    item: 'Settings',
+    resource: '/profile/settings',
+    canView: [AccountType.PET_SITTER, AccountType.PET_OWNER],
+    authenticated: true,
+    component: Settings,
   },
 ];
 
