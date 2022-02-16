@@ -18,6 +18,7 @@ const stripeConnectRouter = require("./routes/stripeConnect");
 const imageUploadRouter = require("./routes/imageUpload");
 const notificationRouter = require("./routes/notification");
 const availabilityRouter = require("./routes/availability");
+
 const { json, urlencoded } = express;
 
 connectDB();
@@ -27,16 +28,6 @@ const PublicKey = process.env.STRIPE_PUBLIC_KEY;
 const app = express();
 const server = http.createServer(app);
 const stripe = require("stripe")(stripeSecretKey);
-
-const io = socketio(server, {
-  cors: {
-    origin: "*",
-  },
-});
-
-io.on("connection", (socket) => {
-  console.log("connected");
-});
 
 if (process.env.NODE_ENV === "development") {
   app.use(logger("dev"));
@@ -51,10 +42,7 @@ app.use(urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(join(__dirname, "public")));
 
-app.use((req, res, next) => {
-  req.io = io;
-  next();
-});
+require("./utils/socket")(server, app);
 
 app.use("/auth", authRouter);
 app.use("/users", userRouter);

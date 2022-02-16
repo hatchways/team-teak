@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 
-
 const options = {
   discriminatorKey: "type",
 };
@@ -13,8 +12,8 @@ const profileSchema = new mongoose.Schema(
       ref: "User",
     },
     stripeAccountId: {
-    type: String,
-    required: true,
+      type: String,
+      required: true,
     },
     activeScheduleId: {
       type: mongoose.Schema.Types.ObjectId,

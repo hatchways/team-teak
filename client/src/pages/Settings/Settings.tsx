@@ -32,6 +32,11 @@ const settingsMenu = [
     to: '/profile/settings/payment-methods',
     component: <PaymentMethods />,
   },
+  {
+    name: 'Billings',
+    to: '/profile/settings/billings',
+    component: <StripeConnect />,
+  },
 ];
 
 const useStyles = makeStyles({
