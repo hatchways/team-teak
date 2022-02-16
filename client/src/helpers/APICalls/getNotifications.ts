@@ -14,7 +14,7 @@ export async function createNotification(): Promise<Notifications> {
     }));
 }
 
-export async function fetctAllNotications(): Promise<Notifications> {
+export async function fetchAllNotications(): Promise<Notifications> {
   const fetchOptions: FetchOptions = {
     method: 'GET',
     credentials: 'include',
@@ -26,7 +26,7 @@ export async function fetctAllNotications(): Promise<Notifications> {
     }));
 }
 
-export async function fetctAllUnreadNotications() {
+export async function fetchAllUnreadNotications() {
   const fetchOptions: FetchOptions = {
     method: 'GET',
     credentials: 'include',

@@ -36,9 +36,6 @@ exports.createNotification = asyncHandler(async (req, res, next) => {
 exports.markNotificationRead = asyncHandler(async (req, res, next) => {
   const notificationByUserId = req.params.userId;
 
-  console.log(notificationByUserId);
-
-
   const { id: userId } = req.user;
 
   const notification = await NotificationSchema.find({
@@ -46,16 +43,7 @@ exports.markNotificationRead = asyncHandler(async (req, res, next) => {
     isRead: false,
   });
 
-  console.log("aaa" + notification);
-  console.log(userId);
-
-
   if (notification) {
-    // if (userId !== notification[0].recieverId) {
-    //   res.status(400);
-    //   throw new Error("Not authorised to read this");
-    // }
-
     const notificationId = notification[0]._id;
     const updatedNotification = await NotificationSchema.findByIdAndUpdate(
       notificationId,
@@ -94,16 +82,10 @@ exports.fetctAllNotications = asyncHandler(async (req, res, next) => {
 exports.fetctAllUnreadNotications = asyncHandler(async (req, res, next) => {
   const { id: userId } = req.user;
 
-  console.log(userId);
-  // console.log(id);
-
   const findAllByLoggedUser = await NotificationSchema.find({
     recieverId: userId,
     isRead: false,
   });
-
-  console.log(findAllByLoggedUser);
-
 
   return res.status(200).send({
     data: findAllByLoggedUser,

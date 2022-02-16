@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Grid, Link, Popper, Badge } from '@mui/material';
 import NotificaitonContent from '../NotificationContent/NotificationContent';
-import { fetctAllUnreadNotications, markNotificationsAsRead } from '../../helpers/APICalls/getNotifications';
+import { fetchAllUnreadNotications, markNotificationsAsRead } from '../../helpers/APICalls/getNotifications';
 import { Notifications, NotificationsApiData } from '../../interface/Notifications';
 import { useSnackBar } from '../../context/useSnackbarContext';
 import { useAuth } from '../../context/useAuthContext';
@@ -10,19 +10,14 @@ import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import { User } from '../../interface/User';
 
-// interface NotificationsProps {
-//   unReadNotifications: string;
-// }
-
 const Notificaitons = (): JSX.Element => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [unReadNotification, setUnReadNotification] = useState<Notifications[] | undefined>();
-  // const [notificationsApiData, setnotificationsApiData] = useState<NotificationsApiData[] | undefined>();
 
   const { updateSnackBarMessage } = useSnackBar();
   const { updateLoginContext } = useAuth();
 
-  const { loggedInUser, profile, notifications, logout } = useAuth();
+  const { loggedInUser, profile, logout } = useAuth();
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(anchorEl ? null : event.currentTarget);
@@ -40,8 +35,8 @@ const Notificaitons = (): JSX.Element => {
 
   useEffect(() => {
     const fetchUnReadData = async () => {
-      const getData = await fetctAllUnreadNotications();
-      total.current = Object.keys(getData.data).length;
+      const getData = await fetchAllUnreadNotications();
+      total.current = getData.data.length;
       unread.current = getData.data;
 
       if (getData.error) {

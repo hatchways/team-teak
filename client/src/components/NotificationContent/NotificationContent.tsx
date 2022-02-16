@@ -5,7 +5,6 @@ import BookingProfile from '../BookingProfile/BookingProfile';
 import BookingWrapper from '../BookingWrapper/BookingWrapper';
 import { format } from 'date-fns';
 import { Notifications, NotificationsApiData } from '../../interface/Notifications';
-import { fetctAllUnreadNotications, markNotificationsAsRead } from '../../helpers/APICalls/getNotifications';
 
 interface NotificationContentProps {
   unReadNotification: Notifications[] | undefined | null;
