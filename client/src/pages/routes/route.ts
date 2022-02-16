@@ -1,10 +1,11 @@
-import { Component } from 'react';
 import BookingPage from '../BookingPage/BookingPage';
 import Dashboard from '../Dashboard/Dashboard';
 import Login from '../Login/Login';
 import SignUp from '../SignUp/SignUp';
 import { AccountType } from '../../types/AccountType';
 import NotFound from '../NotFound/NotFound';
+import Settings from '../Settings/Settings';
+import MessagingPage from '../Messaging/MessagingPage';
 
 const menuItems = [
   {
@@ -47,7 +48,7 @@ const menuItems = [
     resource: '/messages',
     canView: [AccountType.PET_SITTER, AccountType.PET_OWNER],
     authenticated: true,
-    component: NotFound,
+    component: MessagingPage,
   },
   {
     item: 'Manage Bookings',
@@ -55,6 +56,13 @@ const menuItems = [
     canView: [AccountType.PET_SITTER, AccountType.PET_OWNER],
     authenticated: true,
     component: BookingPage,
+  },
+  {
+    item: 'Settings',
+    resource: '/profile/settings',
+    canView: [AccountType.PET_SITTER, AccountType.PET_OWNER],
+    authenticated: true,
+    component: Settings,
   },
 ];
 
