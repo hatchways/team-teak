@@ -44,7 +44,7 @@ const ProfilePhoto: React.FC<ProfilePhotoProps> = ({ header, currentUser }) => {
 
   return (
     <Box sx={{ textAlign: 'center' }}>
-      <SettingHeader header="Availability" />
+      <SettingHeader header={header} />
       <Avatar
         id="photo"
         sx={{
