@@ -9,7 +9,7 @@ const SettingHeader: React.FC<SettingHeaderProps> = ({ header }) => {
   return (
     <Box>
       <Typography
-        variant="h3"
+        variant="h5"
         sx={{
           fontWeight: 700,
           textAlign: 'center',
