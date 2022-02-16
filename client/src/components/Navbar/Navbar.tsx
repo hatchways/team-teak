@@ -9,6 +9,7 @@ import {
   Menu,
   MenuItem as DropdownMenuItem,
   styled,
+  Avatar,
 } from '@mui/material';
 import clsx from 'clsx';
 import React, { useState } from 'react';
@@ -94,7 +95,7 @@ const Navbar: React.FC = () => {
   const location = useLocation();
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const { loggedInUser, logout } = useAuth();
+  const { loggedInUser, logout, profile } = useAuth();
   const open = Boolean(anchorEl);
 
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -145,7 +146,12 @@ const Navbar: React.FC = () => {
                   onClick={handleMenuOpen}
                   color="inherit"
                 >
-                  <img style={{ width: 50 }} src={`https://robohash.org/${loggedInUser.email}`} />
+                  {' '}
+                  {console.log(profile?.photo)}
+                  <Avatar
+                    style={{ width: 50 }}
+                    src={profile ? profile.photo : `https://robohash.org/${loggedInUser.email}`}
+                  />
                 </IconButton>
                 <Menu
                   id="menu-appbar"
