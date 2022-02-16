@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 
-const paymentSchema = new mongoose.Schema(
-  {
+const paymentSchema = new mongoose.Schema({
     sitterId: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
