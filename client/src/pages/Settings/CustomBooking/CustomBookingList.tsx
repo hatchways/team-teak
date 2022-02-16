@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { Box, CircularProgress, Grid, Link, Divider, Typography } from '@mui/material';
-import { NavLink, Redirect, Route, Switch, useHistory } from 'react-router-dom';
 import PageContainer from '../../../components/PageContainer/PageContainer';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
@@ -10,9 +9,6 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import TabBox from '../../../components/TabBox/TabBox';
-import CustomBookingPreview from '../../../components/CustomBookingPreview/CustomBookingPreview';
-import CustomBookingWrapper from 'components/CustomBookingWraper/CustomBookingWrapper';
 
 import PropTypes from 'prop-types';
 import { useSnackBar } from '../../../context/useSnackbarContext';
@@ -99,10 +95,10 @@ export default function CustomerBookings(): JSX.Element {
 
   const currentBookings = [
     {
-      name: 'Jennifer Lawrence',
-      description: 'Most popular dog-sitter',
+      name: 'Iris Jen',
+      description: 'dog-sitter is my career',
       photo:
-        'https://pyxis.nymag.com/v1/imgs/cdd/4c7/65257dcae8272f7aff667d0bf255e5bd02-27-Jennifer-Lawrence-dog.rhorizontal.w700.jpg',
+        'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F47%2F2021%2F05%2F25%2Fhappy-woman-and-dog-713530465-2000.jpg',
       start: '2022-2-3',
       end: '2022-2-3',
       hours: 4,
@@ -110,8 +106,8 @@ export default function CustomerBookings(): JSX.Element {
       status: 'current',
     },
     {
-      name: 'Jane Doe',
-      description: 'I sit dogs',
+      name: 'Kelly Doe',
+      description: 'I kiss dogs',
       photo: 'https://lovingpaws.ca/wp-content/uploads/2019/11/dog-sitter-1.png',
       start: '2022-2-15',
       end: '2022-2-16',
@@ -123,7 +119,7 @@ export default function CustomerBookings(): JSX.Element {
       name: 'Jennifer Lawrence',
       description: 'Most popular dog-sitter',
       photo:
-        'https://pyxis.nymag.com/v1/imgs/cdd/4c7/65257dcae8272f7aff667d0bf255e5bd02-27-Jennifer-Lawrence-dog.rhorizontal.w700.jpg',
+        'https://images.ctfassets.net/nx3pzsky0bc9/9t9YStD9I5zJrEKqJcI44/273b4ab254c6208516c209a5aecec1b1/woman-on-couch-with-dog-and-cat820444297.png?w=355',
       start: '2022-3-3',
       end: '2022-3-4',
       hours: 27,
@@ -131,9 +127,9 @@ export default function CustomerBookings(): JSX.Element {
       status: 'current',
     },
     {
-      name: 'Jane Doe',
+      name: 'Kelly Doe',
       photo: 'https://lovingpaws.ca/wp-content/uploads/2019/11/dog-sitter-1.png',
-      description: 'I sit dogs',
+      description: 'I kiss dogs',
       start: '2022-9-09',
       end: '2022-9-10',
       hours: 12,
@@ -145,8 +141,7 @@ export default function CustomerBookings(): JSX.Element {
     {
       name: 'Jenny L',
       description: 'Famous dog-sitter',
-      photo:
-        'https://pyxis.nymag.com/v1/imgs/cdd/4c7/65257dcae8272f7aff667d0bf255e5bd02-27-Jennifer-Lawrence-dog.rhorizontal.w700.jpg',
+      photo: 'https://www.k9ofmine.com/wp-content/uploads/2018/01/how-much-does-dog-sitting-pay-1150x700.jpg',
       start: '2022-8-26',
       end: '2022-8-26',
       hours: 7,
@@ -168,7 +163,8 @@ export default function CustomerBookings(): JSX.Element {
   const paidBookings = [
     {
       name: 'Fenny K',
-      photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcFYkvkn6EBRxJBi9YMgqzzdhI2BhJ6UWNWw&usqp=CAU',
+      photo:
+        'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F47%2F2021%2F05%2F25%2Fhappy-woman-and-dog-713530465-2000.jpg',
       description: 'I love take care animal',
       start: '2022-2-10',
       end: '2022-2-11',
@@ -177,10 +173,11 @@ export default function CustomerBookings(): JSX.Element {
       status: 'paid',
     },
     {
-      name: 'Jean K.',
-      photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTogkUgsVlIXfl9zhqxShKXzxNzKCfgdg427Q&usqp=CAU',
-      description: 'I can walk dogs',
-      start: '2022-1-11',
+      name: 'Jace Kelly',
+      photo:
+        'https://images.ctfassets.net/nx3pzsky0bc9/9t9YStD9I5zJrEKqJcI44/273b4ab254c6208516c209a5aecec1b1/woman-on-couch-with-dog-and-cat820444297.png?w=355',
+      description: 'walk dogs is my hobby',
+      start: '2022-1-12',
       end: '2022-1-13',
       hours: 12,
       rate: 23,
@@ -193,14 +190,12 @@ export default function CustomerBookings(): JSX.Element {
   }
 
   const [tabValue, setTabValue] = React.useState(0);
-  const [petSitterName, setPetSitterName] = React.useState('Jennifer Lawrence');
-  const [petSitterDescription, setpetSitterDescription] = React.useState('Most popular dog-sitter');
-  const [petSitterRate, setpetSitterRate] = React.useState(22);
-  const [petSitterPhoto, setpetSitterPhoto] = React.useState(
-    'https://pyxis.nymag.com/v1/imgs/cdd/4c7/65257dcae8272f7aff667d0bf255e5bd02-27-Jennifer-Lawrence-dog.rhorizontal.w700.jpg',
-  );
-  const [bookingHours, setBookingHours] = React.useState(4);
-  const [paymentStatus, setPaymentStatus] = React.useState('Current');
+  const [petSitterName, setPetSitterName] = React.useState('');
+  const [petSitterDescription, setpetSitterDescription] = React.useState('');
+  const [petSitterRate, setpetSitterRate] = React.useState(0);
+  const [petSitterPhoto, setpetSitterPhoto] = React.useState('');
+  const [bookingHours, setBookingHours] = React.useState(0);
+  const [paymentStatus, setPaymentStatus] = React.useState('status');
 
   const platformFee = 5;
   const amount = bookingHours * petSitterRate;
@@ -212,7 +207,7 @@ export default function CustomerBookings(): JSX.Element {
     return <FormControlLabel value={card.toString()} control={<Radio />} label={card} />;
   };
 
-  const ccyFormat = (num: number) => {
+  const doPayment = (num: number) => {
     return `${num.toFixed(2)}`;
   };
 
@@ -234,9 +229,9 @@ export default function CustomerBookings(): JSX.Element {
             your bookings
           </Typography>
         </Grid>
-        <Grid item xs={12} sm={3}>
+        <Grid item sm={12} md={4}>
           <Box>
-            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+            <Box sx={{}}>
               <Tabs scrollButtons={false} value={tabValue} onChange={handleChangeTabs} aria-label="basic tabs example">
                 <Tab label="Current" />
                 <Tab label="Past-Due" />
@@ -260,7 +255,7 @@ export default function CustomerBookings(): JSX.Element {
               </Box>
             </TabPanel>
             <TabPanel value={tabValue} index={1}>
-              <Box maxHeight="600px" sx={{ marginBottom: '1rem', overflowY: 'scroll' }}>
+              <Box maxHeight="800px" sx={{ marginBottom: '1rem', overflowY: 'scroll' }}>
                 {pastDueBookings.map((booking: any) =>
                   BookingPreview(
                     booking.name,
@@ -293,10 +288,10 @@ export default function CustomerBookings(): JSX.Element {
             </TabPanel>
           </Box>
         </Grid>
-        <Grid item xs={12} sm={9}>
+        <Grid item sm={12} md={8}>
           <Grid>
             <Box sx={{ display: 'flex' }}>
-              <Grid item xs={11}>
+              <Grid item sm={11}>
                 <Box sx={{ display: 'flex' }}>
                   <Avatar
                     id="photo"
@@ -386,37 +381,37 @@ export default function CustomerBookings(): JSX.Element {
                     </TableCell>
                     <TableCell sx={{ border: '1px solid #dbdbdb' }}>Dog-sitting service</TableCell>
                     <TableCell sx={{ border: '1px solid #dbdbdb' }} align="right">
-                      {ccyFormat(petSitterRate)}
+                      {doPayment(petSitterRate)}
                     </TableCell>
                     <TableCell sx={{ border: '1px solid #dbdbdb' }} align="right">
-                      {ccyFormat(amount)}
+                      {doPayment(amount)}
                     </TableCell>
                   </TableRow>
 
                   <TableRow>
                     <TableCell sx={{ borderBottom: 'none' }} colSpan={2} />
                     <TableCell align="right" sx={{ borderBottom: 'none' }}>
-                      Platform Fee
+                      Tax Fee
                     </TableCell>
                     <TableCell align="right" sx={{ border: '1px solid #dbdbdb' }}>
-                      {ccyFormat(platformFee)}
+                      {doPayment(platformFee)}
                     </TableCell>
                   </TableRow>
                   <TableRow sx={{ border: 'none' }}>
-                    <TableCell colSpan={2} />
+                    <TableCell colSpan={3} />
                     <TableCell align="right" sx={{ textTransform: 'uppercase', fontSize: '15px', fontWeight: 500 }}>
                       Total
                     </TableCell>
                     <TableCell
                       sx={{
-                        backgroundColor: '#eeeeee',
+                        backgroundColor: '#fff',
                         fontSize: '15px',
-                        fontWeight: 500,
-                        border: '1px solid #dbdbdb',
+                        fontWeight: 400,
+                        border: '1px solid #dbdbdc',
                       }}
                       align="right"
                     >
-                      {ccyFormat(invoiceTotal)}
+                      {doPayment(invoiceTotal)}
                     </TableCell>
                   </TableRow>
                 </TableBody>
