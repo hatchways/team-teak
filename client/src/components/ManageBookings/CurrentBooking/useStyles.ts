@@ -11,20 +11,41 @@ const useStyles = makeStyles(() => ({
     padding: '5px',
     margin: '0px auto',
     backgroundColor: 'rgb(255, 255, 255)',
-    // borderWidth: '1px 1px',
-    // borderStyle: 'solid',
     borderColor: theme.palette.primary.dark,
+    '@media(max-width: 767px)': {
+      width: '90%',
+      alignItems: 'center',
+      margin: '10px auto',
+    },
   },
   icon: {
     marginLeft: '350px',
     color: theme.palette.primary.dark,
     fontWeight: 700,
+    '@media(max-width: 767px)': {
+      marginLeft: '90%',
+    },
   },
   date: {
     position: 'relative',
     top: '-20px',
     paddingLeft: '20px',
     color: 'black',
+    '@media(max-width: 767px)': {
+      paddingLeft: '5px',
+      color: 'black',
+    },
+  },
+  title: {
+    position: 'relative',
+    top: '-20px',
+    paddingLeft: '20px',
+    color: 'black',
+    textTransform: 'uppercase',
+    '@media(max-width: 767px)': {
+      paddingLeft: '5px',
+      color: 'black',
+    },
   },
   details: {
     position: 'relative',
@@ -35,7 +56,6 @@ const useStyles = makeStyles(() => ({
     margin: 'auto',
     display: 'flex',
     flexDirection: 'row',
-    // justifyContent: 'space-between',
   },
   image: {
     width: '60px',

@@ -4,6 +4,7 @@ import Login from '../Login/Login';
 import SignUp from '../SignUp/SignUp';
 import { AccountType } from '../../types/AccountType';
 import NotFound from '../NotFound/NotFound';
+import Settings from '../Settings/Settings';
 
 const menuItems = [
   {
@@ -35,13 +36,6 @@ const menuItems = [
     component: SignUp,
   },
   {
-    item: 'My Jobs',
-    resource: '/my-jobs',
-    canView: [AccountType.PET_SITTER],
-    authenticated: true,
-    component: NotFound,
-  },
-  {
     item: 'My Sitters',
     resource: '/sitters',
     canView: [AccountType.PET_OWNER],
@@ -57,10 +51,17 @@ const menuItems = [
   },
   {
     item: 'Manage Bookings',
-    resource: '/bookings',
+    resource: '/my-jobs',
     canView: [AccountType.PET_SITTER, AccountType.PET_OWNER],
     authenticated: true,
     component: BookingPage,
+  },
+  {
+    item: 'Settings',
+    resource: '/profile/settings',
+    canView: [AccountType.PET_SITTER, AccountType.PET_OWNER],
+    authenticated: true,
+    component: Settings,
   },
 ];
 

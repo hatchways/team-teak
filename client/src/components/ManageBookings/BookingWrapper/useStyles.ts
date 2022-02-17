@@ -10,6 +10,11 @@ const useStyles = makeStyles(() => ({
     padding: '5px',
     margin: '0px auto',
     backgroundColor: 'rgb(255, 255, 255)',
+    '@media(max-width: 767px)': {
+      width: '200px',
+      alignItems: 'center',
+      margin: '0px auto',
+    },
   },
   contentWrapper: {
     width: '350px',
