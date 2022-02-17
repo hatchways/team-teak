@@ -16,7 +16,7 @@ router
   .route("/")
   .post([protect, validateCreateConversation], createConversation);
 
-router.route("/:receiverId").get(protect, getAllConversations);
+router.route("/").get(protect, getAllConversations);
 
 router.route("/sendMessage").post([protect, validateSendMessage], sendMessage);
 

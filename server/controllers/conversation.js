@@ -117,11 +117,8 @@ exports.sendMessage = asyncHandler(async (req, res, next) => {
 // @desc get all conversations for a user
 // @access Private
 exports.getAllConversations = asyncHandler(async (req, res, next) => {
-  const { receiverId } = req.params;
-
   const conditions = {
     senderId: mongoose.Types.ObjectId(req.user.id),
-    receiverId: mongoose.Types.ObjectId(receiverId),
   };
 
   const conversations = await getAllConversations(conditions);
