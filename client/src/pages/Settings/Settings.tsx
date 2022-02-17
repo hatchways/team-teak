@@ -3,9 +3,11 @@ import { makeStyles } from '@mui/styles';
 import { cloneElement } from 'react';
 import { NavLink, Redirect, Route, Switch, useHistory } from 'react-router-dom';
 import PageContainer from '../../components/PageContainer/PageContainer';
+import PaymentMethods from '../../components/PaymentMethods/paymentMethods';
 import SettingHeader from '../../components/SettingsHeader/SettingsHeader';
 import SettingsWrapper from '../../components/SettingsWrapper/SettingsWrapper';
 import { useAuth } from '../../context/useAuthContext';
+import StripeConnect from '../StripeConnect/StripeConnect';
 import EditProfile from './EditProfile/EditProfile';
 import Availability from './Availability/Availability';
 import DestopAvailability from '../../components/Availability/DesktopAvailability';
@@ -31,7 +33,12 @@ const settingsMenu = [
   {
     name: 'Payment methods',
     to: '/profile/settings/payment-methods',
-    component: <SettingHeader header="Payment Methods" />,
+    component: <PaymentMethods />,
+  },
+  {
+    name: 'Billings',
+    to: '/profile/settings/billings',
+    component: <StripeConnect />,
   },
 ];
 
@@ -50,7 +57,7 @@ export default function Settings(): JSX.Element {
   if (loggedInUser === undefined) return <CircularProgress />;
   if (!loggedInUser || !profile) {
     history.push('/login');
-    // loading for a split seconds until history.push works
+
     return <CircularProgress />;
   }
 
