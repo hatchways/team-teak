@@ -9,14 +9,14 @@ const menuItems = [
   {
     item: 'Login',
     resource: '/login',
-    canView: [AccountType.PET_OWNER, AccountType.PET_SITTER],
+    canView: null,
     authenticated: false,
     component: Login,
   },
   {
     item: 'Sign up',
     resource: '/signup',
-    canView: [AccountType.PET_OWNER, AccountType.PET_SITTER],
+    canView: null,
     authenticated: false,
     component: SignUp,
   },
@@ -69,7 +69,9 @@ export const getAllRoutes = () => menuItems;
 export const getRoutesAccordingToAccountType = (accountType: string) => {
   const routes = [];
   for (const route of menuItems) {
-    if (route.canView?.includes(accountType)) {
+    if (!route.canView) {
+      routes.push(route);
+    } else if (route.canView?.includes(accountType)) {
       routes.push(route);
     }
   }
