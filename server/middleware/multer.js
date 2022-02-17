@@ -7,6 +7,7 @@ const parser = new DatauriParser();
 
 const multerSingleUpload = multer({ storage }).single("image");
 
-const dataUri = (file) => parser.format(path.extname(file.originalname).toString(), file.buffer);
+const dataUri = (file) =>
+  parser.format(path.extname(file.originalname).toString(), file.buffer);
 
 module.exports = { multerSingleUpload, dataUri };
