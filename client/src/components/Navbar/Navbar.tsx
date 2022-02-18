@@ -83,7 +83,13 @@ const MenuItem: React.FC<{
 
   return (
     <Grid key={resource} sx={{ textAlign: 'center' }} xs={2} justifySelf="flex-end" item>
-      <NavLink className={classes.navbarItem} to={resource}>
+      <NavLink
+        className={clsx(
+          classes.navbarItem,
+          location.pathname === '/welcome' && item === 'Become a sitter' && classes.navSitterButton,
+        )}
+        to={resource}
+      >
         {item}
       </NavLink>
     </Grid>
@@ -123,7 +129,7 @@ const Navbar: React.FC = () => {
 
   return (
     <Grid
-      className={clsx(classes.navbar, location.pathname === '/' && classes.transparentNavbar)}
+      className={clsx(classes.navbar, location.pathname === '/welcome' && classes.transparentNavbar)}
       justifyContent="space-between"
       alignItems="center"
       container
