@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Grid, Link, Popper, Badge } from '@mui/material';
 import NotificaitonContent from '../NotificationContent/NotificationContent';
-import { fetchAllUnreadNotications, markNotificationsAsRead } from '../../helpers/APICalls/getNotifications';
+import { fetchAllUnreadNotifications, markNotificationsAsRead } from '../../helpers/APICalls/getNotifications';
 import { Notifications, NotificationsApiData } from '../../interface/Notifications';
 import { useSnackBar } from '../../context/useSnackbarContext';
 import { useAuth } from '../../context/useAuthContext';
@@ -35,7 +35,7 @@ const Notificaitons = (): JSX.Element => {
 
   useEffect(() => {
     const fetchUnReadData = async () => {
-      const getData = await fetchAllUnreadNotications();
+      const getData = await fetchAllUnreadNotifications();
       total.current = getData.data.length;
       unread.current = getData.data;
 
