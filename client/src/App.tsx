@@ -12,9 +12,9 @@ import { getRoutesAccordingToAccountType } from './pages/routes/route';
 import NotFound from './pages/NotFound/NotFound';
 
 function App(): JSX.Element {
-  const {
-    profile: { accountType },
-  } = useAuth();
+  const { profile } = useAuth();
+  let accountType;
+  if (profile) accountType = profile.accountType;
 
   const routes = getRoutesAccordingToAccountType(accountType);
   return (
