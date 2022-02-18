@@ -64,7 +64,7 @@ exports.markNotificationRead = asyncHandler(async (req, res, next) => {
 // @route GET /notifications/all
 // @desc get all notifications
 // @access Private
-exports.fetctAllNotications = asyncHandler(async (req, res, next) => {
+exports.fetchAllNotifications = asyncHandler(async (req, res, next) => {
   const { id: userId } = req.user;
 
   const findAllByLoggedUser = await NotificationSchema.find({
@@ -79,7 +79,7 @@ exports.fetctAllNotications = asyncHandler(async (req, res, next) => {
 // @route GET /notifications/unread
 // @desc get all unnotifications
 // @access Private
-exports.fetctAllUnreadNotications = asyncHandler(async (req, res, next) => {
+exports.fetctAllUnreadNotifications = asyncHandler(async (req, res, next) => {
   const { id: userId } = req.user;
 
   const findAllByLoggedUser = await NotificationSchema.find({

@@ -2,8 +2,8 @@ const express = require("express");
 const {
   createNotification,
   markNotificationRead,
-  fetctAllNotications,
-  fetctAllUnreadNotications,
+  fetchAllNotifications,
+  fetctAllUnreadNotifications,
 } = require("../controllers/notification");
 const router = express.Router();
 
@@ -19,8 +19,8 @@ router
   .route("/read/:userId")
   .put([protect, validateRequestParameter], markNotificationRead);
 
-router.route("/").get(protect, fetctAllNotications);
+router.route("/").get(protect, fetchAllNotifications);
 
-router.route("/unread").get(protect, fetctAllUnreadNotications);
+router.route("/unread").get(protect, fetctAllUnreadNotifications);
 
 module.exports = router;
