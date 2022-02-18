@@ -1,21 +1,26 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useContext } from 'react';
 import SettingHeader from '../../../components/SettingsHeader/SettingsHeader';
 import { Box } from '@mui/system';
-import useStyles from './useStyles';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableRow from '@mui/material/TableRow';
-import TextField from '@mui/material/TextField';
-import Checkbox from '@mui/material/Checkbox';
+import useStyles from './makeStyles';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import EventNoteSharpIcon from '@mui/icons-material/EventNoteSharp';
 import StarIcon from '@mui/icons-material/Star';
+import { SnackBarContext } from '../../../context/useSnackbarContext';
+import { AuthContext } from '../../../context/useAuthContext';
+import { schedules } from './schedules';
 
 import {
+  MenuItem,
+  Select,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableRow,
+  TextField,
+  Checkbox,
   ListItemButton,
   Typography,
   Button,
@@ -26,14 +31,7 @@ import {
   ListItemText,
   Menu,
   MenuItem as DropdownMenuItem,
-  styled,
-  AppBar,
-  Toolbar,
-  DialogActions,
-  Dialog,
-  MenuItem,
 } from '@mui/material';
-import TimePicker from '@mui/lab/TimePicker';
 
 interface AvailibilityProps {
   header: string;
@@ -56,7 +54,20 @@ const rows = [
 const Availability: React.FC<AvailibilityProps> = ({ header }) => {
   const classes = useStyles();
   const [checked, checkForAvailability] = React.useState([1]);
-  console.log(checked);
+  const { updateSnackBarMessage } = useContext(SnackBarContext);
+  const { loggedInUser } = useContext(AuthContext);
+  const [startTime, setStartTime] = useState('09:00');
+  const [endTime, setEndTime] = useState('17:00');
+  const [updating, setUpdating] = useState(false);
+
+  const updateAvailability = (newTime: string, param: string) => {
+    if (param === 'start') {
+      setStartTime(newTime);
+    } else {
+      setEndTime(newTime);
+    }
+    setUpdating(true);
+  };
 
   const handleToggle = (value: number) => () => {
     const currentIndex = checked.indexOf(value);
@@ -147,11 +158,37 @@ const Availability: React.FC<AvailibilityProps> = ({ header }) => {
                   <TableCell sx={{ display: 'flex', border: 0, alignItems: 'center', justifyContent: 'space-between' }}>
                     {checked.includes(row.value) ? (
                       <Box sx={{ display: 'flex', border: 0, alignItems: 'center', justifyContent: 'center' }}>
-                        <TextField id="time_click" type="time"></TextField>
+                        <Select
+                          className={classes.selectAvailableTime}
+                          variant="outlined"
+                          name="startTime"
+                          value={startTime}
+                          onChange={(e) => updateAvailability(e.target.value, 'start')}
+                        >
+                          <MenuItem value={-1} disabled></MenuItem>
+                          {schedules.map((schedule) => (
+                            <MenuItem value={schedule.value} key={schedule.value}>
+                              {schedule.time}
+                            </MenuItem>
+                          ))}
+                        </Select>
 
-                        <Typography>-</Typography>
+                        <Typography> - </Typography>
 
-                        <TextField id="time_click" type="time"></TextField>
+                        <Select
+                          className={classes.selectAvailableTime}
+                          variant="outlined"
+                          name="endTime"
+                          value={endTime}
+                          onChange={(e) => updateAvailability(e.target.value, 'end')}
+                        >
+                          <MenuItem value={-1} disabled></MenuItem>
+                          {schedules.map((schedule) => (
+                            <MenuItem value={schedule.value} key={schedule.value}>
+                              {schedule.time}
+                            </MenuItem>
+                          ))}
+                        </Select>
                         <DeleteIcon className={classes.icon} />
                       </Box>
                     ) : (

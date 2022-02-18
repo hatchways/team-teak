@@ -10,8 +10,6 @@ import { useAuth } from '../../context/useAuthContext';
 import StripeConnect from '../StripeConnect/StripeConnect';
 import EditProfile from './EditProfile/EditProfile';
 import Availability from './Availability/Availability';
-import DestopAvailability from '../../components/Availability/DesktopAvailability';
-import DesktopAvailability from '../../components/Availability/DesktopAvailability';
 import ProfilePhoto from './ProfilePhoto/ProfilePhoto';
 
 const settingsMenu = [
@@ -92,7 +90,29 @@ export default function Settings(): JSX.Element {
           ))}
         </Grid>
         <Grid xs={12} md={9} item>
-          <DesktopAvailability />
+          <Switch>
+            <Route exact path="/profile/settings">
+              <Redirect to="/profile/settings/edit-profile" />
+            </Route>
+            <SettingsWrapper>
+              {settingsMenu.map((item) => (
+                <Route
+                  key={item.name}
+                  path={item.to}
+                  render={(props) =>
+                    cloneElement(item.component, {
+                      ...props,
+                      currentUser: loggedInUser,
+                      currentProfile: profile,
+                    })
+                  }
+                />
+              ))}
+            </SettingsWrapper>
+            <Route path="*">
+              <Redirect to="/not-found" />
+            </Route>
+          </Switch>
         </Grid>
       </Grid>
     </PageContainer>
