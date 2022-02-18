@@ -14,7 +14,7 @@ export async function createNotification(): Promise<Notifications> {
     }));
 }
 
-export async function fetchAllNotications(): Promise<Notifications> {
+export async function fetchAllNotifications(): Promise<Notifications> {
   const fetchOptions: FetchOptions = {
     method: 'GET',
     credentials: 'include',
