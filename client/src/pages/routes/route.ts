@@ -68,11 +68,15 @@ const menuItems = [
 
 export const getAllRoutes = () => menuItems;
 
-export const getNonAuthenticatedRoutes = () => {
-  const result = [];
-
-  for (const item of menuItems) {
-    if (!item.authenticated) result.push(item);
+export const getRoutesAccordingToAccountType = (accountType: string) => {
+  const routes = [];
+  for (const route of menuItems) {
+    if (!route.canView) {
+      routes.push(route);
+    } else if (route.canView?.includes(accountType)) {
+      routes.push(route);
+    }
   }
-  return result;
+
+  return routes;
 };
