@@ -3,6 +3,7 @@ const Profile = require("../models/Profile");
 const PetSitter = require("../models/PetSitter");
 const asyncHandler = require("express-async-handler");
 const generateToken = require("../utils/generateToken");
+const stripe = require("stripe")(process.env.STRIPE_SECRET);
 
 
 
@@ -43,7 +44,15 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
       });
     } else {
     const profile = await Profile.create({
+
+    const customer = await stripe.customers.create({
+      description: `Customer name is ${name}`,
+    });
+
+    const { id } = customer;
+    await Profile.create({
       userId: user._id,
+      stripeAccountId: id,
       name,
     });
 
@@ -110,7 +119,6 @@ exports.loginUser = asyncHandler(async (req, res, next) => {
           email: user.email,
         },
         profile,
-
       },
     });
   } else {
