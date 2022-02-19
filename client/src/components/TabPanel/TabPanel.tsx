@@ -6,33 +6,6 @@ import useStyles from '../../pages/Login/LoginForm/useStyles';
 import CustomBookingMockData from '../../mockData/CustomBookingMockData';
 import * as React from 'react';
 
-// function TabPanel(props: any) {
-//   const { children, value, index, ...other } = props;
-
-//   return (
-//     <div
-//       role="tabpanel"
-//       hidden={value !== index}
-//       id={`simple-tabpanel-${index}`}
-//       aria-labelledby={`simple-tab-${index}`}
-//       {...other}
-//     >
-//       {value === index && (
-//         <Box sx={{ p: 3 }}>
-//           <Typography>{children}</Typography>
-//         </Box>
-//       )}
-//     </div>
-//   );
-// }
-
-// TabPanel.propTypes = {
-//   children: PropTypes.node,
-//   index: PropTypes.number.isRequired,
-//   value: PropTypes.number.isRequired,
-// };
-
-////////////////////////////////
 interface Props {
   children: string;
   index: number;
@@ -71,18 +44,6 @@ const TabPanel = ({ children, index, value }: Props): JSX.Element => {
   };
 
   return (
-    // <div
-    //   role="tabpanel"
-    //   hidden={value !== index}
-    //   id={`simple-tabpanel-${index}`}
-    //   aria-labelledby={`simple-tab-${index}`}
-    // >
-    //   {value === index && (
-    //     <Box sx={{ p: 3 }}>
-    //       <Typography>{children}</Typography>
-    //     </Box>
-    //   )}
-    // </div>
     <>
       <Button className="filter-btn" onClick={() => switchStatus('current')}>
         current

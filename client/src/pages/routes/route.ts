@@ -6,7 +6,7 @@ import SignUp from '../SignUp/SignUp';
 import { AccountType } from '../../types/AccountType';
 import NotFound from '../NotFound/NotFound';
 import Settings from '../Settings/Settings';
-import CustomBookingList from 'pages/Settings/CustomBooking/CustomBookingList';
+import CustomBookingList from '../Settings/CustomBooking/CustomBookingList';
 
 const menuItems = [
   {
