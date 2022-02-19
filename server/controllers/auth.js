@@ -143,7 +143,14 @@ exports.loadUser = asyncHandler(async (req, res, next) => {
   });
 });
 
+// @route GET /auth/logout
+// @desc Logout user
+// @access Public
+exports.logoutUser = asyncHandler(async (req, res, next) => {
+  res.clearCookie("token");
 
+  res.send("You have successfully logged out");
+});
 
 
 
