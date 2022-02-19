@@ -22,8 +22,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     borderBottom: '1px solid RGB(0, 0, 0, .25)',
   },
   selectAvailableTime: {
-    height: 50,
-    width: 100,
+    height: 35,
+    width: 12,
   },
 }));
 export default useStyles;
