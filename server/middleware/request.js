@@ -1,11 +1,10 @@
 const jwt = require("jsonwebtoken");
 
-const{
-    requestGet,
-    requestPost,
-    requestUpdate
-} = require('../controllers/request.js');
-
+const {
+  requestGet,
+  requestPost,
+  requestUpdate,
+} = require("../controllers/request.js");
 
 const protect = (req, res, next) => {
   const token = req.cookies.token;

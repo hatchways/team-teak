@@ -6,16 +6,6 @@ const petSitterSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  availabilityId: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-    ref: "Availability",
-  },
-  activatedAvailabilitySchedule: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-    ref: "Schedule",
-  },
   rate: {
     type: Number,
     min: 0,
@@ -23,7 +13,6 @@ const petSitterSchema = new mongoose.Schema({
   },
 });
 
-module.exports = PetSitter = Profile.discriminator(
-  "PetSitter",
-  petSitterSchema
-);
+const petSitter = Profile.discriminator("petSitter", petSitterSchema);
+
+module.exports = PetSitter = mongoose.model("petSitter");
