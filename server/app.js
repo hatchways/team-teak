@@ -49,9 +49,11 @@ app.use("/auth", authRouter);
 app.use("/users", userRouter);
 app.use("/profile", profileRouter);
 app.use("/conversations", conversationRouter);
+
 app.use("/payment_methods", paymentMethodsRouter);
 app.use("/stripe", stripeConnectRouter);
 app.use("/imageUpload", imageUploadRouter);
+
 app.use("/notification", notificationRouter);
 app.use("/availability", availabilityRouter);
 
