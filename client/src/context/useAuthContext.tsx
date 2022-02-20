@@ -8,7 +8,7 @@ import { User } from '../interface/User';
 import { Profile } from '../interface/Profile';
 
 interface IAuthContext {
-  profile: Profile | null | undefined;
+  profile: Profile | null | undefined | never | any;
   loggedInUser: User | null | undefined;
   updateLoginContext: (data: AuthApiDataSuccess) => void;
   logout: () => void;
