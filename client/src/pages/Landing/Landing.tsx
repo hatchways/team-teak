@@ -20,12 +20,12 @@ export default function Landing(): JSX.Element {
     return null;
   };
   return (
-    <Grid container className={classes.flexLayout}>
-      <Grid item xs={12} sm={6} container justifyContent="center">
+    <Grid container className={classes.landingContainer} direction={{ xs: 'column-reverse', md: 'row' }}>
+      <Grid item xs={12} md={6} container justifyContent="center" sx={{ maxWidth: 550 }}>
         <FindSitter handleSubmit={handleSubmit} />
       </Grid>
-      <Grid item xs={12} sm={6} container sx={{ height: '80vh' }}>
-        <Box className={classes.landingContainer} />
+      <Grid item xs={12} md={6} container>
+        <Box className={classes.heroContainer} />
       </Grid>
     </Grid>
   );

@@ -44,13 +44,22 @@ export default function FindSitter({ handleSubmit }: Props): JSX.Element {
     >
       {({ handleSubmit, handleChange, values, touched, errors, isSubmitting }) => {
         return (
-          <Grid container alignSelf="center" direction="column" sx={{ width: 600 }}>
-            <Grid item sx={{ maxWidth: 600 }}>
-              <Typography variant="h2" sx={{ fontWeight: 800 }}>
+          <Grid
+            container
+            alignSelf="center"
+            direction={{ xs: 'row', md: 'column' }}
+            sx={{ maxWidth: 550, justifyContent: 'center' }}
+          >
+            <Grid item>
+              <Typography
+                fontWeight="800"
+                sx={{ typography: { xs: 'h3', md: 'h2' } }}
+                className={classes.responsiveTitle}
+              >
                 Find the care your dog deserves
               </Typography>
             </Grid>
-            <form onSubmit={handleSubmit} noValidate style={{ width: '100%' }}>
+            <form onSubmit={handleSubmit} noValidate>
               <Grid item mt={6}>
                 <FormInput
                   id="where"

@@ -11,6 +11,12 @@ export const theme = createTheme({
   typography: {
     fontFamily: '"Roboto", "Open Sans", "sans-serif"',
     fontSize: 12,
+    h2: {
+      fontWeight: 800,
+    },
+    h3: {
+      fontWeight: 800,
+    },
     button: {
       fontWeight: 700,
     },

@@ -14,4 +14,9 @@ export const useStyles = makeStyles((theme: Theme) => ({
     marginRight: '10px',
     marginLeft: '10px',
   },
+  responsiveTitle: {
+    [theme.breakpoints.down('md')]: {
+      textAlign: 'center',
+    },
+  },
 }));

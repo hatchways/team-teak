@@ -134,10 +134,10 @@ const Navbar: React.FC = () => {
       alignItems="center"
       container
     >
-      <Grid xs={4} md={6} item>
+      <Grid xs={2} md={6} item>
         <img className={classes.navbarLogo} src={lovingSitterLogo} />
       </Grid>
-      <Grid xs={8} md={6} item>
+      <Grid xs={10} md={6} item>
         <Grid container alignItems="center" gap={2} justifyContent="flex-end">
           {renderMenuItems()}
           {loggedInUser && (
