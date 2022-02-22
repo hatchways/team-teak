@@ -4,7 +4,7 @@ import { SearchProfileApiData } from '../../interface/Profile';
 
 interface Props {
   location: string;
-  availability: Date | null;
+  availability: Date | string | null;
 }
 
 export async function searchProfiles({ location, availability }: Props): Promise<SearchProfileApiData> {

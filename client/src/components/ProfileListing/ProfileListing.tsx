@@ -1,4 +1,6 @@
 import React, { useEffect } from 'react';
+import SitterCard from './SitterCard';
+import NotFound from '../../pages/NotFound/NotFound';
 import { searchProfiles } from '../../helpers/APICalls/searchUsers';
 import { SearchProfileApiData } from '../../interface/Profile';
 
@@ -11,7 +13,7 @@ import staticData from './constants';
 
 interface Props {
   debouncedLocation: string | null;
-  date: Date | null;
+  date: Date | string | null;
 }
 
 const ProfileListing = ({ debouncedLocation, date }: Props): JSX.Element => {
