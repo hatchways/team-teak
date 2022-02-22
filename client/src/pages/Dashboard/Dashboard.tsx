@@ -21,10 +21,24 @@ export default function Dashboard(): JSX.Element {
     initSocket();
   }, [initSocket]);
 
+  useEffect(() => {
+    const socket = socketIOClient('http://localhost:3000');
+    socket.on('connection', (data) => {
+      setResponse(data);
+    });
+    socket.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const socket = socketIOClient('http://localhost:3000');
+    socket.on('disconnect', (data) => {
+      setResponse('');
+    });
+  }, []);
+
   if (loggedInUser === undefined) return <CircularProgress />;
   if (!loggedInUser) {
     history.push('/login');
-    // loading for a split seconds until history.push works
     return <CircularProgress />;
   }
 
