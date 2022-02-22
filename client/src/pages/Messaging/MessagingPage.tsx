@@ -29,8 +29,6 @@ const MessagingPage = (): JSX.Element => {
     const fetchAllCoversation = async () => {
       const result = await getAllConversations();
 
-      setConversations(result.success.conversations);
-
       console.log('Conversations', result.success.conversations);
 
       const firstConversation = result.success.conversations[0];
@@ -39,8 +37,6 @@ const MessagingPage = (): JSX.Element => {
     };
     fetchAllCoversation();
   }, []);
-
-  console.log('Conversations', conversations);
 
   const handleConversationChange = async (id?: string) => {
     for (const jazz of conversations) {
