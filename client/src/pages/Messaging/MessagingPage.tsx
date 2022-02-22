@@ -29,7 +29,7 @@ const MessagingPage = (): JSX.Element => {
     const fetchAllCoversation = async () => {
       const result = await getAllConversations();
 
-      console.log('Conversations', result.success.conversations);
+      setConversations(result.success.conversations);
 
       const firstConversation = result.success.conversations[0];
 
