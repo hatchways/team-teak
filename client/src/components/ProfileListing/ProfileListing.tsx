@@ -19,6 +19,7 @@ const ProfileListing = ({ debouncedLocation, date }: Props): JSX.Element => {
     (async () => {
       if (debouncedLocation && date) {
         const data = await searchProfiles({ location: debouncedLocation, availability: date });
+
         setProfiles(data);
       }
     })();
@@ -43,11 +44,11 @@ const ProfileListing = ({ debouncedLocation, date }: Props): JSX.Element => {
     if (profiles?.users?.length === 0) {
       return <NotFound message={'No sitters available'} />;
     }
-    return profiles?.users?.map((profile) => {
+    return profiles?.users?.map((profile, id) => {
       const { photo, name, description, address } = profile;
       return (
         <SitterCard
-          key={profile._id.toString()}
+          key={id}
           photo={photo}
           name={name}
           subTitle={'Pet Lover'}
