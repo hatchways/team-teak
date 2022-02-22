@@ -60,7 +60,7 @@ export default function FindSitter({ handleSubmit }: Props): JSX.Element {
               </Typography>
             </Grid>
             <form onSubmit={handleSubmit} noValidate>
-              <Grid item mt={6}>
+              <Grid item mt={1}>
                 <FormInput
                   id="where"
                   label="where"
@@ -74,7 +74,7 @@ export default function FindSitter({ handleSubmit }: Props): JSX.Element {
                   onChange={handleChange}
                   style={{ width: 350 }}
                 />
-                <Grid container direction="row" mt={2}>
+                <Grid container direction="row" mt={1}>
                   <Grid item>
                     <FormInput
                       id="dropIn"
@@ -106,7 +106,7 @@ export default function FindSitter({ handleSubmit }: Props): JSX.Element {
                 </Grid>
               </Grid>
             </form>
-            <Grid item mt={2}>
+            <Grid item mt={1}>
               <Button size="large" variant="contained" color="primary" disableElevation className={classes.submit}>
                 {isSubmitting ? <CircularProgress style={{ color: 'white' }} /> : 'Find my Dog Sitter'}
               </Button>

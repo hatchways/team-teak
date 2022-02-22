@@ -21,8 +21,11 @@ export const useStyles = makeStyles((theme: Theme) => ({
     justifyContent: 'center',
     alignContent: 'center',
     backgroundPosition: '50% 50%',
-    height: '33vh',
+    height: '200px',
     width: '100vw',
+    [theme.breakpoints.up('sm')]: {
+      height: '350px',
+    },
     [theme.breakpoints.up('md')]: {
       height: '100vh',
       width: '100%',
