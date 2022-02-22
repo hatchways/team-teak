@@ -1,19 +1,22 @@
 import React, { useEffect } from 'react';
 import { searchProfiles } from '../../helpers/APICalls/searchUsers';
 import { SearchProfileApiData } from '../../interface/Profile';
-import { Box, Grid } from '@mui/material';
 
-import NotFound from '../../pages/NotFound/NotFound';
-import SitterCard from './SitterCard';
+import { Box, Grid, Card, CardMedia, CardContent, Typography, CardHeader } from '@mui/material';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import StarIcon from '@mui/icons-material/Star';
+import StarBorderIcon from '@mui/icons-material/StarBorder';
+import { useStyles } from './useStyles';
 import staticData from './constants';
 
 interface Props {
   debouncedLocation: string | null;
-  date: string;
+  date: Date | null;
 }
 
 const ProfileListing = ({ debouncedLocation, date }: Props): JSX.Element => {
   const [profiles, setProfiles] = React.useState<SearchProfileApiData | null>(null);
+  const classes = useStyles();
 
   useEffect(() => {
     (async () => {
@@ -62,7 +65,7 @@ const ProfileListing = ({ debouncedLocation, date }: Props): JSX.Element => {
   return (
     <Box>
       <Grid container spacing={7} alignItems="center" justifyContent="center">
-        {renderProfiles()}
+        {profiles?.users && renderProfiles()}
       </Grid>
     </Box>
   );

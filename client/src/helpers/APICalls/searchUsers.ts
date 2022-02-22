@@ -1,9 +1,10 @@
 import { FetchOptions } from '../../interface/FetchOptions';
+import { SearchUsersApiData } from '../../interface/User';
 import { SearchProfileApiData } from '../../interface/Profile';
 
 interface Props {
   location: string;
-  availability: string;
+  availability: Date | null;
 }
 
 export async function searchProfiles({ location, availability }: Props): Promise<SearchProfileApiData> {

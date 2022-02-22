@@ -1,6 +1,5 @@
-import { Dispatch, SetStateAction } from 'react';
-import { format } from 'date-fns';
-import { useDebouncedCallback } from 'use-debounce/lib';
+import React, { Dispatch, SetStateAction, useEffect } from 'react';
+
 import { Box, Grid, TextField, InputAdornment } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import DateRangeIcon from '@mui/icons-material/DateRange';
@@ -14,27 +13,12 @@ import { useStyles } from './useStyles';
 interface Props {
   setLocation: Dispatch<SetStateAction<string | null>>;
   location: string | null;
-  setDate: Dispatch<SetStateAction<string>>;
-  date: string;
+  setDate: Dispatch<SetStateAction<Date | null>>;
+  date: Date | null;
 }
 
 const Search = ({ location, date, setLocation, setDate }: Props): JSX.Element => {
   const classes = useStyles();
-
-  const handleChangeDate = (event: string | null) => {
-    if (event !== null) {
-      try {
-        const formattedDate = format(Date.parse(event), 'EEEE');
-        setDate(formattedDate);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-  };
-
-  const handleChangeLocation = (event: { target: { value: SetStateAction<string | null> } }) => {
-    setLocation(event.target.value);
-  };
 
   return (
     <Box>
@@ -44,10 +28,10 @@ const Search = ({ location, date, setLocation, setDate }: Props): JSX.Element =>
             id="search sitters"
             name="Search for Sitters"
             value={location}
-            onChange={handleChangeLocation}
+            onChange={(e) => setLocation(e.target.value)}
             variant="outlined"
             type="search"
-            placeholder="ex. Toronto, Ontario"
+            placeholder="Toronto, Ontario"
             sx={{
               width: '300px',
               '.MuiOutlinedInput-root fieldset': {
@@ -69,18 +53,15 @@ const Search = ({ location, date, setLocation, setDate }: Props): JSX.Element =>
         <Grid item>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DatePicker
-              inputFormat="DDDD"
-              onChange={handleChangeDate}
+              inputFormat="d MMMM yyyy"
+              onChange={(date) => {
+                setDate(date);
+              }}
               value={date}
               renderInput={(params) => (
                 <TextField
                   {...params}
-                  inputProps={{
-                    ...params.inputProps,
-                    placeholder: 'ex. Monday',
-                    value: date,
-                  }}
-                  value={date}
+                  placeholder="Select a date"
                   sx={{
                     '.MuiOutlinedInput-root fieldset': {
                       borderTopLeftRadius: '0px',
@@ -99,7 +80,7 @@ const Search = ({ location, date, setLocation, setDate }: Props): JSX.Element =>
                 ),
                 endAdornment: (
                   <InputAdornment position="end">
-                    <CloseIcon className={classes.closeIcon} onClick={() => setDate('')} />
+                    <CloseIcon className={classes.closeIcon} onClick={() => setDate(null)} />
                   </InputAdornment>
                 ),
               }}
