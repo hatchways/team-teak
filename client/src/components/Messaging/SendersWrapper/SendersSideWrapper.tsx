@@ -1,11 +1,15 @@
 import { Typography, Box, Paper } from '@mui/material';
+import { conversation, conversations } from '../../../interface/messages';
 import MessageSenderCard from '../SenderCard/MessageSenderCars';
 import { useStyles } from './useStyles';
 
-const SendersSideWrapper = (): JSX.Element => {
-  const classes = useStyles();
+interface sideWrapper {
+  conversations: conversation[];
+  handleConversationChange: () => void;
+}
 
-  const array = Array.from('1234');
+const SendersSideWrapper = ({ conversations, handleConversationChange }: sideWrapper): JSX.Element => {
+  const classes = useStyles();
 
   return (
     <Box elevation={3} component={Paper} square className={classes.wrapper}>
@@ -13,8 +17,8 @@ const SendersSideWrapper = (): JSX.Element => {
         <Typography sx={{ fontSize: '18px', fontWeight: 'bold', margin: 'auto 10px' }}>Inbox Messages</Typography>
       </Box>
       <Box className={classes.chats}>
-        {array.map((item, i) => (
-          <MessageSenderCard key={i} />
+        {conversations.map((item, i) => (
+          <MessageSenderCard key={item._id} senderInfo={item} handleConversationChange={handleConversationChange} />
         ))}
       </Box>
     </Box>

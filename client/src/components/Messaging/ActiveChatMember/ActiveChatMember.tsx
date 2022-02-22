@@ -2,17 +2,29 @@ import { Typography, Box } from '@mui/material';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
 import { useStyles } from './useStyles';
+import { conversation } from '../../../interface/messages';
+import { createImageFromInitials } from '../../../helpers/makeAnImageFromName';
 
-const ActiveChatMember = (): JSX.Element => {
+const ActiveChatMember = ({
+  _id,
+  receiverId,
+  senderId,
+  user: { name, photo, isOnline },
+}: conversation): JSX.Element => {
   const classes = useStyles();
+
+  let image;
+  if (!photo.length) image = createImageFromInitials(name);
+  else image = photo;
+
   return (
     <Box className={classes.cardContainer}>
       <Box className={classes.image}>
-        <img src="https://cdn.pixabay.com/photo/2021/09/12/18/07/robin-6619184_960_720.jpg" alt="Image" />
-        <p className={classes.online}></p>
+        <img src={image} alt="Image" />
+        {isOnline ? <Typography className={classes.online}></Typography> : ''}
       </Box>
       <Box className={classes.content}>
-        <Typography sx={{ fontSize: '18px', fontWeight: 'bold' }}>Marry Wills</Typography>
+        <Typography sx={{ fontSize: '18px', fontWeight: 'bold', display: 'flex' }}>{name}</Typography>
       </Box>
       <Box className={classes.icon}>
         <MoreHorizIcon fontSize="large" />

@@ -1,23 +1,55 @@
 import { Typography, Box } from '@mui/material';
+import { visitNodes } from 'typescript';
+import { createImageFromInitials } from '../../../helpers/makeAnImageFromName';
+import { conversation } from '../../../interface/messages';
 
 import { useStyles } from './useStyles';
 
-const MessageSenderCard = (): JSX.Element => {
+interface sender {
+  senderInfo: conversation;
+  handleConversationChange: (id?: string) => void;
+}
+
+const date = (date: string) => {
+  return new Date(date).toLocaleString().slice(0, 9);
+};
+
+const MessageSenderCard = ({ senderInfo, handleConversationChange }: sender): JSX.Element => {
+  const {
+    _id,
+    receiverId,
+    senderId,
+    user: { name, photo, isOnline },
+    message: { message, createdAt },
+  } = senderInfo;
   const classes = useStyles();
+
+  let image;
+  if (!photo.length) image = createImageFromInitials(name);
+  else image = photo;
+
+  const lastMessageTime = date(createdAt);
+  const lastMessage = message.slice(0, 25);
+
   return (
-    <Box className={classes.cardContainer}>
+    <Box
+      className={classes.cardContainer}
+      onClick={() => {
+        handleConversationChange(_id);
+      }}
+    >
       <Box className={classes.image}>
-        <img src="https://cdn.pixabay.com/photo/2021/09/12/18/07/robin-6619184_960_720.jpg" alt="Image" />
-        <p className={classes.online}></p>
+        <img src={image} alt="Image" />
+        {isOnline ? <Typography className={classes.online}></Typography> : ''}
       </Box>
       <Box className={classes.content}>
-        <Typography sx={{ fontSize: '18px', fontWeight: 'bold' }}>Marry Wills</Typography>
+        <Typography sx={{ fontSize: '18px', fontWeight: 'bold' }}>{name}</Typography>
         <Typography className="message" sx={{ fontSize: '13px' }}>
-          This the last message...
+          {lastMessage}...
         </Typography>
       </Box>
       <Box className={classes.sentTime}>
-        <Typography sx={{ fontSize: '18px', fontWeight: 'bold' }}>10:30 AM</Typography>
+        <Typography sx={{ fontSize: '18px', fontWeight: 'bold' }}>{lastMessageTime}</Typography>
       </Box>
     </Box>
   );
