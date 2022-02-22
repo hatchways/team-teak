@@ -146,8 +146,6 @@ const Navbar: React.FC = () => {
                   onClick={handleMenuOpen}
                   color="inherit"
                 >
-                  {' '}
-                  {console.log(profile?.photo)}
                   <Avatar
                     style={{ width: 50 }}
                     src={profile ? profile.photo : `https://robohash.org/${loggedInUser.email}`}
