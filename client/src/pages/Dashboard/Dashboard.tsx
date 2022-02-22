@@ -9,8 +9,8 @@ import ProfileListing from '../../components/ProfileListing/ProfileListing';
 import Search from '../../components/ProfileListing/Search';
 
 export default function Dashboard(): JSX.Element {
-  const [date, setDate] = React.useState<Date | null>(null);
-  const [location, setLocation] = React.useState<string | null>(null);
+  const [date, setDate] = React.useState<string>('');
+  const [location, setLocation] = React.useState<string>('');
   const [debouncedLocation] = useDebounce(location, 2000);
 
   const { loggedInUser } = useAuth();
@@ -20,21 +20,6 @@ export default function Dashboard(): JSX.Element {
   useEffect(() => {
     initSocket();
   }, [initSocket]);
-
-  useEffect(() => {
-    const socket = socketIOClient('http://localhost:3000');
-    socket.on('connection', (data) => {
-      setResponse(data);
-    });
-    socket.disconnect();
-  }, []);
-
-  useEffect(() => {
-    const socket = socketIOClient('http://localhost:3000');
-    socket.on('disconnect', (data) => {
-      setResponse('');
-    });
-  }, []);
 
   if (loggedInUser === undefined) return <CircularProgress />;
   if (!loggedInUser) {
