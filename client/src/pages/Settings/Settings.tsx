@@ -66,7 +66,7 @@ export default function Settings(): JSX.Element {
           {settingsMenu.map((item) => (
             <Box
               sx={{
-                margin: '20px 0',
+                margin: '20px 20px',
               }}
               key={item.name}
             >
@@ -89,7 +89,7 @@ export default function Settings(): JSX.Element {
             </Box>
           ))}
         </Grid>
-        <Grid xs={12} md={9} item>
+        <Grid xs={12} sm={9} item>
           <Switch>
             <Route exact path="/profile/settings">
               <Redirect to="/profile/settings/edit-profile" />
