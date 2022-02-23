@@ -11,6 +11,10 @@ const profileSchema = new mongoose.Schema(
       required: true,
       ref: "User",
     },
+    stripeAccountId: {
+      type: String,
+      required: true,
+    },
     activeScheduleId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Availability",
@@ -49,7 +53,7 @@ const profileSchema = new mongoose.Schema(
       default: "petOwner",
       },
   },
-  options
+  { ...options }
 );
 
 

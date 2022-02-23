@@ -10,6 +10,7 @@ export interface Profile {
   telephone: string;
   birthday: Date;
   photo: string;
+  accountType: string;
 }
 
 export interface PetSitter extends Profile {

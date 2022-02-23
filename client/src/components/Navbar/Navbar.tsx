@@ -24,7 +24,7 @@ import { PetSitter, Profile } from '../../interface/Profile';
 import { useStyles } from './useStyles';
 
 const NavbarButton = styled(Button)({
-  padding: '15px 0',
+  padding: '5px 0',
 });
 
 const menuItems = [
@@ -36,7 +36,7 @@ const menuItems = [
   },
   {
     item: 'Become a sitter',
-    resource: '/signup?accountType=pet_sitter',
+    resource: '/signup?accountType=petSitter',
     canView: null,
     authenticated: false,
   },
@@ -58,6 +58,7 @@ const menuItems = [
     canView: [AccountType.PET_SITTER, AccountType.PET_OWNER],
     authenticated: true,
   },
+
   {
     item: (
       <NavbarButton variant="outlined" size="large" fullWidth>
@@ -116,6 +117,7 @@ const Navbar: React.FC = () => {
   };
 
   const renderMenuItems = () => {
+    // user info display when user login
     return menuItems.map((menu) => {
       if (menu.authenticated) {
         if (!profile) return loggedInUser && <MenuItem key={menu.resource} {...menu} />;
