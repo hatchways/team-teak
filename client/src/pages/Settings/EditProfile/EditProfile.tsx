@@ -1,3 +1,4 @@
+import React from 'react';
 import { LocalizationProvider, DesktopDatePicker } from '@mui/lab';
 import { Button, CircularProgress, InputLabel } from '@mui/material';
 import { Box } from '@mui/system';
@@ -98,7 +99,7 @@ const EditProfile: React.FC<EditProfileProps> = ({ header, currentUser, currentP
       <SettingHeader header={header} />
       <Formik
         initialValues={{
-          name: currentUser?.name || '',
+          name: currentProfile?.name || '',
           email: currentUser?.email || '',
           gender: currentProfile?.gender || 'none',
           birthday: currentProfile?.birthday || new Date(),
