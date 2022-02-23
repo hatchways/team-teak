@@ -32,7 +32,7 @@ const menuItems = [
   },
   {
     item: 'Become a sitter',
-    resource: '/signup?accountType=pet_sitter',
+    resource: '/signup?accountType=petSitter',
     canView: null,
     authenticated: false,
   },
