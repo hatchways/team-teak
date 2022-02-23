@@ -62,8 +62,8 @@ const ProfilePhoto: React.FC<ProfilePhotoProps> = ({ header, currentUser }) => {
           fontSize: '14px',
           marginTop: '25px',
           color: '#aaaaaa',
-          marginLeft: 25,
-          marginRight: 25,
+
+          width: '100%',
         }}
       >
         Be sure to use a photo that <br />
