@@ -9,18 +9,21 @@ import {
   Menu,
   MenuItem as DropdownMenuItem,
   styled,
+  AppBar,
+  Toolbar,
   useMediaQuery,
 } from '@mui/material';
 import clsx from 'clsx';
 import React, { useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/useAuthContext';
+import Notifications from '../Notifications/Notifications';
 import lovingSitterLogo from '../../images/logo.svg';
 import { AccountType } from '../../types/AccountType';
 import { useStyles } from './useStyles';
 
 const NavbarButton = styled(Button)({
-  padding: '15px 0',
+  padding: '5px 0',
 });
 
 const menuItems = [
@@ -54,6 +57,7 @@ const menuItems = [
     canView: [AccountType.PET_SITTER, AccountType.PET_OWNER],
     authenticated: true,
   },
+
   {
     item: (
       <NavbarButton variant="outlined" size="large" fullWidth>
@@ -112,7 +116,7 @@ const Navbar: React.FC = () => {
   };
 
   const renderMenuItems = () => {
-    // TODO: conditionally render based on profile type
+    // user info display when user login
     return menuItems.map((menu) => {
       if (menu.authenticated) {
         return loggedInUser && <MenuItem key={menu.resource} {...menu} />;
@@ -135,7 +139,6 @@ const Navbar: React.FC = () => {
       <Grid xs={6} sm={4} item>
         <img className={classes.navbarLogo} src={lovingSitterLogo} />
       </Grid>
-
       <Grid xs={6} sm={4} item>
         {matches ? (
           <Grid container alignItems="center" gap={2} justifyContent="flex-end">
