@@ -2,8 +2,9 @@ const express = require("express");
 const router = express.Router();
 
 const protect = require("../middleware/auth");
-const { uploadPicture } = require("../controllers/imageUpload");
 
-router.route("/upload").post(protect, uploadPicture);
+const { stripeConnect } = require("../controllers/stripeConnect");
+
+router.route("/connect").post(protect, stripeConnect);
 
 module.exports = router;

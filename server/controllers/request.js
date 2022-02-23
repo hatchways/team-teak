@@ -1,4 +1,3 @@
-require("dotenv").config();
 const Request = require("../models/Request");
 const asyncHandler = require("express-async-handler");
 const Profile = require("../models/Profile");

@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
-
 const protect = require("../middleware/auth");
-const { uploadPicture } = require("../controllers/imageUpload");
 
-router.route("/upload").post(protect, uploadPicture);
+const { createPaymentMethod } = require("../controllers/paymentMethods");
+
+router.route("/session").post(protect, createPaymentMethod);
 
 module.exports = router;
