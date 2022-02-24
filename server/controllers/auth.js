@@ -36,28 +36,23 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
 
   const isPetSitter = req.query.accountType === "petSitter" ? true : false;
 
-
   if (user) {
-    if (isPetSitter) {
-      await PetSitter.create({
-        userId: user._id,
-        name,
-      });
-    } else {
-    const profile = await Profile.create({
-
     const customer = await stripe.customers.create({
       description: `Customer name is ${name}`,
     });
-
     const { id } = customer;
-    await Profile.create({
+    if (isPetSitter) {
+      await PetSitter.create({
+        userId: user._id,
+        stripeConnectId: id,
+        name,
+      });
+    } else {
+      await Profile.create({
       userId: user._id,
       stripeAccountId: id,
       name,
     });
-
-
   }
 
 
