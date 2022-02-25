@@ -1,8 +1,12 @@
 const User = require("../models/User");
 const Profile = require("../models/Profile");
+const Notification = require("../models/Notification");
+const PetSitter = require("../models/PetSitter");
 const asyncHandler = require("express-async-handler");
 const generateToken = require("../utils/generateToken");
 const stripe = require("stripe")(process.env.STRIPE_SECRET);
+
+
 
 // @route POST /auth/register
 // @desc Register user
@@ -30,17 +34,34 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
     password,
   });
 
+  const isPetSitter = req.query.accountType === "petSitter" ? true : false;
+
+
   if (user) {
+    if (isPetSitter) {
+      await PetSitter.create({
+        userId: user._id,
+        name,
+      });
+    } else {
+
     const customer = await stripe.customers.create({
       description: `Customer name is ${name}`,
+
     });
 
     const { id } = customer;
-    await Profile.create({
+    const profile = await Profile.create({
+
+    
       userId: user._id,
       stripeAccountId: id,
       name,
     });
+
+
+  }
+
 
     const token = generateToken(user._id);
     const secondsInWeek = 604800;
@@ -83,6 +104,8 @@ exports.loginUser = asyncHandler(async (req, res, next) => {
 
   const user = await User.findOne({ email });
   const profile = await Profile.findOne({ userId: user.id });
+  const notifications = await Notification.find({recieverId: user.id});
+
 
   if (user && (await user.matchPassword(password))) {
     const token = generateToken(user._id);
@@ -101,6 +124,7 @@ exports.loginUser = asyncHandler(async (req, res, next) => {
           email: user.email,
         },
         profile,
+        notifications,
       },
     });
   } else {
@@ -115,6 +139,8 @@ exports.loginUser = asyncHandler(async (req, res, next) => {
 exports.loadUser = asyncHandler(async (req, res, next) => {
   const user = await User.findById(req.user.id);
   const profile = await Profile.findOne({ userId: req.user.id });
+  const notifications = await Notification.findById({recieverId: req.user.id});
+
 
   if (!user) {
     res.status(401);
@@ -129,6 +155,7 @@ exports.loadUser = asyncHandler(async (req, res, next) => {
         email: user.email,
       },
       profile,
+      notifications,
     },
   });
 });
@@ -141,3 +168,6 @@ exports.logoutUser = asyncHandler(async (req, res, next) => {
 
   res.send("You have successfully logged out");
 });
+
+
+
