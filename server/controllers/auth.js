@@ -48,7 +48,6 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
         name,
       });
     } else {
-
       await Profile.create({
         userId: user._id,
         stripeAccountId: id,
