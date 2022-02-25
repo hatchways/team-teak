@@ -15,7 +15,7 @@ export default function NotFound(): JSX.Element {
 
   return (
     <PageContainer>
-      <Box sx={{ width: '50%', margin: '0 auto', textAlign: 'center' }}>
+      <Box sx={{ width: '100%', margin: '0 auto', textAlign: 'center' }}>
         <Typography
           sx={{
             color: 'primary.main',
@@ -25,7 +25,7 @@ export default function NotFound(): JSX.Element {
         >
           Sorry we couldn&apos;t get that page.
         </Typography>
-        <Box sx={{ width: 600, margin: '20px auto' }}>
+        <Box sx={{ width: '100%', margin: '20px auto' }}>
           <img className={classes.image} src={dogNotFound} />
         </Box>
       </Box>
