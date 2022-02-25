@@ -61,8 +61,8 @@ export default function Settings(): JSX.Element {
 
   return (
     <PageContainer>
-      <Grid sx={{ width: '100%', margin: '0 auto' }} container>
-        <Grid xs={12} md={3} item>
+      <Grid sx={{ width: '100%' }} container>
+        <Grid xs={12} md={3} sx={{ width: '100%', margin: '0 auto' }} item>
           {settingsMenu.map((item) => (
             <Box
               sx={{
@@ -89,7 +89,7 @@ export default function Settings(): JSX.Element {
             </Box>
           ))}
         </Grid>
-        <Grid xs={12} sm={9} item>
+        <Grid xs={12} sm={9} sx={{ width: '100%', margin: '10px auto' }} item>
           <Switch>
             <Route exact path="/profile/settings">
               <Redirect to="/profile/settings/edit-profile" />

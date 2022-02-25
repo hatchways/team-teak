@@ -9,18 +9,21 @@ import {
   Menu,
   MenuItem as DropdownMenuItem,
   styled,
+  AppBar,
+  Toolbar,
   useMediaQuery,
 } from '@mui/material';
 import clsx from 'clsx';
 import React, { useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/useAuthContext';
+import Notifications from '../Notifications/Notifications';
 import lovingSitterLogo from '../../images/logo.svg';
 import { AccountType } from '../../types/AccountType';
 import { useStyles } from './useStyles';
 
 const NavbarButton = styled(Button)({
-  padding: '15px 0',
+  padding: '5px 0',
 });
 
 const menuItems = [
@@ -54,6 +57,7 @@ const menuItems = [
     canView: [AccountType.PET_SITTER, AccountType.PET_OWNER],
     authenticated: true,
   },
+
   {
     item: (
       <NavbarButton variant="outlined" size="large" fullWidth>
@@ -84,7 +88,13 @@ const MenuItem: React.FC<{
 
   return (
     <Grid key={resource} sx={{ textAlign: 'center' }} xs={2} justifySelf="flex-end" item>
-      <NavLink className={classes.navbarItem} to={resource}>
+      <NavLink
+        className={clsx(
+          classes.navbarItem,
+          location.pathname === '/welcome' && item === 'Become a sitter' && classes.navSitterButton,
+        )}
+        to={resource}
+      >
         {item}
       </NavLink>
     </Grid>
@@ -112,7 +122,7 @@ const Navbar: React.FC = () => {
   };
 
   const renderMenuItems = () => {
-    // TODO: conditionally render based on profile type
+    // user info display when user login
     return menuItems.map((menu) => {
       if (menu.authenticated) {
         return loggedInUser && <MenuItem key={menu.resource} {...menu} />;
@@ -126,7 +136,7 @@ const Navbar: React.FC = () => {
 
   return (
     <Grid
-      className={clsx(classes.navbar, location.pathname === '/' && classes.transparentNavbar)}
+      className={clsx(classes.navbar, location.pathname === '/welcome' && classes.transparentNavbar)}
       justifyContent="space-between"
       alignItems="center"
       width="100%"
@@ -135,7 +145,6 @@ const Navbar: React.FC = () => {
       <Grid xs={6} sm={4} item>
         <img className={classes.navbarLogo} src={lovingSitterLogo} />
       </Grid>
-
       <Grid xs={6} sm={4} item>
         {matches ? (
           <Grid container alignItems="center" gap={2} justifyContent="flex-end">
