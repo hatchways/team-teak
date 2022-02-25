@@ -44,14 +44,16 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
         name,
       });
     } else {
-    const profile = await Profile.create({
 
     const customer = await stripe.customers.create({
       description: `Customer name is ${name}`,
+
     });
 
     const { id } = customer;
-    await Profile.create({
+    const profile = await Profile.create({
+
+    
       userId: user._id,
       stripeAccountId: id,
       name,
