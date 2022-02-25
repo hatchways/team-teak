@@ -7,9 +7,6 @@ import { AuthProvider, useAuth } from './context/useAuthContext';
 import { SocketProvider } from './context/useSocketContext';
 import { SnackBarProvider } from './context/useSnackbarContext';
 import { Navbar } from './components/Navbar/Navbar';
-import { Route, Switch } from 'react-router-dom';
-import { getRoutesAccordingToAccountType } from './pages/routes/route';
-import NotFound from './pages/NotFound/NotFound';
 import RenderRoutes from './pages/routes/routes';
 
 function App(): JSX.Element {
