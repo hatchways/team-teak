@@ -5,7 +5,7 @@ import SignUp from '../SignUp/SignUp';
 import { AccountType } from '../../types/AccountType';
 import NotFound from '../NotFound/NotFound';
 import Settings from '../Settings/Settings';
-import CustomBookingList from '../Settings/CustomBooking/CustomBookingList';
+import CustomerBookingList from '../Settings/CustomerBooking/CustomerBookingList';
 import Landing from '../Landing/Landing';
 
 const menuItems = [
@@ -66,11 +66,11 @@ const menuItems = [
     component: BookingPage,
   },
   {
-    item: 'Custom Booking',
-    resource: '/custom/booking',
+    item: 'Customer Booking',
+    resource: '/customer/booking',
     canView: [AccountType.PET_SITTER, AccountType.PET_OWNER],
     authenticated: true,
-    component: CustomBookingList,
+    component: CustomerBookingList,
   },
 ];
 

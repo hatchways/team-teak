@@ -404,7 +404,7 @@ export default function CustomerBookings(): JSX.Element {
                     </TableCell>
                     <TableCell
                       sx={{
-                        backgroundColor: '#fff',
+                        backgroundColor: 'white',
                         fontSize: '15px',
                         fontWeight: 400,
                         border: '1px solid #dbdbdc',

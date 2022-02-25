@@ -1,4 +1,4 @@
-export interface CustomBooking {
+export interface CustomerBooking {
   name: string;
   description: string;
   photo: string;
@@ -9,7 +9,7 @@ export interface CustomBooking {
   status: string;
 }
 
-export interface CustomBookingData {
-  users?: CustomBooking[];
+export interface CustomerBookingData {
+  users?: CustomerBooking[];
   error?: { message: string };
 }

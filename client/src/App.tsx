@@ -10,7 +10,7 @@ import { Navbar } from './components/Navbar/Navbar';
 import { Route, Switch } from 'react-router-dom';
 import { getAllRoutes } from './pages/routes/route';
 import NotFound from './pages/NotFound/NotFound';
-import CustomBooking from './pages/Settings/CustomBooking/CustomBookingList';
+import CustomerBooking from './pages/Settings/CustomerBooking/CustomerBookingList';
 function App(): JSX.Element {
   const routes = getAllRoutes();
   return (

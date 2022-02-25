@@ -1,33 +1,30 @@
 import { LocalizationProvider, DesktopDatePicker } from '@mui/lab';
 import { Button, CircularProgress, InputLabel, Paper } from '@mui/material';
 import { Box } from '@mui/system';
-import { Formik, FormikHelpers } from 'formik';
-import FormInput from '../../../../components/FormInput/FormInput';
 import SettingHeader from '../../../../components/SettingsHeader/SettingsHeader';
-import { User } from '../../../../interface/User';
-import { Profile } from '../../../../interface/Profile';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import { makeStyles, styled } from '@mui/styles';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-import editProfile from '../../../../helpers/APICalls/editProfile';
-import { useSnackBar } from '../../../../context/useSnackbarContext';
-import TableRow from '@mui/material/TableRow';
-import TableHead from '@mui/material/TableHead';
-import TableContainer from '@mui/material/TableContainer';
-import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Grid';
-import ButtonBase from '@mui/material/ButtonBase';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
+import {
+  TableRow,
+  TableHead,
+  TableContainer,
+  Typography,
+  Grid,
+  ButtonBase,
+  Radio,
+  RadioGroup,
+  FormLabel,
+  FormControl,
+  FormControlLabel,
+} from '@mui/material';
+
 import React from 'react';
 import useStyles from './makeStyles';
-import customBookingList from './CustomBooking';
+import customerBookingList from './CustomerBooking';
 
 const Img = styled('img')({
   margin: 'auto',
@@ -50,11 +47,11 @@ const theme = createTheme({
   },
 });
 
-interface CustomBookingProps {
+interface CustomerBookingProps {
   header: string;
 }
 
-const CustomBooking = ({ header }: CustomBookingProps): JSX.Element => {
+const CustomerBooking = ({ header }: CustomerBookingProps): JSX.Element => {
   const TAX_RATE = 0.0625;
 
   function ccyFormat(num: number) {
@@ -103,7 +100,7 @@ const CustomBooking = ({ header }: CustomBookingProps): JSX.Element => {
         width: '100%',
         margin: '0 auto',
         padding: '20px',
-        backgroundColor: '#fff',
+        backgroundColor: 'white',
       }}
     >
       <SettingHeader header={header} />
@@ -217,4 +214,4 @@ const CustomBooking = ({ header }: CustomBookingProps): JSX.Element => {
   );
 };
 
-export default CustomBooking;
+export default CustomerBooking;

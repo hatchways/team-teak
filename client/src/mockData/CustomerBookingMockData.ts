@@ -1,4 +1,4 @@
-const CustomBookingMockData: {
+const CustomerBookingMockData: {
   name: string;
   description: string;
   photo: string;
@@ -86,4 +86,4 @@ const CustomBookingMockData: {
   },
 ];
 
-export default CustomBookingMockData;
+export default CustomerBookingMockData;

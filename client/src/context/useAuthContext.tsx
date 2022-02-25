@@ -9,7 +9,7 @@ import { Profile } from '../interface/Profile';
 import { Notifications } from '../interface/Notifications';
 
 interface IAuthContext {
-  profile: Profile | null | undefined | never | any;
+  profile: Profile | null | undefined;
   loggedInUser: User | null | undefined;
   notifications: Notifications | null | undefined;
   updateLoginContext: (data: AuthApiDataSuccess) => void;

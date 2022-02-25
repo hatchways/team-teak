@@ -9,7 +9,6 @@ import SettingsWrapper from '../../components/SettingsWrapper/SettingsWrapper';
 import { useAuth } from '../../context/useAuthContext';
 import StripeConnect from '../StripeConnect/StripeConnect';
 import EditProfile from './EditProfile/EditProfile';
-import CustomBookingList from './CustomBooking/CustomBookingForm/CustomBooking';
 import ProfilePhoto from './ProfilePhoto/ProfilePhoto';
 
 const settingsMenu = [
@@ -37,11 +36,6 @@ const settingsMenu = [
     name: 'Billings',
     to: '/profile/settings/billings',
     component: <StripeConnect />,
-  },
-  {
-    name: 'Custom booking',
-    to: '/custom/booking',
-    component: <CustomBookingList header="Custom Booking" />,
   },
 ];
 
