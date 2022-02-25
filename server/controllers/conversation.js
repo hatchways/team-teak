@@ -1,122 +1,131 @@
 const Conversation = require("../models/Conversation");
 const Message = require("../models/Message");
 const asyncHandler = require("express-async-handler");
+const Profile = require("../models/Profile");
+const {
+  getAllMessagesOnAConversation,
+  getAllConversations,
+} = require("../utils/getMessagingData");
+const mongoose = require("mongoose");
 
 // @route POST /conversation/createConversation
 // @desc create a new conversation
-// @access Public
+// @access Private
 exports.createConversation = asyncHandler(async (req, res, next) => {
-    const { content, otherUsers } = req.body;
+  const { receiverId, initialMessage } = req.body;
+  const { id: senderId } = req.user;
 
-    if(!content || !otherUsers){
-        res.status(400).send("content or otherUsers can't be null");
-    }
+  const recieverProfile = await Profile.findById(receiverId);
+  if (!recieverProfile) {
+    res.status(404);
+    throw new Error("This sitter does not exist");
+  }
 
-    const newMessage = await Message.create({
-        sender: req.user.id,
-        content,
+  const conversationIsAvailable = await Conversation.findOne({
+    receiverId,
+    senderId,
+  });
+
+  let message;
+
+  if (conversationIsAvailable) {
+    message = await Message.create({
+      senderId,
+      receiverId,
+      message: initialMessage,
+    });
+  } else {
+    const conversation = await Conversation.create({
+      receiverId,
+      senderId,
     });
 
-    const existConversation = await Conversation.findOne({
-      otherUsers:{ $all: [`${req.user.id}`, `${otherUsers}`]}
+    message = await Message.create({
+      senderId,
+      receiverId,
+      message: initialMessage,
     });
+  }
 
-    if(existConversation){
-        existConversation.messages.push(newMessage);
-
-        await existConversation.save();
-
-        res.status(200).json({
-            success: {
-                contactId: otherUsers,
-            }
-        });
-    } else {
-        const conversation = await Conversation.create({
-            otherUsers: [req.user.id, receiver],
-          });
-      
-          conversation.messages.push(message);
-      
-          await conversation.save();
-
-          res.status(200).json({
-              success: {
-                conversation: {
-                  name: existConversation.name,
-                  email: existConversation.email,
-              }
-            },
-          });
-        }
-    });
-
+  return res.status(201).send({
+    success: {
+      message,
+    },
+  });
+});
 
 // @route GET /conversation/getAllMessageByConversation
 // @desc get all messages from a single conversation
-// @access Public
- exports.getAllMessageByConversation = asyncHandler(async (req, res, next) => {
+// @access Private
+exports.getAllMessageByConversation = asyncHandler(async (req, res, next) => {
+  const { receiverId } = req.params;
 
-    const conversations = await Conversation.find({
-      otherUsers: { $in: req.user.id },
-    }).populate({
-        path: "messages",
-        sort: { updatedAt: "desc" },
-      });
+  const conditions = {
+    senderId: mongoose.Types.ObjectId(req.user.id),
+    receiverId: mongoose.Types.ObjectId(receiverId),
+  };
+  const conversations = await getAllMessagesOnAConversation(conditions);
 
-    res.status(200).json({
-      success: {
-        message: conversations[0].messages,
-      },
-    });
-  
+  res.status(200).json({
+    success: {
+      messages: conversations,
+    },
+  });
 });
 
 // @route POST /conversation/sendMessage
 // @desc send a message to a conversation
 // @access Private
 exports.sendMessage = asyncHandler(async (req, res, next) => {
-    const { otherUsers, content  } = req.body;
-  
-    if (!content || !otherUsers) {
-      res.status(400).send("Bad request");
-    }
+  const { receiverId, message } = req.body;
 
-    const conversation = await Conversation.findOne({
-      otherUsers:{ $all: [`${req.user.id}`, `${otherUsers}`]}
-    });
-    
-    const message = await Message.create({
-      sender: req.user.id,
-      content,
-    });
+  const senderId = req.user.id;
 
-    conversation.messages.push(message);
-
-    await conversation.save();
-
-    res.status(200).json({
-      success: {
-        message: message.content,
-      },
-    });
-    
+  const conversation = await Conversation.findOne({
+    receiverId: mongoose.Types.ObjectId(receiverId),
+    senderId: mongoose.Types.ObjectId(senderId),
   });
-  
-  // @route GET /conversation/getAllConversations
-  // @desc get all conversations for a user
-  // @access Private
-  exports.getAllConversations = asyncHandler(async (req, res, next) => {
-    const conversations = await Conversation.find({
-      otherUsers: { $in: req.user.id },
-    }).populate({
-        path: "messages",
-        sort: { updatedAt: "desc" },
-      });
-    
-      res.status(200).json({
-        success: {
-          conversations,
-        },
-      });
+  let messages;
+
+  if (!conversation) {
+    await Conversation.create({
+      receiverId,
+      senderId,
     });
+
+    messages = await Message.create({
+      senderId,
+      receiverId,
+      message: message,
+    });
+  } else {
+    messages = await Message.create({
+      senderId,
+      receiverId,
+      message: message,
+    });
+  }
+
+  res.status(200).send({
+    success: {
+      message: messages,
+    },
+  });
+});
+
+// @route GET /conversation/getAllConversations
+// @desc get all conversations for a user
+// @access Private
+exports.getAllConversations = asyncHandler(async (req, res, next) => {
+  const conditions = {
+    senderId: mongoose.Types.ObjectId(req.user.id),
+  };
+
+  const conversations = await getAllConversations(conditions);
+
+  res.status(200).json({
+    success: {
+      conversations,
+    },
+  });
+});
