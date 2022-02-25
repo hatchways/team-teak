@@ -29,15 +29,15 @@ exports.stripeConnect = asyncHandler(async (req, res, next) => {
       },
     });
   } catch (err) {
-    res.status(400);
+    res.status(500);
     throw new Error("Stripe account not created", err);
   }
 
   try {
     await stripe.accountLinks.create({
       account: account.id,
-      refresh_url: "http://localhost:3000/settings/payment-methods",
-      return_url: "http://localhost:3000/dashboard",
+      refresh_url: process.env.REFRESH_URL_STRIPE,
+      return_url: process.env.RETURN_URL_STRIPE,
       type: "account_onboarding",
     });
   } catch (err) {
