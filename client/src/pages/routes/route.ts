@@ -5,8 +5,16 @@ import SignUp from '../SignUp/SignUp';
 import { AccountType } from '../../types/AccountType';
 import NotFound from '../NotFound/NotFound';
 import Settings from '../Settings/Settings';
+import Landing from '../Landing/Landing';
 
 const menuItems = [
+  {
+    item: 'Landing',
+    resource: '/welcome',
+    canView: null,
+    authenticated: false,
+    component: Landing,
+  },
   {
     item: 'Login',
     resource: '/login',
