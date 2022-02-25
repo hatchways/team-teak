@@ -8,9 +8,11 @@ module.exports = async (server, app) => {
   app.use(async (req, res, next) => {
     token = req.cookies.token;
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    if (token) {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    currentUser = await User.findById(decoded.id);
+      currentUser = await User.findById(decoded.id);
+    }
 
     next();
   });
