@@ -21,7 +21,7 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
     throw new Error("A user with that email already exists");
   }
 
-  const userExists = await User.findOne({ name });
+  const userExists = await Profile.findOne({ name });
 
   if (userExists) {
     res.status(400);
@@ -29,7 +29,6 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
   }
 
   const user = await User.create({
-    name,
     email,
     password,
   });
