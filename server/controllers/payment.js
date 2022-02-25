@@ -1,8 +1,7 @@
 const User = require("../models/User");
-const Profile = require("../models/Profile");
 const asyncHandler = require("express-async-handler");
-const generateToken = require("../utils/generateToken");
 const stripe = require("stripe")(process.env.STRIPE_SECRET);
+const Payment = require("../models/payment");
 
 // @route POST /payments/
 // @desc add payment
@@ -11,19 +10,35 @@ exports.addPayment = asyncHandler(async (req, res, next) => {
   const userId = req.user.id;
   const { sitterId, rate, startTime, endTime } = req.body;
 
-  const sitter = await User.findById(sitterId);
-  if (!sitter) {
+  const sitterProfile = await Profile.findById(sitterId);
+  const currentUser = await Profile.findOne({ userId });
+  if (!sitterProfile) {
     res.status(404);
     throw new Error("Sitter does not exist");
   }
 
-  const stripeAccountId = sitter.stripeAccountId;
+  const sitterStripeAccountId = sitterProfile.stripeAccountId;
   const hoursOfService = endTime - startTime;
+
+  const ownerStripeAccountId = currentUser.stripeAccountId;
+
+  const paymentIntent = await stripe.paymentIntents.create({
+    customer: ownerStripeAccountId,
+    payment_method_types: ["card"],
+    amount: hoursOfService * rate + 5,
+    currency: "cad",
+    transfer_data: {
+      destination: sitterStripeAccountId,
+    },
+  });
+
+  console.log(paymentIntent);
 
   const createPayment = await Payment.create({
     sitterId,
     userId,
-    stripeAccountId,
+    stripeAccountId: sitterStripeAccountId,
+    paymentIntentId: paymentIntent.id,
     rate,
     hoursOfService,
   });
@@ -51,7 +66,7 @@ exports.getPayment = asyncHandler(async (req, res, next) => {
   }
   return res.status(200).send({
     success: {
-      payment: payment,
+      payment,
     },
   });
 });
@@ -77,7 +92,7 @@ exports.makePayment = asyncHandler(async (req, res, next) => {
       customer: stripeAccountId,
       amount: totalPayment,
       currency: "cad",
-      source: "Hatchways",
+      source: "Loving Sitter",
       description: `Made a payment of ${totalPayment}`,
     });
   } catch (error) {
