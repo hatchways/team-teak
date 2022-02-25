@@ -10,7 +10,7 @@ const mongoose = require("mongoose");
 
 // @route POST /conversation/createConversation
 // @desc create a new conversation
-// @access Public
+// @access Private
 exports.createConversation = asyncHandler(async (req, res, next) => {
   const { receiverId, initialMessage } = req.body;
   const { id: senderId } = req.user;
@@ -56,7 +56,7 @@ exports.createConversation = asyncHandler(async (req, res, next) => {
 
 // @route GET /conversation/getAllMessageByConversation
 // @desc get all messages from a single conversation
-// @access Public
+// @access Private
 exports.getAllMessageByConversation = asyncHandler(async (req, res, next) => {
   const { receiverId } = req.params;
 
