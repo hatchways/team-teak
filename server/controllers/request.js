@@ -17,12 +17,12 @@ exports.getRequest = asyncHandler(async (req, res) => {
     sitterId: sitterProfileId,
   };
 
-  const accepted = await getRequestsData({ ...conditions, status: "ACCEPTED" });
+  const accepted = await getRequestsData({ ...conditions, status: "accepted" });
   const cancelled = await getRequestsData({
     ...conditions,
-    status: "CANCELLED",
+    status: "cancelled",
   });
-  const pending = await getRequestsData({ ...conditions, status: "PENDING" });
+  const pending = await getRequestsData({ ...conditions, status: "pending" });
 
   const requests = {
     accepted,

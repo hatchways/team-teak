@@ -14,17 +14,17 @@ const obj: Request = {
   status: 'Not Available',
   user: {
     photo: '',
-    name: 'NoBookings',
+    name: 'No Bookings',
   },
 };
 
-interface requestObj {
+interface RequestObj {
   accepted: Request[];
   pending: Request[];
   cancelled: Request[];
 }
 
-const request: requestObj = {
+const request: RequestObj = {
   accepted: [],
   pending: [],
   cancelled: [],

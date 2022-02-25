@@ -20,7 +20,7 @@ export const updateRequest = async (id: string, status: string) => {
     headers: { 'Content-Type': 'application/json' },
     credentials: 'include',
   };
-  return await fetch(`/request/${id}?status=${status.toUpperCase()}`, fetchOptions)
+  return await fetch(`/request/${id}?status=${status}`, fetchOptions)
     .then((res) => res.json())
     .catch(() => ({
       error: { message: 'Unable to connect to server. Please try again' },

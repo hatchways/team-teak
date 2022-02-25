@@ -1,4 +1,4 @@
-export interface props {
+export interface Bookings {
   _id: string;
   name: string;
   start: string;
@@ -16,15 +16,15 @@ export interface Request {
   };
 }
 
-export interface requestsList {
+export interface RequestsList {
   requests: Request[];
   cancelled: Request[];
 }
 
-export interface currentList {
+export interface CurrentList {
   requests: Request[];
 }
 
-export interface requestItem {
+export interface RequestItem {
   item: Request;
 }

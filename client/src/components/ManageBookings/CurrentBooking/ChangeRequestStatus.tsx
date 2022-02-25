@@ -2,6 +2,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import { useState } from 'react';
+import { Redirect } from 'react-router-dom';
 import { updateRequest } from '../../../helpers/APICalls/requests';
 import useStyles from './useStyles';
 interface props {
@@ -18,7 +19,7 @@ const ChangeRequstStatus = ({ id }: props): JSX.Element => {
 
     const result = await updateRequest(id, 'cancelled');
 
-    window.location.href = '/my-jobs';
+    <Redirect to="/my-jobs" />;
   };
 
   const updateRequestToAccepted = async () => {
@@ -26,7 +27,7 @@ const ChangeRequstStatus = ({ id }: props): JSX.Element => {
 
     await updateRequest(id, 'accepted');
 
-    window.location.href = '/my-jobs';
+    <Redirect to="/my-jobs" />;
   };
 
   return (

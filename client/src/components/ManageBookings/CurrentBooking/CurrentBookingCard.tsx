@@ -1,13 +1,13 @@
-import { Typography, Box } from '@mui/material';
+import { Typography, Box, Avatar } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
 import useStyles from './useStyles';
 import { createImageFromInitials } from '../../../helpers/makeAnImageFromName';
-import { Request, props } from '../../../interface/manageBooking';
+import { Bookings } from '../../../interface/manageBooking';
 import ChangeRequestStatus from './ChangeRequestStatus';
 import { useState } from 'react';
 import { convertDate } from '../../../helpers/APICalls/convertDateRightFormat';
 
-const CurrentBookingCard = ({ _id, name, start, photo, ...props }: props): JSX.Element => {
+const CurrentBookingCard = ({ _id, name, start, photo, ...props }: Bookings): JSX.Element => {
   const [showAccept, setShowAccept] = useState(false);
   const classes = useStyles();
 
@@ -40,13 +40,10 @@ const CurrentBookingCard = ({ _id, name, start, photo, ...props }: props): JSX.E
 
         <Box className={classes.details}>
           <Typography component="div" className={classes.image}>
-            <img src={image} alt="Image" />
+            <Avatar alt={letterImage} src={image} />
           </Typography>
           <Typography className={classes.name} sx={{ fontSize: '18px', fontWeight: 'bold' }}>
-            {firstName}
-          </Typography>
-          <Typography className={classes.name} sx={{ fontSize: '18px', fontWeight: 'bold', paddingLeft: '10px' }}>
-            {lastName}
+            {name}
           </Typography>
         </Box>
       </Box>

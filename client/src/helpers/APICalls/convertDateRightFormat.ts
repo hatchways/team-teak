@@ -1,9 +1,8 @@
 export const convertDate = (date: string): string => {
   const monthsInString = [
-    ,
     'January',
     'February',
-    'Marth',
+    'March',
     'April',
     'May',
     'June',
@@ -17,5 +16,5 @@ export const convertDate = (date: string): string => {
 
   const dateArray = date.split('/');
 
-  return `${dateArray[1]} ${monthsInString[Number(dateArray[0])]} ${dateArray[2]}`;
+  return `${dateArray[1]} ${monthsInString[Number(dateArray[0]) - 1]} ${dateArray[2]}`;
 };

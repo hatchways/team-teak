@@ -1,9 +1,9 @@
 import { Box, Typography } from '@mui/material';
 import BookingCard from '../BookingCard/BookingCard';
 import useStyles from './useStyles';
-import { requestsList } from '../../../interface/manageBooking';
+import { RequestsList } from '../../../interface/manageBooking';
 
-const BookingWrapper = ({ requests, cancelled }: requestsList): JSX.Element => {
+const BookingWrapper = ({ requests, cancelled }: RequestsList): JSX.Element => {
   const classes = useStyles();
 
   return (

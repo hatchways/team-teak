@@ -4,11 +4,11 @@ const requestSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
-    ref: "profiles",
+    ref: "Profile",
   },
   sitterId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "profiles",
+    ref: "Profile",
   },
   start: {
     type: Date,
@@ -20,8 +20,8 @@ const requestSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ["PENDING", "ACCEPTED", "CANCELLED"],
-    default: "PENDING",
+    enum: ["pending", "accepted", "cancelled"],
+    default: "pending",
   },
   accepetd: {
     type: Boolean,
