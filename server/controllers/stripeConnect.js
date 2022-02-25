@@ -2,8 +2,6 @@ const User = require("../models/User");
 const Profile = require("../models/Profile");
 const asyncHandler = require("express-async-handler");
 const PetSitter = require("../models/PetSitter");
-const availability = require("../models/availability");
-const { activateSchedule } = require("./availability");
 const stripe = require("stripe")(process.env.STRIPE_SECRET);
 
 // @route POST /connect/stripe
@@ -14,6 +12,7 @@ exports.stripeConnect = asyncHandler(async (req, res, next) => {
   const userId = req.user.id;
 
   const currentUser = await User.findById(userId);
+  const currentUserProfile = await Profile.findOne({ userId });
 
   let account;
 
@@ -46,10 +45,12 @@ exports.stripeConnect = asyncHandler(async (req, res, next) => {
   }
 
   const rateInCents = rate * 100;
+
   const petSitter = await PetSitter.create({
     stripeConnectId: account.id,
     rate: rateInCents,
     userId,
+    stripeAccountId: currentUserProfile.stripeAccountId,
   });
 
   return res.status(201).send({ success: petSitter });
