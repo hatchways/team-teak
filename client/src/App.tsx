@@ -8,15 +8,11 @@ import { SocketProvider } from './context/useSocketContext';
 import { SnackBarProvider } from './context/useSnackbarContext';
 import { Navbar } from './components/Navbar/Navbar';
 import { Route, Switch } from 'react-router-dom';
-import { getRoutesAccordingToAccountType } from './pages/routes/route';
+import { getAllRoutes } from './pages/routes/route';
 import NotFound from './pages/NotFound/NotFound';
 import CustomBooking from './pages/Settings/CustomBooking/CustomBookingList';
 function App(): JSX.Element {
-  const {
-    profile: { accountType },
-  } = useAuth();
-
-  const routes = getRoutesAccordingToAccountType(accountType);
+  const routes = getAllRoutes();
   return (
     <ThemeProvider theme={theme}>
       <SnackBarProvider>

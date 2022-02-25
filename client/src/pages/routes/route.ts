@@ -6,8 +6,16 @@ import { AccountType } from '../../types/AccountType';
 import NotFound from '../NotFound/NotFound';
 import Settings from '../Settings/Settings';
 import CustomBookingList from '../Settings/CustomBooking/CustomBookingList';
+import Landing from '../Landing/Landing';
 
 const menuItems = [
+  {
+    item: 'Landing',
+    resource: '/welcome',
+    canView: null,
+    authenticated: false,
+    component: Landing,
+  },
   {
     item: 'Login',
     resource: '/login',
