@@ -12,11 +12,9 @@ import { getRoutesAccordingToAccountType } from './pages/routes/route';
 import NotFound from './pages/NotFound/NotFound';
 
 function App(): JSX.Element {
-  const {
-    profile: { accountType },
-  } = useAuth();
+  const { profile } = useAuth();
 
-  const routes = getRoutesAccordingToAccountType(accountType);
+  const routes = getRoutesAccordingToAccountType(profile?.accountType || '');
   return (
     <ThemeProvider theme={theme}>
       <SnackBarProvider>
