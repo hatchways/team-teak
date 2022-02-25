@@ -5,15 +5,16 @@ const Profile = require("../models/Profile");
 const {
   getAllMessagesOnAConversation,
   getAllConversations,
+  getAllConversationsReceived,
 } = require("../utils/getMessagingData");
 const mongoose = require("mongoose");
+const User = require("../models/User");
 
-// @route POST /conversation/createConversation
+// @route POST /conversations/
 // @desc create a new conversation
 // @access Public
 exports.createConversation = asyncHandler(async (req, res, next) => {
   const { receiverId, initialMessage } = req.body;
-  const { id: senderId } = req.user;
 
   const recieverProfile = await Profile.findById(receiverId);
   if (!recieverProfile) {
@@ -21,15 +22,29 @@ exports.createConversation = asyncHandler(async (req, res, next) => {
     throw new Error("This sitter does not exist");
   }
 
+  const senderProfile = await Profile.findOne({ userId: req.user.id });
+  const senderId = senderProfile.id;
+
   const conversationIsAvailable = await Conversation.findOne({
     receiverId,
     senderId,
   });
 
+  let conversationId;
+
+  const conversationIsAvailableSent = await Conversation.findOne({
+    receiverId: senderId,
+    senderId: receiverId,
+  });
+
+  if (conversationIsAvailable) conversationId = conversationIsAvailable.id;
+  else conversationId = conversationIsAvailableSent.id;
+
   let message;
 
-  if (conversationIsAvailable) {
+  if (conversationIsAvailable || conversationIsAvailableSent) {
     message = await Message.create({
+      conversationId,
       senderId,
       receiverId,
       message: initialMessage,
@@ -41,6 +56,7 @@ exports.createConversation = asyncHandler(async (req, res, next) => {
     });
 
     message = await Message.create({
+      conversationId: conversation.id,
       senderId,
       receiverId,
       message: initialMessage,
@@ -58,13 +74,17 @@ exports.createConversation = asyncHandler(async (req, res, next) => {
 // @desc get all messages from a single conversation
 // @access Public
 exports.getAllMessageByConversation = asyncHandler(async (req, res, next) => {
-  const { receiverId } = req.params;
+  const { conversationId } = req.params;
 
-  const conditions = {
-    senderId: mongoose.Types.ObjectId(req.user.id),
-    receiverId: mongoose.Types.ObjectId(receiverId),
+  const sentConditions = {
+    conversationId,
   };
-  const conversations = await getAllMessagesOnAConversation(conditions);
+
+  const messagesReceived = await getAllMessagesOnAConversation(sentConditions);
+
+  const conversations = [...messagesReceived].sort(
+    (i, j) => new Date(i.createdAt) - new Date(j.createdAt)
+  );
 
   res.status(200).json({
     success: {
@@ -79,27 +99,39 @@ exports.getAllMessageByConversation = asyncHandler(async (req, res, next) => {
 exports.sendMessage = asyncHandler(async (req, res, next) => {
   const { receiverId, message } = req.body;
 
-  const senderId = req.user.id;
+  const senderProfile = await Profile.findOne({ userId: req.user.id });
+  const senderId = senderProfile.id;
 
-  const conversation = await Conversation.findOne({
-    receiverId: mongoose.Types.ObjectId(receiverId),
-    senderId: mongoose.Types.ObjectId(senderId),
+  const conversationSent = await Conversation.findOne({
+    receiverId,
+    senderId,
+  });
+
+  const conversationRecieved = await Conversation.findOne({
+    receiverId: senderId,
+    senderId: receiverId,
   });
   let messages;
 
-  if (!conversation) {
-    await Conversation.create({
+  let conversationId;
+  if (conversationSent) conversationId = conversationSent.id;
+  else conversationId = conversationRecieved.id;
+
+  if (!conversationSent && !conversationRecieved) {
+    const conversation = await Conversation.create({
       receiverId,
       senderId,
     });
 
     messages = await Message.create({
+      conversationId: conversation.id,
       senderId,
       receiverId,
       message: message,
     });
   } else {
     messages = await Message.create({
+      conversationId,
       senderId,
       receiverId,
       message: message,
@@ -113,15 +145,27 @@ exports.sendMessage = asyncHandler(async (req, res, next) => {
   });
 });
 
-// @route GET /conversation/getAllConversations
+// @route GET /conversations/
 // @desc get all conversations for a user
 // @access Private
 exports.getAllConversations = asyncHandler(async (req, res, next) => {
-  const conditions = {
-    senderId: mongoose.Types.ObjectId(req.user.id),
+  const profile = await Profile.findOne({ userId: req.user.id });
+
+  const senderConditions = {
+    senderId: profile.id,
   };
 
-  const conversations = await getAllConversations(conditions);
+  const receiverConditions = {
+    receiverId: profile.id,
+  };
+
+  const senderConversations = await getAllConversations(senderConditions);
+
+  const receiverConversations = await getAllConversationsReceived(
+    receiverConditions
+  );
+
+  const conversations = [...senderConversations, ...receiverConversations];
 
   res.status(200).json({
     success: {
