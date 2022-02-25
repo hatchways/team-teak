@@ -102,6 +102,7 @@ exports.sendMessage = asyncHandler(async (req, res, next) => {
   const senderProfile = await Profile.findOne({ userId: req.user.id });
   const senderId = senderProfile.id;
 
+
   const conversationSent = await Conversation.findOne({
     receiverId,
     senderId,
