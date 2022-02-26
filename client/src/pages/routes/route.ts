@@ -1,12 +1,20 @@
-import { Component } from 'react';
 import BookingPage from '../BookingPage/BookingPage';
 import Dashboard from '../Dashboard/Dashboard';
 import Login from '../Login/Login';
 import SignUp from '../SignUp/SignUp';
 import { AccountType } from '../../types/AccountType';
 import NotFound from '../NotFound/NotFound';
+import Settings from '../Settings/Settings';
+import Landing from '../Landing/Landing';
 
 const menuItems = [
+  {
+    item: 'Landing',
+    resource: '/welcome',
+    canView: null,
+    authenticated: false,
+    component: Landing,
+  },
   {
     item: 'Login',
     resource: '/login',
@@ -56,15 +64,26 @@ const menuItems = [
     authenticated: true,
     component: BookingPage,
   },
+  {
+    item: 'Settings',
+    resource: '/profile/settings',
+    canView: [AccountType.PET_SITTER, AccountType.PET_OWNER],
+    authenticated: true,
+    component: Settings,
+  },
 ];
 
 export const getAllRoutes = () => menuItems;
 
-export const getNonAuthenticatedRoutes = () => {
-  const result = [];
-
-  for (const item of menuItems) {
-    if (!item.authenticated) result.push(item);
+export const getRoutesAccordingToAccountType = (accountType?: string) => {
+  const routes = [];
+  for (const route of menuItems) {
+    if (!route.canView) {
+      routes.push(route);
+    } else if (accountType && route.canView?.includes(accountType)) {
+      routes.push(route);
+    }
   }
-  return result;
+
+  return routes;
 };
