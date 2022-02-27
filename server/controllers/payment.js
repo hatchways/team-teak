@@ -28,16 +28,14 @@ exports.addPayment = asyncHandler(async (req, res, next) => {
     amount: hoursOfService * rate + 5,
     currency: "cad",
     transfer_data: {
-      destination: sitterStripeAccountId,
+      destination: sitterProfile.stripeConnectId,
     },
   });
-
-  console.log(paymentIntent);
 
   const createPayment = await Payment.create({
     sitterId,
     userId,
-    stripeAccountId: sitterStripeAccountId,
+    stripeCustomerId: sitterStripeAccountId,
     paymentIntentId: paymentIntent.id,
     rate,
     hoursOfService,
@@ -88,13 +86,7 @@ exports.makePayment = asyncHandler(async (req, res, next) => {
   const { totalPayment, stripeAccountId } = payment;
 
   try {
-    await stripe.charges.create({
-      customer: stripeAccountId,
-      amount: totalPayment,
-      currency: "cad",
-      source: "Loving Sitter",
-      description: `Made a payment of ${totalPayment}`,
-    });
+    await stripe.paymentIntents.confirm(payment.paymentIntentId);
   } catch (error) {
     res.status(500);
     throw new Error("Payment was not completed");
@@ -126,6 +118,13 @@ exports.cancelPayment = asyncHandler(async (req, res, next) => {
   if (!payment) {
     res.status(404);
     throw new Error("Only merchant can cancel");
+  }
+
+  try {
+    await stripe.paymentIntents.cancel(payment.paymentIntentId);
+  } catch (error) {
+    res.status(500);
+    throw new Error("Payment was not completed");
   }
 
   payment.set({ cancel: true });
