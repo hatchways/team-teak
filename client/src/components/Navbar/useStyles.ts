@@ -3,6 +3,8 @@ import { makeStyles } from '@mui/styles';
 
 export const useStyles = makeStyles((theme: Theme) => ({
   navbar: {
+    position: 'relative',
+    zIndex: 5,
     boxShadow: '4px 4px 5px 7px rgba(217,217,217,0.26)',
     padding: theme.spacing(2),
     background: 'white',
@@ -51,5 +53,9 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
   navbarLogo: {
     width: 180,
+  },
+  navSitterButton: {
+    color: theme.palette.primary.light,
+    textDecoration: 'underline',
   },
 }));
