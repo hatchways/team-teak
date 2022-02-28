@@ -19,7 +19,7 @@ export default function NotFound({ message }: Props): JSX.Element {
 
   return (
     <PageContainer>
-      <Box sx={{ width: '50%', margin: '0 auto', textAlign: 'center' }}>
+      <Box sx={{ width: '100%', margin: '0 auto', textAlign: 'center' }}>
         <Typography
           sx={{
             color: 'primary.main',
@@ -29,7 +29,7 @@ export default function NotFound({ message }: Props): JSX.Element {
         >
           {message}
         </Typography>
-        <Box sx={{ width: 600, margin: '20px auto' }}>
+        <Box sx={{ width: '100%', margin: '20px auto' }}>
           <img className={classes.image} src={dogNotFound} />
         </Box>
       </Box>

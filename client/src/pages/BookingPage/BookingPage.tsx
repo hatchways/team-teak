@@ -16,7 +16,7 @@ const BookingsPage = (): JSX.Element => {
           <BookingWrapper />
         </Box>
       </Grid>
-      <Grid xs={5} md={5} lg={5} item>
+      <Grid xs={10} md={5} lg={5} item>
         <Box className={classes.boxMargin}>
           <BookingCalendarWrapper />
         </Box>
