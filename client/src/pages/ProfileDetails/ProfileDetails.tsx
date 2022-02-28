@@ -3,7 +3,6 @@ import PageContainer from '../../components/PageContainer/PageContainer';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import RequestForm from './RequestFormSubmit/RequestFormSubmit';
 import useStyles from './useStyles';
-import { useEffect, useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import { User } from '../../interface/User';
 
@@ -26,7 +25,7 @@ const testProfileDetail = {
   rating: 3.7,
 };
 
-const ProfileDetails = ({ user, width, height, photoUrl }: ProfileDetailProps): JSX.Element => {
+const ProfileDetails = (): JSX.Element => {
   const classes = useStyles();
 
   return (
@@ -79,7 +78,7 @@ const ProfileDetails = ({ user, width, height, photoUrl }: ProfileDetailProps): 
             <Typography margin="10px 10px">{testProfileDetail.introduction}</Typography>
           </Box>
         </Grid>
-        {/* <Divider sx={{ width: '100%' }} /> */}
+        <Divider sx={(width) => ({ [width.breakpoints.down('xs')]: { width: '100%' } })} />
         <Grid xs={12} lg={4} item borderRadius={2} boxShadow={{ lg: 2, xl: 4 }} container flexDirection="column">
           <Typography fontSize="1.1rem" component="p" fontWeight="bold" m="3rem auto 1rem auto">
             ${testProfileDetail.hourlyRate}/hr
