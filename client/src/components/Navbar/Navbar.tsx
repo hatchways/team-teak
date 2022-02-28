@@ -86,7 +86,7 @@ const MenuItem: React.FC<{
       <NavLink
         className={clsx(
           classes.navbarItem,
-          location.pathname === '/welcome' && item === 'Become a sitter' && classes.navSitterButton,
+          location.pathname === '/index' && item === 'Become a sitter' && classes.navSitterButton,
         )}
         to={resource}
       >
@@ -129,7 +129,7 @@ const Navbar: React.FC = () => {
 
   return (
     <Grid
-      className={clsx(classes.navbar, location.pathname === '/welcome' && classes.transparentNavbar)}
+      className={clsx(classes.navbar, location.pathname === '/index' && classes.transparentNavbar)}
       justifyContent="space-between"
       alignItems="center"
       container

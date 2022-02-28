@@ -10,7 +10,7 @@ import Landing from '../Landing/Landing';
 const menuItems = [
   {
     item: 'Landing',
-    resource: '/welcome',
+    resource: '/index',
     canView: null,
     authenticated: false,
     component: Landing,
