@@ -5,8 +5,16 @@ import SignUp from '../SignUp/SignUp';
 import { AccountType } from '../../types/AccountType';
 import NotFound from '../NotFound/NotFound';
 import Settings from '../Settings/Settings';
+import Landing from '../Landing/Landing';
 
 const menuItems = [
+  {
+    item: 'Landing',
+    resource: '/welcome',
+    canView: null,
+    authenticated: false,
+    component: Landing,
+  },
   {
     item: 'Login',
     resource: '/login',
@@ -67,12 +75,12 @@ const menuItems = [
 
 export const getAllRoutes = () => menuItems;
 
-export const getRoutesAccordingToAccountType = (accountType: string) => {
+export const getRoutesAccordingToAccountType = (accountType?: string) => {
   const routes = [];
   for (const route of menuItems) {
     if (!route.canView) {
       routes.push(route);
-    } else if (route.canView?.includes(accountType)) {
+    } else if (accountType && route.canView?.includes(accountType)) {
       routes.push(route);
     }
   }

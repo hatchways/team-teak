@@ -2262,10 +2262,10 @@
   "resolved" "https://registry.npmjs.org/strip-json-comments/-/strip-json-comments-3.1.1.tgz"
   "version" "3.1.1"
 
-"stripe@^8.201.0":
-  "integrity" "sha512-pF0F1DdE9zt0U6Cb0XN+REpdFkUmaqp6C7OEVOCeUpTAafjjJqrdV/WmZd7Y5MwT8XvDAxB5/v3CAXwxAp0XNg=="
-  "resolved" "https://registry.npmjs.org/stripe/-/stripe-8.201.0.tgz"
-  "version" "8.201.0"
+"stripe@^8.202.0":
+  "integrity" "sha512-hmYnc7je6j0n9GlkUpc8USsUquLzSxmWj78g9NKFokCtSybNy7y9fYS+VB5AuZUwmIkzhTczgf+TaSmI4kbk9A=="
+  "resolved" "https://registry.npmjs.org/stripe/-/stripe-8.205.0.tgz"
+  "version" "8.205.0"
   dependencies:
     "@types/node" ">=8.1.0"
     "qs" "^6.6.0"
