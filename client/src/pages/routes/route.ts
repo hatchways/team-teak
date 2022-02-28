@@ -6,8 +6,16 @@ import { AccountType } from '../../types/AccountType';
 import NotFound from '../NotFound/NotFound';
 import Settings from '../Settings/Settings';
 import MessagingPage from '../Messaging/MessagingPage';
+import Landing from '../Landing/Landing';
 
 const menuItems = [
+  {
+    item: 'Landing',
+    resource: '/welcome',
+    canView: null,
+    authenticated: false,
+    component: Landing,
+  },
   {
     item: 'Login',
     resource: '/login',
