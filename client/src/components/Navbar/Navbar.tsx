@@ -106,7 +106,7 @@ const Navbar: React.FC = () => {
   const location = useLocation();
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const { loggedInUser, profile, logout } = useAuth();
+  const { loggedInUser, logout, profile } = useAuth();
   const open = Boolean(anchorEl);
 
   console.log('navbar profile', profile);
@@ -128,7 +128,7 @@ const Navbar: React.FC = () => {
     return menuItems.map((menu) => {
       if (menu.authenticated) {
         if (!profile) return loggedInUser && <MenuItem key={menu.resource} {...menu} />;
-        if (profile.accountType && menu?.canView?.includes(profile.accountType))
+        if (profile.type && menu?.canView?.includes(profile.type))
           return loggedInUser && <MenuItem key={menu.resource} {...menu} />;
       } else {
         return !loggedInUser && <MenuItem key={menu.resource} {...menu} />;

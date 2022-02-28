@@ -5,12 +5,11 @@ import loginWithCookies from '../helpers/APICalls/loginWithCookies';
 import logoutAPI from '../helpers/APICalls/logout';
 import { AuthApiData, AuthApiDataSuccess } from '../interface/AuthApiData';
 import { User } from '../interface/User';
-
-import { Profile } from '../interface/Profile';
+import { Profile, PetSitter } from '../interface/Profile';
 import { Notifications } from '../interface/Notifications';
 
 interface IAuthContext {
-  profile: Profile | null | undefined;
+  profile: PetSitter | Profile | null | undefined;
   loggedInUser: User | null | undefined;
   notifications: Notifications | null | undefined;
   updateLoginContext: (data: AuthApiDataSuccess) => void;
@@ -28,7 +27,7 @@ export const AuthContext = createContext<IAuthContext>({
 export const AuthProvider: FunctionComponent = ({ children }): JSX.Element => {
   // default undefined before loading, once loaded provide user or null if logged out
   const [loggedInUser, setLoggedInUser] = useState<User | null | undefined>();
-  const [profile, setProfile] = useState<Profile | null | undefined>();
+  const [profile, setProfile] = useState<PetSitter | Profile | null | undefined>();
   const [notifications, setNotifications] = useState<Notifications | null | undefined>();
   const history = useHistory();
 
