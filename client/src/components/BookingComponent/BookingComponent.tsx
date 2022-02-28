@@ -1,6 +1,5 @@
 import { Typography } from '@mui/material';
 import RequestStatusButton from '../RequestFormButton/RequestFormButton';
-import AvatarDisplay from '../AvatarDisplay/AvatarDisplay';
 import { Box } from '@mui/material';
 import { Request } from '../../interface/Request';
 import { useState } from 'react';
@@ -80,7 +79,6 @@ export default function BookingComponents({ booking, isNextBooking, isPastBookin
     <>
       {topLine()}
       <Box sx={{ padding: '0', display: 'flex', alignItems: 'center', marginBottom: 0 }}>
-        <AvatarDisplay loggedIn={false} user={booking.user} />
         <Typography sx={{ textTransform: 'none', fontWeight: 'bold' }}>&nbsp;{booking.user.name}</Typography>
         <Typography
           sx={{

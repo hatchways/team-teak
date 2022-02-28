@@ -2,6 +2,22 @@ import { Theme } from '@mui/material/styles';
 import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles((theme: Theme) => ({
+  pageDetail: {
+    width: 800,
+    [theme.breakpoints.up('lg')]: {
+      width: 1200,
+    },
+    [theme.breakpoints.down('xs')]: {
+      width: 400,
+    },
+  },
+
+  responsiveTitle: {
+    [theme.breakpoints.down('md')]: {
+      textAlign: 'center',
+    },
+  },
+
   coverImage: {
     position: 'relative',
     backgroundImage: 'url("https://image.shutterstock.com/image-photo/human-dog-girl-her-friend-260nw-1494711500.jpg")',
@@ -16,9 +32,26 @@ const useStyles = makeStyles((theme: Theme) => ({
     '@media(min-width:600px)': {
       minHeight: 300,
       '& > *': {
-        top: 220,
+        top: 120,
         left: 'calc(50% - 80px)',
       },
+    },
+  },
+
+  responsiveAvatar: {
+    position: 'relative',
+    width: 170,
+    height: 170,
+    // [theme.breakpoints.up('sm')]: {
+    //   position: 'relative',
+    //   width: 170,
+    //   height: 170,
+    // },
+    [theme.breakpoints.down('xs')]: {
+      position: 'relative',
+      width: 100,
+      height: 100,
+      fullWidth: { width: '100%' },
     },
   },
 }));
