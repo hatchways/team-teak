@@ -4,7 +4,7 @@ import { useStyles } from './useStyles';
 import { Grid, Box, Typography, Button, CircularProgress } from '@mui/material';
 import FormInput from '../../../components/FormInput/FormInput';
 
-interface Props {
+interface FindSitters {
   handleSubmit: (
     {
       where,
@@ -26,7 +26,7 @@ interface Props {
   ) => void;
 }
 
-export default function FindSitter({ handleSubmit }: Props): JSX.Element {
+export default function FindSitter({ handleSubmit }: FindSitters): JSX.Element {
   const classes = useStyles();
   return (
     <Formik
