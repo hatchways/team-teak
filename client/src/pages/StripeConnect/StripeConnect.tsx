@@ -4,7 +4,8 @@ import stripeConnect from '../../helpers/APICalls/stripeConnect';
 
 const StripeConnect = (): JSX.Element => {
   const createStripeAccount = async () => {
-    await stripeConnect();
+    const result = await stripeConnect();
+    console.log(result);
   };
 
   return (
