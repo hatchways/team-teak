@@ -58,7 +58,7 @@ exports.validateAvailability = [
 ];
 
 exports.validateRequestParameter = [
-  param("notificationId", "Invalid id").isMongoId(),
+  param("userId", "Invalid id").isMongoId(),
   (req, res, next) => {
     const errors = validationResult(req);
 
