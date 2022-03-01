@@ -132,7 +132,7 @@ exports.loginUser = asyncHandler(async (req, res, next) => {
 exports.loadUser = asyncHandler(async (req, res, next) => {
   const user = await User.findById(req.user.id);
   const profile = await Profile.findOne({ userId: req.user.id });
-  const notifications = await Notification.findById({
+  const notifications = await Notification.find({
     recieverId: req.user.id,
   });
 
