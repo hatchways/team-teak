@@ -20,12 +20,10 @@ exports.uploadPicture = asyncHandler(async (req, res, next) => {
 
     const imageUrlStringPath = imageUrlPath.url;
 
-    res
-      .status(200)
-      .json({
-        success: { message: "image update successfully!" },
-        data: { imageUrlStringPath },
-      });
+    res.status(200).json({
+      success: { message: "image update successfully!" },
+      data: { imageUrlStringPath },
+    });
   } catch (err) {
     res.status(500).send({
       message: "update image fail ",

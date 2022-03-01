@@ -29,7 +29,6 @@ export const AuthProvider: FunctionComponent = ({ children }): JSX.Element => {
   const [loggedInUser, setLoggedInUser] = useState<User | null | undefined>();
   const [profile, setProfile] = useState<PetSitter | Profile | null | undefined>();
   const [notifications, setNotifications] = useState<Notifications | null | undefined>();
-
   const history = useHistory();
 
   const updateLoginContext = useCallback(

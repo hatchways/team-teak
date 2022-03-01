@@ -109,6 +109,8 @@ const Navbar: React.FC = () => {
   const { loggedInUser, logout, profile } = useAuth();
   const open = Boolean(anchorEl);
 
+  console.log('navbar profile', profile);
+
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -123,7 +125,6 @@ const Navbar: React.FC = () => {
   };
 
   const renderMenuItems = () => {
-    // user info display when user login
     return menuItems.map((menu) => {
       if (menu.authenticated) {
         if (!profile) return loggedInUser && <MenuItem key={menu.resource} {...menu} />;

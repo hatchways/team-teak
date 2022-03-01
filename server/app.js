@@ -10,6 +10,7 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const cors = require("cors");
 
+const conversationRouter = require("./routes/conversation");
 const authRouter = require("./routes/auth");
 const userRouter = require("./routes/user");
 const profileRouter = require("./routes/profile");
@@ -47,9 +48,12 @@ require("./utils/socket")(server, app);
 app.use("/auth", authRouter);
 app.use("/users", userRouter);
 app.use("/profile", profileRouter);
+app.use("/conversations", conversationRouter);
+
 app.use("/payment_methods", paymentMethodsRouter);
 app.use("/stripe", stripeConnectRouter);
 app.use("/imageUpload", imageUploadRouter);
+
 app.use("/notification", notificationRouter);
 app.use("/availability", availabilityRouter);
 
