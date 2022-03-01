@@ -25,7 +25,7 @@ export interface SearchProfileApiData {
   error?: { message: string };
 }
 
-export interface ApiResponse<T> {
+export interface ApiUsersData<T> {
   users?: T[];
   error?: { message: string };
 }

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { searchProfiles } from '../../helpers/APICalls/searchUsers';
-import { SearchProfileApiData } from '../../interface/Profile';
+import { ApiUsersData, PetSitter } from '../../interface/Profile';
 import { Box, Grid } from '@mui/material';
 
 import NotFound from '../../pages/NotFound/NotFound';
@@ -13,7 +13,7 @@ interface Props {
 }
 
 const ProfileListing = ({ debouncedLocation, date }: Props): JSX.Element => {
-  const [profiles, setProfiles] = React.useState<SearchProfileApiData | null>(null);
+  const [profiles, setProfiles] = React.useState<ApiUsersData<PetSitter> | null>(null);
 
   useEffect(() => {
     (async () => {
@@ -42,7 +42,7 @@ const ProfileListing = ({ debouncedLocation, date }: Props): JSX.Element => {
       });
     }
     if (profiles?.users?.length === 0) {
-      return <NotFound message={'No sitters available'} />;
+      return <NotFound />;
     }
     return profiles?.users?.map((profile, id) => {
       const { photo, name, description, address } = profile;
@@ -54,7 +54,7 @@ const ProfileListing = ({ debouncedLocation, date }: Props): JSX.Element => {
           subTitle={'Pet Lover'}
           description={description}
           address={address}
-          rate={'20/hr'}
+          rate={profile.rate ? `${profile.rate}/hr` : '0.0/hr'}
         />
       );
     });
