@@ -3,9 +3,11 @@ import { makeStyles } from '@mui/styles';
 import { cloneElement } from 'react';
 import { NavLink, Redirect, Route, Switch, useHistory } from 'react-router-dom';
 import PageContainer from '../../components/PageContainer/PageContainer';
+import PaymentMethods from '../../components/PaymentMethods/paymentMethods';
 import SettingHeader from '../../components/SettingsHeader/SettingsHeader';
 import SettingsWrapper from '../../components/SettingsWrapper/SettingsWrapper';
 import { useAuth } from '../../context/useAuthContext';
+import StripeConnect from '../StripeConnect/StripeConnect';
 import EditProfile from './EditProfile/EditProfile';
 import ProfilePhoto from './ProfilePhoto/ProfilePhoto';
 
@@ -28,7 +30,12 @@ const settingsMenu = [
   {
     name: 'Payment methods',
     to: '/profile/settings/payment-methods',
-    component: <SettingHeader header="Payment Methods" />,
+    component: <PaymentMethods />,
+  },
+  {
+    name: 'Billings',
+    to: '/profile/settings/billings',
+    component: <StripeConnect />,
   },
 ];
 
@@ -47,18 +54,18 @@ export default function Settings(): JSX.Element {
   if (loggedInUser === undefined) return <CircularProgress />;
   if (!loggedInUser || !profile) {
     history.push('/login');
-    // loading for a split seconds until history.push works
+
     return <CircularProgress />;
   }
 
   return (
     <PageContainer>
-      <Grid sx={{ width: '75%', margin: '0 auto' }} container>
-        <Grid xs={3} item>
+      <Grid sx={{ width: '90%', margin: '0 auto' }} container>
+        <Grid xs={9} sm={3} item>
           {settingsMenu.map((item) => (
             <Box
               sx={{
-                margin: '20px 0',
+                margin: '20px 20px',
               }}
               key={item.name}
             >
@@ -81,7 +88,7 @@ export default function Settings(): JSX.Element {
             </Box>
           ))}
         </Grid>
-        <Grid xs={9} item>
+        <Grid xs={12} sm={9} item>
           <Switch>
             <Route exact path="/profile/settings">
               <Redirect to="/profile/settings/edit-profile" />

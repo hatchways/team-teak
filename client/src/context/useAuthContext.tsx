@@ -5,11 +5,13 @@ import loginWithCookies from '../helpers/APICalls/loginWithCookies';
 import logoutAPI from '../helpers/APICalls/logout';
 import { AuthApiData, AuthApiDataSuccess } from '../interface/AuthApiData';
 import { User } from '../interface/User';
-import { Profile } from '../interface/Profile';
+import { Profile, PetSitter } from '../interface/Profile';
+import { Notifications } from '../interface/Notifications';
 
 interface IAuthContext {
-  profile: Profile | null | undefined;
+  profile: PetSitter | Profile | null | undefined;
   loggedInUser: User | null | undefined;
+  notifications: Notifications | null | undefined;
   updateLoginContext: (data: AuthApiDataSuccess) => void;
   logout: () => void;
 }
@@ -17,6 +19,7 @@ interface IAuthContext {
 export const AuthContext = createContext<IAuthContext>({
   profile: undefined,
   loggedInUser: undefined,
+  notifications: undefined,
   updateLoginContext: () => null,
   logout: () => null,
 });
@@ -24,14 +27,19 @@ export const AuthContext = createContext<IAuthContext>({
 export const AuthProvider: FunctionComponent = ({ children }): JSX.Element => {
   // default undefined before loading, once loaded provide user or null if logged out
   const [loggedInUser, setLoggedInUser] = useState<User | null | undefined>();
-  const [profile, setProfile] = useState<Profile | null | undefined>();
+  const [profile, setProfile] = useState<PetSitter | Profile | null | undefined>();
+  const [notifications, setNotifications] = useState<Notifications | null | undefined>();
+
   const history = useHistory();
 
   const updateLoginContext = useCallback(
     (data: AuthApiDataSuccess) => {
+      console.log(updateLoginContext);
+
       console.log(data);
       setLoggedInUser(data.user);
       setProfile(data.profile);
+      setNotifications(data.notification);
       if (data.user && (history.location.pathname === '/login' || history.location.pathname === '/signup')) {
         history.push('/dashboard');
       }
@@ -60,7 +68,7 @@ export const AuthProvider: FunctionComponent = ({ children }): JSX.Element => {
           // don't need to provide error feedback as this just means user doesn't have saved cookies or the cookies have not been authenticated on the backend
           setLoggedInUser(null);
           if (!(history.location.pathname === '/signup')) {
-            history.push('/login');
+            history.push('/welcome');
           }
         }
       });
@@ -69,7 +77,7 @@ export const AuthProvider: FunctionComponent = ({ children }): JSX.Element => {
   }, [updateLoginContext, history]);
 
   return (
-    <AuthContext.Provider value={{ loggedInUser, profile, updateLoginContext, logout }}>
+    <AuthContext.Provider value={{ loggedInUser, profile, notifications, updateLoginContext, logout }}>
       {children}
     </AuthContext.Provider>
   );
