@@ -1,10 +1,10 @@
 import { Typography, Box, Paper } from '@mui/material';
-import { conversation, conversations } from '../../../interface/messages';
+import { Conversation, Conversations } from '../../../interface/messages';
 import MessageSenderCard from '../SenderCard/MessageSenderCars';
 import { useStyles } from './useStyles';
 
 interface sideWrapper {
-  conversations: conversation[];
+  conversations: Conversation[];
   handleConversationChange: () => void;
 }
 

@@ -2,7 +2,7 @@ import { Typography, Box } from '@mui/material';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
 import { useStyles } from './useStyles';
-import { conversation } from '../../../interface/messages';
+import { Conversation } from '../../../interface/messages';
 import { createImageFromInitials } from '../../../helpers/makeAnImageFromName';
 
 const ActiveChatMember = ({
@@ -10,7 +10,7 @@ const ActiveChatMember = ({
   receiverId,
   senderId,
   user: { name, photo, isOnline },
-}: conversation): JSX.Element => {
+}: Conversation): JSX.Element => {
   const classes = useStyles();
 
   let image;

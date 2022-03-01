@@ -1,15 +1,10 @@
 import { Typography } from '@mui/material';
 import { useAuth } from '../../../context/useAuthContext';
 import { createImageFromInitials } from '../../../helpers/makeAnImageFromName';
+import { TextMessage } from '../../../interface/messages';
 import { useStyles } from './useStyles';
 
-interface props {
-  senderId: string;
-  message: string;
-  photo: string;
-  name: string;
-}
-const ChatMessage = ({ senderId, message, photo, name }: props): JSX.Element => {
+const ChatMessage = ({ senderId, message, photo, name }: TextMessage): JSX.Element => {
   const { profile } = useAuth();
   const classes = useStyles();
   const messageClass = senderId === profile._id ? classes.sent : classes.received;

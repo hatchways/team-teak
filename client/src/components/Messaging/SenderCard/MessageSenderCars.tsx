@@ -1,12 +1,12 @@
 import { Typography, Box } from '@mui/material';
 import { visitNodes } from 'typescript';
 import { createImageFromInitials } from '../../../helpers/makeAnImageFromName';
-import { conversation } from '../../../interface/messages';
+import { Conversation } from '../../../interface/messages';
 
 import { useStyles } from './useStyles';
 
 interface sender {
-  senderInfo: conversation;
+  senderInfo: Conversation;
   handleConversationChange: (id?: string) => void;
 }
 

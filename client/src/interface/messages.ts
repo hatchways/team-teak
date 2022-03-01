@@ -1,4 +1,4 @@
-export interface message {
+export interface Message {
   _id: string;
   message: string;
   createdAt: string;
@@ -11,7 +11,7 @@ export interface message {
   };
 }
 
-export interface conversation {
+export interface Conversation {
   _id: string;
   receiverId: string;
   senderId: string;
@@ -26,10 +26,17 @@ export interface conversation {
   };
 }
 
-export interface conversations {
-  conversations: conversation[];
+export interface Conversations {
+  conversations: Conversation[];
 }
 
-export interface chatRoom {
-  conversation: conversation;
+export interface ChatRoom {
+  conversation: Conversation;
+}
+
+export interface TextMessage {
+  senderId: string;
+  message: string;
+  photo: string;
+  name: string;
 }

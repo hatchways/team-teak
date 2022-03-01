@@ -4,9 +4,9 @@ import ChatRoom from '../../components/Messaging/ChatSection/ChatRoom';
 import SendersSideWrapper from '../../components/Messaging/SendersWrapper/SendersSideWrapper';
 import { useAuth } from '../../context/useAuthContext';
 import { getAllConversations, getAllMessages } from '../../helpers/APICalls/messaging';
-import { conversation } from '../../interface/messages';
+import { Conversation } from '../../interface/messages';
 
-const conversationObj: conversation = {
+const conversationObj: Conversation = {
   _id: '',
   receiverId: '',
   senderId: '',
@@ -22,7 +22,7 @@ const conversationObj: conversation = {
 };
 
 const MessagingPage = (): JSX.Element => {
-  const [conversations, setConversations] = useState<conversation[]>([]);
+  const [conversations, setConversations] = useState<Conversation[]>([]);
   const [conversation, setConversation] = useState(conversationObj);
 
   useEffect(() => {

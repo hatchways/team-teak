@@ -3,13 +3,13 @@ import ActiveChatMember from '../ActiveChatMember/ActiveChatMember';
 import ChatMessage from '../Message/ChartMessage';
 import { useEffect, useState, useRef } from 'react';
 import { useStyles } from './useStyles';
-import { chatRoom, message } from '../../../interface/messages';
+import { ChatRoom, Message } from '../../../interface/messages';
 import { getAllMessages, sendMessage } from '../../../helpers/APICalls/messaging';
 import { useAuth } from '../../../context/useAuthContext';
 
-const ChatRoom = ({ conversation }: chatRoom): JSX.Element => {
+const ChatRoom = ({ conversation }: ChatRoom): JSX.Element => {
   const [message, setMessage] = useState('');
-  const [messages, setMessages] = useState<message[]>([]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const { profile } = useAuth();
   const messagesEndRef = useRef<HTMLInputElement>(null);
 
@@ -46,7 +46,7 @@ const ChatRoom = ({ conversation }: chatRoom): JSX.Element => {
       receiverId = sender;
     }
 
-    const messageObj: message = {
+    const messageObj: Message = {
       receiverId,
       senderId: profile._id,
       message,
