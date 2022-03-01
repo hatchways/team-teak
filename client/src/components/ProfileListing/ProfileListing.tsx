@@ -44,11 +44,11 @@ const ProfileListing = ({ debouncedLocation, date }: Props): JSX.Element => {
     if (profiles?.users?.length === 0) {
       return <NotFound />;
     }
-    return profiles?.users?.map((profile, id) => {
+    return profiles?.users?.map((profile) => {
       const { photo, name, description, address } = profile;
       return (
         <SitterCard
-          key={id}
+          key={profile.id}
           photo={photo}
           name={name}
           subTitle={'Pet Lover'}

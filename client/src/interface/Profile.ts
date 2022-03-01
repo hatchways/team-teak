@@ -1,7 +1,7 @@
 import { User } from './User';
 
 export interface Profile {
-  type?: string;
+  id?: string;
   userId: User;
   name: string;
   description: string;
