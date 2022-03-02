@@ -7,7 +7,7 @@ import { ChatRoom, Message } from '../../../interface/messages';
 import { getAllMessages, sendMessage } from '../../../helpers/APICalls/messaging';
 import { useAuth } from '../../../context/useAuthContext';
 
-const ChatRoom = ({ conversation }: ChatRoom): JSX.Element => {
+const ChatRoomMessage = ({ conversation }: ChatRoom): JSX.Element => {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState<Message[]>([]);
   const { profile } = useAuth();
@@ -40,7 +40,7 @@ const ChatRoom = ({ conversation }: ChatRoom): JSX.Element => {
     const sender = conversation.senderId;
     const receiver = conversation.receiverId;
 
-    if (profile._id === sender) {
+    if (profile?._id === sender) {
       receiverId = receiver;
     } else {
       receiverId = sender;
@@ -48,7 +48,6 @@ const ChatRoom = ({ conversation }: ChatRoom): JSX.Element => {
 
     const messageObj: Message = {
       receiverId,
-      senderId: profile._id,
       message,
       _id: '',
       createdAt: '',
@@ -57,6 +56,7 @@ const ChatRoom = ({ conversation }: ChatRoom): JSX.Element => {
         photo: '',
         isOnline: false,
       },
+      senderId: '',
     };
 
     setMessages([...messages, messageObj]);
@@ -131,4 +131,4 @@ const ChatRoom = ({ conversation }: ChatRoom): JSX.Element => {
   );
 };
 
-export default ChatRoom;
+export default ChatRoomMessage;

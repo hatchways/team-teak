@@ -80,17 +80,17 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
 // @desc Login user
 // @access Public
 exports.loginUser = asyncHandler(async (req, res, next) => {
-  const isDemo = req.query.isDemo;
+  // const isDemo = req.query.isDemo;
 
   let email, password;
 
-  if (!isDemo) {
-    email = req.body.email;
-    password = req.body.password;
-  } else {
-    email = process.env.DEMO_USER_EMAIL;
-    password = process.env.DEMO_USER_PASSWORD;
-  }
+  // if (!isDemo) {
+  //   email = req.body.email;
+  //   password = req.body.password;
+  // } else {
+  //   email = process.env.DEMO_USER_EMAIL;
+  //   password = process.env.DEMO_USER_PASSWORD;
+  // }
 
   const user = await User.findOne({ email });
 
@@ -137,7 +137,7 @@ exports.loginUser = asyncHandler(async (req, res, next) => {
 exports.loadUser = asyncHandler(async (req, res, next) => {
   const user = await User.findById(req.user.id);
   const profile = await Profile.findOne({ userId: req.user.id });
-  const notifications = await Notification.findById({
+  const notifications = await Notification.find({
     recieverId: req.user.id,
   });
 

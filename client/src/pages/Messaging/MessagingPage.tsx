@@ -1,6 +1,6 @@
 import { Grid, Box } from '@mui/material';
 import { useEffect, useState } from 'react';
-import ChatRoom from '../../components/Messaging/ChatSection/ChatRoom';
+import ChatRoom from '../../components/Messaging/ChatSection/ChatRoomMessage';
 import SendersSideWrapper from '../../components/Messaging/SendersWrapper/SendersSideWrapper';
 import { useAuth } from '../../context/useAuthContext';
 import { getAllConversations, getAllMessages } from '../../helpers/APICalls/messaging';
