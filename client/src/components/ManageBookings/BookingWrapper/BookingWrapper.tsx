@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Box, Typography, Grid } from '@mui/material';
 import CurrentBookingCard from '../CurrentBooking/CurrentBookingCard';
@@ -34,9 +33,8 @@ const BookingWrapper = ({ requests, cancelled }: RequestsList): JSX.Element => {
             _id={item._id}
           />
         ))}
-
       </Box>
-    </Grid>
+    </Box>
   );
 };
 

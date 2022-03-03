@@ -9,6 +9,7 @@ import {
   Menu,
   MenuItem as DropdownMenuItem,
   styled,
+  Avatar,
   AppBar,
   Toolbar,
   useMediaQuery,
@@ -20,7 +21,6 @@ import { useAuth } from '../../context/useAuthContext';
 import Notifications from '../Notifications/Notifications';
 import lovingSitterLogo from '../../images/logo.svg';
 import { AccountType } from '../../types/AccountType';
-import { PetSitter, Profile } from '../../interface/Profile';
 import { useStyles } from './useStyles';
 
 const NavbarButton = styled(Button)({
@@ -49,7 +49,7 @@ const menuItems = [
   {
     item: 'My Sitters',
     resource: '/sitters',
-    canView: [AccountType.PET_OWNER, AccountType.PET_SITTER],
+    canView: [AccountType.PET_OWNER],
     authenticated: true,
   },
   {
@@ -111,7 +111,7 @@ const Navbar: React.FC = () => {
   const location = useLocation();
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const { loggedInUser, logout, profile } = useAuth();
+  const { loggedInUser, profile, logout } = useAuth();
   const open = Boolean(anchorEl);
 
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -131,9 +131,7 @@ const Navbar: React.FC = () => {
     // user info display when user login
     return menuItems.map((menu) => {
       if (menu.authenticated) {
-        if (!profile) return loggedInUser && <MenuItem key={menu.resource} {...menu} />;
-        if (profile.type && menu?.canView?.includes(profile.type))
-          return loggedInUser && <MenuItem key={menu.resource} {...menu} />;
+        return loggedInUser && <MenuItem key={menu.resource} {...menu} />;
       } else {
         return !loggedInUser && <MenuItem key={menu.resource} {...menu} />;
       }
@@ -168,7 +166,10 @@ const Navbar: React.FC = () => {
                     onClick={handleMenuOpen}
                     color="inherit"
                   >
-                    <img style={{ width: 50 }} src={`https://robohash.org/${loggedInUser.email}`} />
+                    <Avatar
+                      style={{ width: 50 }}
+                      src={profile ? profile.photo : `https://robohash.org/${loggedInUser.email}`}
+                    />
                   </IconButton>
                   <Menu
                     id="menu-appbar"

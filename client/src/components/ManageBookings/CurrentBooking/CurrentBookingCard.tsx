@@ -1,4 +1,3 @@
-
 import { Typography, Box, Avatar } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
 import useStyles from './useStyles';
@@ -22,7 +21,6 @@ const CurrentBookingCard = ({ _id, name, start, photo, ...props }: Bookings): JS
   else image = photo;
 
   return (
-
     <>
       <Box>{showAccept ? <ChangeRequestStatus id={_id} /> : ''}</Box>
       <Box component="div" className={classes.cardWrapper}>
