@@ -58,7 +58,12 @@ const menuItems = [
     canView: [AccountType.PET_SITTER, AccountType.PET_OWNER],
     authenticated: true,
   },
-
+  {
+    item: 'Customer Booking',
+    resource: '/customer/booking',
+    canView: [AccountType.PET_SITTER, AccountType.PET_OWNER],
+    authenticated: true,
+  },
   {
     item: (
       <NavbarButton variant="outlined" size="large" fullWidth>
@@ -252,6 +257,12 @@ const Navbar: React.FC = () => {
                         <Person fontSize="small" />
                       </ListItemIcon>
                       <ListItemText>My sitter</ListItemText>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={handleClose}>
+                      <ListItemIcon>
+                        <Person fontSize="small" />
+                      </ListItemIcon>
+                      <ListItemText>Customer Booking</ListItemText>
                     </DropdownMenuItem>
                     <DropdownMenuItem onClick={handleClose}>
                       <ListItemIcon>

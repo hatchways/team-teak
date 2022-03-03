@@ -2,6 +2,7 @@ import Box from '@mui/material/Box';
 import { isSameDay } from 'date-fns';
 import Calendar from 'react-calendar';
 import useStyles from './useStyles';
+import { Request } from '../../../interface/manageBooking';
 
 export interface Booking {
   startTime: Date;
@@ -10,8 +11,8 @@ export interface Booking {
 }
 
 interface Props {
-  firstBooking?: Booking;
-  upcomingBookings?: Booking[];
+  firstBooking?: Request;
+  upcomingBookings?: Request[];
 }
 
 function BookingCalendar({ firstBooking, upcomingBookings }: Props): JSX.Element {
@@ -19,14 +20,13 @@ function BookingCalendar({ firstBooking, upcomingBookings }: Props): JSX.Element
 
   function tileClassName({ date, view }: { date: Date; view: string }) {
     if (view === 'month') {
-      // Check if the date matches either the first booking or any of the upcoming bookings (not declined), then return the class we want
       if (firstBooking) {
-        if (isSameDay(date, firstBooking.startTime)) {
+        if (isSameDay(date, new Date(firstBooking.start))) {
           return classes.activeTile;
         }
         if (upcomingBookings) {
           for (const booking of upcomingBookings) {
-            if (isSameDay(booking.startTime, date) && booking.status != 'declined') {
+            if (isSameDay(new Date(booking.start), date) && booking.status != 'CANCELLED') {
               return classes.activeTile;
             }
           }
