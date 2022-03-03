@@ -15,8 +15,8 @@ exports.createPaymentMethod = asyncHandler(async (req, res, next) => {
   let session;
   try {
     session = await stripe.checkout.sessions.create({
-      success_url: "http://localhost:3000/dashboard",
-      cancel_url: "http://localhost:3000/settings/payment-methods",
+      success_url: process.env.RETURN_URL_STRIPE,
+      cancel_url: process.env.REFRESH_URL_STRIPE,
       payment_method_types: ["card"],
       mode: "setup",
       customer: userProfle.stripeAccountId,

@@ -11,7 +11,7 @@ const useStyles = makeStyles(() => ({
     margin: '0px auto',
     backgroundColor: 'rgb(255, 255, 255)',
     '@media(max-width: 767px)': {
-      width: '200px',
+      width: '100%',
       alignItems: 'center',
       margin: '0px auto',
     },

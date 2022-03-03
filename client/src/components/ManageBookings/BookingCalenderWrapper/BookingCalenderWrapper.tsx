@@ -54,7 +54,7 @@ const sortedBookings = sortBookingDates(mockBookings);
 
 function BookingCalendarWrapper(): JSX.Element {
   return (
-    <Box>
+    <Box sx={{ width: '100%', position: 'center' }}>
       <BookingCalendar firstBooking={nextBooking} upcomingBookings={sortedBookings} />
     </Box>
   );
