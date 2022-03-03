@@ -12,7 +12,7 @@ const StripeConnect = (): JSX.Element => {
     <>
       <Grid xs={12} sm={3} item>
         <SettingHeader header="Payment Methods" />
-        <Box sx={{ width: '100%', position: 'center' }}>
+        <Box sx={{ width: '100%' }}>
           <Button
             variant="outlined"
             sx={{ padding: '20px', fontWeight: 'bold' }}
