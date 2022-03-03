@@ -18,6 +18,7 @@ const stripeConnectRouter = require("./routes/stripeConnect");
 const imageUploadRouter = require("./routes/imageUpload");
 const notificationRouter = require("./routes/notification");
 const availabilityRouter = require("./routes/availability");
+const requestRouter = require("./routes/requests");
 
 const { json, urlencoded } = express;
 
@@ -50,6 +51,7 @@ app.use("/stripe", stripeConnectRouter);
 app.use("/imageUpload", imageUploadRouter);
 app.use("/notification", notificationRouter);
 app.use("/availability", availabilityRouter);
+app.use("/request", requestRouter);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "/client/build")));

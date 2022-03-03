@@ -22,6 +22,7 @@ const useStyles = makeStyles(() => ({
     marginLeft: '350px',
     color: theme.palette.primary.dark,
     fontWeight: 700,
+    cursor: 'pointer',
     '@media(max-width: 767px)': {
       marginLeft: '90%',
     },
@@ -79,6 +80,30 @@ const useStyles = makeStyles(() => ({
   status: {
     color: theme.palette.primary.dark,
     height: '50px',
+  },
+
+  statusUpdate: {
+    display: 'flex',
+    position: 'relative',
+    justifyContent: 'space-evenly',
+    zIndex: 1,
+    top: '-40px',
+    left: '60px',
+    width: '350px',
+    border: '1px',
+  },
+
+  submit: {
+    margin: theme.spacing(3, 2, 2),
+    padding: 10,
+    width: 150,
+    height: 56,
+    borderRadius: theme.shape.borderRadius,
+    marginTop: 49,
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginRight: '10px',
+    marginLeft: '10px',
   },
 }));
 
