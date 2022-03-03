@@ -46,13 +46,17 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
         name,
       });
     } else {
-      await Profile.create({
-      userId: user._id,
-      stripeAccountId: id,
-      name,
-    });
-  }
+      const customer = await stripe.customers.create({
+        description: `Customer name is ${name}`,
+      });
 
+      const { id } = customer;
+      const profile = await Profile.create({
+        userId: user._id,
+        stripeAccountId: id,
+        name,
+      });
+    }
     const token = generateToken(user._id);
     const secondsInWeek = 604800;
 
