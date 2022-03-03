@@ -1,4 +1,4 @@
-import { Box, CircularProgress, Grid, Link } from '@mui/material';
+import { Box, CircularProgress, Grid, Link, Hidden } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { cloneElement } from 'react';
 import { NavLink, Redirect, Route, Switch, useHistory } from 'react-router-dom';
@@ -9,6 +9,7 @@ import SettingsWrapper from '../../components/SettingsWrapper/SettingsWrapper';
 import { useAuth } from '../../context/useAuthContext';
 import StripeConnect from '../StripeConnect/StripeConnect';
 import EditProfile from './EditProfile/EditProfile';
+import Availability from './Availability/Availability';
 import ProfilePhoto from './ProfilePhoto/ProfilePhoto';
 
 const settingsMenu = [
@@ -25,7 +26,7 @@ const settingsMenu = [
   {
     name: 'Availability',
     to: '/profile/settings/availability',
-    component: <SettingHeader header="Availability" />,
+    component: <Availability header="Your Availability" />,
   },
   {
     name: 'Payment methods',
@@ -60,8 +61,8 @@ export default function Settings(): JSX.Element {
 
   return (
     <PageContainer>
-      <Grid sx={{ width: '90%', margin: '0 auto' }} container>
-        <Grid xs={9} sm={3} item>
+      <Grid sx={{ width: '100%' }} container>
+        <Grid xs={12} md={3} sx={{ width: '100%', margin: '0 auto' }} item>
           {settingsMenu.map((item) => (
             <Box
               sx={{
@@ -88,7 +89,7 @@ export default function Settings(): JSX.Element {
             </Box>
           ))}
         </Grid>
-        <Grid xs={12} sm={9} item>
+        <Grid xs={12} sm={9} sx={{ width: '100%', margin: '10px auto' }} item>
           <Switch>
             <Route exact path="/profile/settings">
               <Redirect to="/profile/settings/edit-profile" />
