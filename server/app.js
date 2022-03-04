@@ -10,6 +10,7 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const cors = require("cors");
 
+const conversationRouter = require("./routes/conversation");
 const authRouter = require("./routes/auth");
 const userRouter = require("./routes/user");
 const profileRouter = require("./routes/profile");
@@ -19,6 +20,8 @@ const imageUploadRouter = require("./routes/imageUpload");
 const notificationRouter = require("./routes/notification");
 const availabilityRouter = require("./routes/availability");
 const paymentRouter = require("./routes/payment");
+
+const requestRouter = require("./routes/requests");
 
 const { json, urlencoded } = express;
 
@@ -43,17 +46,20 @@ app.use(urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(join(__dirname, "public")));
 
-require("./utils/socket")(server, app);
-
 app.use("/auth", authRouter);
 app.use("/users", userRouter);
 app.use("/profile", profileRouter);
+app.use("/conversations", conversationRouter);
+
 app.use("/payment_methods", paymentMethodsRouter);
 app.use("/stripe", stripeConnectRouter);
 app.use("/imageUpload", imageUploadRouter);
+
 app.use("/notification", notificationRouter);
 app.use("/availability", availabilityRouter);
 app.use("/payments", paymentRouter);
+app.use("/request", requestRouter);
+
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "/client/build")));

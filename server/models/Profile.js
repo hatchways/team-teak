@@ -47,8 +47,13 @@ const profileSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
-  },
+    accountType: {
+      type: String,
+      enum: ["petSitter", "petOwner"],
+      default: "petOwner",
+    },
   { ...options }
 );
+
 
 module.exports = Profile = mongoose.model("Profile", profileSchema);

@@ -5,6 +5,8 @@ import SignUp from '../SignUp/SignUp';
 import { AccountType } from '../../types/AccountType';
 import NotFound from '../NotFound/NotFound';
 import Settings from '../Settings/Settings';
+import MessagingPage from '../Messaging/MessagingPage';
+import CustomerBookingList from '../Settings/CustomerBooking/CustomerBookingList';
 import Landing from '../Landing/Landing';
 
 const menuItems = [
@@ -55,7 +57,7 @@ const menuItems = [
     resource: '/messages',
     canView: [AccountType.PET_SITTER, AccountType.PET_OWNER],
     authenticated: true,
-    component: NotFound,
+    component: MessagingPage,
   },
   {
     item: 'Manage Bookings',
@@ -65,11 +67,11 @@ const menuItems = [
     component: BookingPage,
   },
   {
-    item: 'Settings',
-    resource: '/profile/settings',
+    item: 'Customer Booking',
+    resource: '/customer/booking',
     canView: [AccountType.PET_SITTER, AccountType.PET_OWNER],
     authenticated: true,
-    component: Settings,
+    component: CustomerBookingList,
   },
 ];
 
