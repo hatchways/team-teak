@@ -16,6 +16,10 @@ const paymentSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    paymentIntentId: {
+      type: String,
+      default: "",
+    },
     rate: {
       type: Number,
       required: true,
