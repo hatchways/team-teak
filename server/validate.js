@@ -58,7 +58,7 @@ exports.validateAvailability = [
 ];
 
 exports.validateRequestParameter = [
-  param("notificationId", "Invalid id").isMongoId(),
+  param("userId", "Invalid id").isMongoId(),
   (req, res, next) => {
     const errors = validationResult(req);
 
@@ -71,6 +71,20 @@ exports.validateRequestParameter = [
 exports.validateScheduleId = [
   param("scheduleId", "Invalid id").isMongoId(),
 
+  (req, res, next) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty())
+      return res.status(400).json({ errors: errors.array() });
+    next();
+  },
+];
+
+exports.validateCreatePaymentRecord = [
+  check("sitterId", "Invalid sitter id").isMongoId(),
+  check("rate", "Rate is required").not().isEmpty(),
+  check("startTime", "Start time is required").not().isEmpty(),
+  check("endTime", "End time is required").not().isEmpty(),
   (req, res, next) => {
     const errors = validationResult(req);
 
@@ -93,10 +107,33 @@ exports.validateCreateConversation = [
   },
 ];
 
+exports.validatePaymentId = [
+  param("paymentId", "Invalid id").isMongoId(),
+  (req, res, next) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty())
+      return res.status(400).json({ errors: errors.array() });
+    next();
+  },
+];
+
 exports.validateSendMessage = [
   check("receiverId", "Invalid id").isMongoId(),
   check("message", "please send a message").not().isEmpty(),
+  (req, res, next) => {
+    const errors = validationResult(req);
 
+    if (!errors.isEmpty())
+      return res.status(400).json({ errors: errors.array() });
+    next();
+  },
+];
+
+exports.validateRequest = [
+  check("sitterId", "Invalid id").isMongoId(),
+  check("start", "start date is required").not().isEmpty(),
+  check("end", "end date is required").not().isEmpty(),
   (req, res, next) => {
     const errors = validationResult(req);
 

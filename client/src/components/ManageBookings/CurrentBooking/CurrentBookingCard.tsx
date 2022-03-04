@@ -1,31 +1,51 @@
-import { Typography, Box } from '@mui/material';
+import { Typography, Box, Avatar } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
 import useStyles from './useStyles';
+import { createImageFromInitials } from '../../../helpers/makeAnImageFromName';
+import { Bookings } from '../../../interface/manageBooking';
+import ChangeRequestStatus from './ChangeRequestStatus';
+import { useState } from 'react';
+import { convertDate } from '../../../helpers/APICalls/convertDateRightFormat';
 
-const CurrentBookingCard = (): JSX.Element => {
+const CurrentBookingCard = ({ _id, name, start, photo, ...props }: Bookings): JSX.Element => {
+  const [showAccept, setShowAccept] = useState(false);
   const classes = useStyles();
-  return (
-    <Box component="div" className={classes.cardWrapper}>
-      <SettingsIcon className={classes.icon} />
-      <Typography component="div" className={classes.title}>
-        your current booking
-      </Typography>
-      <Typography variant="h6" className={classes.date}>
-        8 April 2020, 7-9 PM
-      </Typography>
 
-      <Box className={classes.details}>
-        <Typography component="div" className={classes.image}>
-          <img src="https://cdn.pixabay.com/photo/2021/09/12/18/07/robin-6619184_960_720.jpg" alt="Image" />
+  const letterImage = createImageFromInitials(name);
+
+  const firstName = name.split(' ')[0];
+  const lastName = name.split(' ')[1];
+
+  let image: any;
+  if (!photo.length) image = letterImage;
+  else image = photo;
+
+  return (
+    <>
+      <Box>{showAccept ? <ChangeRequestStatus id={_id} /> : ''}</Box>
+      <Box component="div" className={classes.cardWrapper}>
+        <SettingsIcon
+          className={classes.icon}
+          onClick={() => {
+            setShowAccept(!showAccept);
+          }}
+        />
+        <Typography component="div" className={classes.title}>
+          your current booking
         </Typography>
-        <Typography className={classes.name} sx={{ fontSize: '18px', fontWeight: 'bold' }}>
-          Muhamad
+        <Typography variant="h6" className={classes.date}>
+          {convertDate(start)}
         </Typography>
-        <Typography className={classes.name} sx={{ fontSize: '18px', fontWeight: 'bold', paddingLeft: '10px' }}>
-          Rashid
-        </Typography>
+        <Box className={classes.details}>
+          <Typography component="div" className={classes.image}>
+            <Avatar alt={letterImage} src={image} />
+          </Typography>
+          <Typography className={classes.name} sx={{ fontSize: '18px', fontWeight: 'bold' }}>
+            {name}
+          </Typography>
+        </Box>
       </Box>
-    </Box>
+    </>
   );
 };
 

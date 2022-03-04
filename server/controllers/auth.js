@@ -1,5 +1,7 @@
 const User = require("../models/User");
 const Profile = require("../models/Profile");
+const Notification = require("../models/Notification");
+const PetSitter = require("../models/PetSitter");
 const asyncHandler = require("express-async-handler");
 const generateToken = require("../utils/generateToken");
 const stripe = require("stripe")(process.env.STRIPE_SECRET);
@@ -30,18 +32,31 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
     password,
   });
 
+  const isPetSitter = req.query.accountType === "petSitter" ? true : false;
+
   if (user) {
     const customer = await stripe.customers.create({
       description: `Customer name is ${name}`,
     });
-
     const { id } = customer;
-    await Profile.create({
-      userId: user._id,
-      stripeAccountId: id,
-      name,
-    });
+    if (isPetSitter) {
+      await PetSitter.create({
+        userId: user._id,
+        stripeConnectId: id,
+        name,
+      });
+    } else {
+      const customer = await stripe.customers.create({
+        description: `Customer name is ${name}`,
+      });
 
+      const { id } = customer;
+      const profile = await Profile.create({
+        userId: user._id,
+        stripeAccountId: id,
+        name,
+      });
+    }
     const token = generateToken(user._id);
     const secondsInWeek = 604800;
 
@@ -82,16 +97,14 @@ exports.loginUser = asyncHandler(async (req, res, next) => {
   }
 
   const user = await User.findOne({ email });
+  const userId = user.id;
 
   if (!user) {
     res.status(400);
     throw new Error("Wrong email or password!");
   }
-  const profile = await Profile.findOne({ userId: user.id });
-
-  profile.set({ isOnline: true });
-
-  const updatedProfile = await profile.save();
+  const notifications = await Notification.find({ recieverId: user.id });
+  const profile = await Profile.findOneAndUpdate(userId, { isOnline: true });
 
   if (user && (await user.matchPassword(password))) {
     const token = generateToken(user._id);
@@ -109,7 +122,8 @@ exports.loginUser = asyncHandler(async (req, res, next) => {
           name: user.name,
           email: user.email,
         },
-        profile: updatedProfile,
+        profile,
+        notifications,
       },
     });
   } else {
@@ -124,6 +138,9 @@ exports.loginUser = asyncHandler(async (req, res, next) => {
 exports.loadUser = asyncHandler(async (req, res, next) => {
   const user = await User.findById(req.user.id);
   const profile = await Profile.findOne({ userId: req.user.id });
+  const notifications = await Notification.find({
+    recieverId: req.user.id,
+  });
 
   if (!user) {
     res.status(401);
@@ -138,6 +155,7 @@ exports.loadUser = asyncHandler(async (req, res, next) => {
         email: user.email,
       },
       profile,
+      notifications,
     },
   });
 });

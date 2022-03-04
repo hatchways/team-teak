@@ -7,7 +7,7 @@ import { getAllConversations, getAllMessages } from '../../helpers/APICalls/mess
 import { Conversation } from '../../interface/messages';
 
 const conversationObj: Conversation = {
-  _id: '',
+  _id: 'dhfjd',
   receiverId: '',
   senderId: '',
   user: {
@@ -37,6 +37,8 @@ const MessagingPage = (): JSX.Element => {
     };
     fetchAllCoversation();
   }, []);
+
+  console.log(conversation, conversations);
 
   const handleConversationChange = async (id?: string) => {
     for (const jazz of conversations) {

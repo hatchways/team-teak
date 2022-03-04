@@ -2,8 +2,6 @@ const User = require("../models/User");
 const Profile = require("../models/Profile");
 const asyncHandler = require("express-async-handler");
 const PetSitter = require("../models/PetSitter");
-const availability = require("../models/availability");
-const { activateSchedule } = require("./availability");
 const stripe = require("stripe")(process.env.STRIPE_SECRET);
 
 // @route POST /connect/stripe
@@ -14,6 +12,7 @@ exports.stripeConnect = asyncHandler(async (req, res, next) => {
   const userId = req.user.id;
 
   const currentUser = await User.findById(userId);
+  const currentUserProfile = await Profile.findOne({ userId });
 
   let account;
 
@@ -29,15 +28,15 @@ exports.stripeConnect = asyncHandler(async (req, res, next) => {
       },
     });
   } catch (err) {
-    res.status(400);
+    res.status(500);
     throw new Error("Stripe account not created", err);
   }
 
   try {
     await stripe.accountLinks.create({
       account: account.id,
-      refresh_url: "http://localhost:3000/settings/payment-methods",
-      return_url: "http://localhost:3000/dashboard",
+      refresh_url: process.env.REFRESH_URL_STRIPE,
+      return_url: process.env.RETURN_URL_STRIPE,
       type: "account_onboarding",
     });
   } catch (err) {
@@ -46,10 +45,12 @@ exports.stripeConnect = asyncHandler(async (req, res, next) => {
   }
 
   const rateInCents = rate * 100;
+
   const petSitter = await PetSitter.create({
     stripeConnectId: account.id,
     rate: rateInCents,
     userId,
+    stripeAccountId: currentUserProfile.stripeAccountId,
   });
 
   return res.status(201).send({ success: petSitter });

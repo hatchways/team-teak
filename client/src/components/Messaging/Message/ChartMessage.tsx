@@ -1,7 +1,7 @@
-import { Typography } from '@mui/material';
 import { useAuth } from '../../../context/useAuthContext';
 import { createImageFromInitials } from '../../../helpers/makeAnImageFromName';
 import { TextMessage } from '../../../interface/messages';
+import { Box, Typography } from '@mui/material';
 import { useStyles } from './useStyles';
 
 const ChatMessage = ({ senderId, message, photo, name }: TextMessage): JSX.Element => {
@@ -17,12 +17,12 @@ const ChatMessage = ({ senderId, message, photo, name }: TextMessage): JSX.Eleme
 
   return (
     <>
-      <div className={`message ${messageClass}`}>
+      <Box className={`message ${messageClass}`}>
         <img src={image} alt="image" />
         <Typography className={textStyle} sx={{ fontSize: '15px', fontWeight: 'bold' }}>
           {message}
         </Typography>
-      </div>
+      </Box>
     </>
   );
 };
