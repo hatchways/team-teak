@@ -4,11 +4,11 @@ const requestSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
-    ref: "Profile",
+    ref: "User",
   },
   sitterId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Profile",
+    ref: "User",
   },
   start: {
     type: Date,

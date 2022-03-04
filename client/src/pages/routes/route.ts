@@ -82,6 +82,13 @@ const menuItems = [
     authenticated: true,
     component: ProfileDetail,
   },
+  {
+    item: 'Settings',
+    resource: '/profile/settings',
+    canView: [AccountType.PET_SITTER, AccountType.PET_OWNER],
+    authenticated: true,
+    component: Settings,
+  },
 ];
 
 export const getAllRoutes = () => menuItems;

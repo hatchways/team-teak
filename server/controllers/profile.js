@@ -5,11 +5,15 @@ const asyncHandler = require("express-async-handler");
 // @desc edit user profile
 // @access Public
 exports.editProfile = asyncHandler(async (req, res, next) => {
-  const userId = req.user.id;
+  const profile = await Profile.findOne({ userId: req.user.id });
 
-  const updatedProfile = await Profile.findOneAndUpdate(userId, {
-    ...req.body,
-  });
+  if (!profile) {
+    res.status(404);
+    throw new Error("Profile doesn't exist");
+  }
+  profile.set(req.body);
+  const updatedProfile = await profile.save();
+
 
   res.status(200).json({
     success: {
