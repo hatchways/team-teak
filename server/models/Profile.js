@@ -52,7 +52,8 @@ const profileSchema = new mongoose.Schema(
       enum: ["petSitter", "petOwner"],
       default: "petOwner",
     },
-  { ...options }
+    // { ...options }
+  }
 );
 
 

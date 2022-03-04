@@ -131,9 +131,8 @@ const Navbar: React.FC = () => {
     // user info display when user login
     return menuItems.map((menu) => {
       if (menu.authenticated) {
-        if (profile.accountType && menu?.canView?.includes(profile.accountType))
-
-          return loggedInUser && <MenuItem key={menu.resource} {...menu} />;in
+        if (profile?.accountType && menu?.canView?.includes(profile.accountType))
+          return loggedInUser && <MenuItem key={menu.resource} {...menu} />;
       } else {
         return !loggedInUser && <MenuItem key={menu.resource} {...menu} />;
       }
