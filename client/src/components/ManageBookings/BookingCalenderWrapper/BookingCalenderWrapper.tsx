@@ -36,7 +36,7 @@ function BookingCalendarWrapper({ nextBooking, bookingsArray }: calendar): JSX.E
   const sortedBookings = sortBookingDates();
 
   return (
-    <Box sx={{ width: '100%', position: 'center' }}>
+    <Box sx={{ width: '100%' }}>
       <BookingCalendar firstBooking={nextBooking} upcomingBookings={sortedBookings} />
     </Box>
   );

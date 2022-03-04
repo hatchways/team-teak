@@ -6,7 +6,6 @@ import Checkbox from '@mui/material/Checkbox';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import { Field } from 'formik';
-import { DisplaySettingsOutlined } from '@mui/icons-material';
 
 const HoursSetting = () => {
   const display = [];
@@ -28,7 +27,6 @@ const GeneerateSchedules = (eachDay: string, bookSchedules: any, setFieldValue: 
       columns={3}
       sx={{
         height: '5.5rem',
-        opactiy: bookSchedules[eachDay].active ? 1 : 0.4,
         borderBottom: 1,
         borderColor: '#dbdbdb',
       }}

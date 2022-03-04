@@ -1,32 +1,56 @@
-const imageUrl = require("../models/imageUpload");
 const asyncHandler = require("express-async-handler");
-const util = require("util");
 const { cloudinary } = require("../utils/cloudinary");
-const { dataUri } = require("../middleware/multer");
+const Profile = require("../models/Profile");
+const User = require("../models/User");
 
 // @route POST /upload
 // @desc insert user profile
 // @access Private
 exports.uploadPicture = asyncHandler(async (req, res, next) => {
   const userId = req.user.id;
-  const fileString = req.body.files;
-
+  const uploadedPhoto = req.file.path;
+  let imageUrlPath;
   try {
-    const file = dataUri(req.file).content;
-
-    const imageUrlPath = await cloudinary.uploader.upload(file, {
-      folder: `profile_image/${userId}`,
-    });
-
-    const imageUrlStringPath = imageUrlPath.url;
-
-    res.status(200).json({
-      success: { message: "image update successfully!" },
-      data: { imageUrlStringPath },
-    });
+    imageUrlPath = await cloudinary.uploader.upload(
+      uploadedPhoto,
+      async (err) => {
+        if (err) {
+          console.error(err);
+        }
+      }
+    );
   } catch (err) {
     res.status(500).send({
       message: "update image fail ",
+    });
+  }
+
+  const { url } = imageUrlPath;
+  const user = await User.findById(userId);
+  const profile = await Profile.findOneAndUpdate(
+    userId,
+    { photo: url },
+    { new: true }
+  );
+  res.status(201).json({ message: "upload successful", user, profile });
+});
+
+// @route PUT /
+// @desc remove photo
+// @access Private
+exports.removePicture = asyncHandler(async (req, res, next) => {
+  const userId = req.user.id;
+  try {
+    const user = await User.findById(req.user.id);
+    const profile = await Profile.findOneAndUpdate(
+      userId,
+      { photo: "" },
+      { new: true }
+    );
+    res.status(201).json({ message: "image deleted", user, profile });
+  } catch (err) {
+    res.status(500).send({
+      message: "delete image fail ",
     });
   }
 });

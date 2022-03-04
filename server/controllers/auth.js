@@ -78,8 +78,6 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
     res.status(400);
     throw new Error("Invalid user data");
   }
-
-  
 });
 
 // @route POST /auth/login
