@@ -9,6 +9,7 @@ import {
   Menu,
   MenuItem as DropdownMenuItem,
   styled,
+  Avatar,
   AppBar,
   Toolbar,
   useMediaQuery,
@@ -57,7 +58,12 @@ const menuItems = [
     canView: [AccountType.PET_SITTER, AccountType.PET_OWNER],
     authenticated: true,
   },
-
+  {
+    item: 'Customer Booking',
+    resource: '/customer/booking',
+    canView: [AccountType.PET_SITTER, AccountType.PET_OWNER],
+    authenticated: true,
+  },
   {
     item: (
       <NavbarButton variant="outlined" size="large" fullWidth>
@@ -125,7 +131,9 @@ const Navbar: React.FC = () => {
     // user info display when user login
     return menuItems.map((menu) => {
       if (menu.authenticated) {
-        return loggedInUser && <MenuItem key={menu.resource} {...menu} />;
+        if (profile.accountType && menu?.canView?.includes(profile.accountType))
+
+          return loggedInUser && <MenuItem key={menu.resource} {...menu} />;in
       } else {
         return !loggedInUser && <MenuItem key={menu.resource} {...menu} />;
       }
@@ -160,7 +168,10 @@ const Navbar: React.FC = () => {
                     onClick={handleMenuOpen}
                     color="inherit"
                   >
-                    <img style={{ width: 50 }} src={`https://robohash.org/${loggedInUser.email}`} />
+                    <Avatar
+                      style={{ width: 50 }}
+                      src={profile ? profile.photo : `https://robohash.org/${loggedInUser.email}`}
+                    />
                   </IconButton>
                   <Menu
                     id="menu-appbar"
@@ -248,6 +259,12 @@ const Navbar: React.FC = () => {
                         <Person fontSize="small" />
                       </ListItemIcon>
                       <ListItemText>My sitter</ListItemText>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={handleClose}>
+                      <ListItemIcon>
+                        <Person fontSize="small" />
+                      </ListItemIcon>
+                      <ListItemText>Customer Booking</ListItemText>
                     </DropdownMenuItem>
                     <DropdownMenuItem onClick={handleClose}>
                       <ListItemIcon>
