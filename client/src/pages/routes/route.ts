@@ -1,3 +1,4 @@
+import { ProfileDetails } from './../../interface/ProfileDetails';
 import BookingPage from '../BookingPage/BookingPage';
 import Dashboard from '../Dashboard/Dashboard';
 import Login from '../Login/Login';
@@ -8,6 +9,7 @@ import Settings from '../Settings/Settings';
 import MessagingPage from '../Messaging/MessagingPage';
 import CustomerBookingList from '../Settings/CustomerBooking/CustomerBookingList';
 import Landing from '../Landing/Landing';
+import ProfileDetail from '../ProfileDetails/ProfileDetails';
 
 const menuItems = [
   {
@@ -72,6 +74,13 @@ const menuItems = [
     canView: [AccountType.PET_SITTER, AccountType.PET_OWNER],
     authenticated: true,
     component: CustomerBookingList,
+  },
+  {
+    item: 'Profile Detail',
+    resource: '/profile/detail',
+    canView: [AccountType.PET_SITTER, AccountType.PET_OWNER],
+    authenticated: true,
+    component: ProfileDetail,
   },
 ];
 
