@@ -51,9 +51,9 @@ const profileSchema = new mongoose.Schema(
       type: String,
       enum: ["petSitter", "petOwner"],
       default: "petOwner",
-    },
-    // { ...options }
-  }
+    },  
+  },
+  { ...options }
 );
 
 
