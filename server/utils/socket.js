@@ -7,7 +7,6 @@ module.exports = async (server, app) => {
 
   app.use(async (req, res, next) => {
     token = req.cookies.token;
-
     if (token) {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
