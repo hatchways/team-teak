@@ -1,9 +1,8 @@
-import { Grid, Box } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 import { useEffect, useState } from 'react';
 import ChatRoom from '../../components/Messaging/ChatSection/ChatRoom';
 import SendersSideWrapper from '../../components/Messaging/SendersWrapper/SendersSideWrapper';
-import { useAuth } from '../../context/useAuthContext';
-import { getAllConversations, getAllMessages } from '../../helpers/APICalls/messaging';
+import { getAllConversations } from '../../helpers/APICalls/messaging';
 import { Conversation } from '../../interface/messages';
 
 const conversationObj: Conversation = {
@@ -23,7 +22,7 @@ const conversationObj: Conversation = {
 
 const MessagingPage = (): JSX.Element => {
   const [conversations, setConversations] = useState<Conversation[]>([]);
-  const [conversation, setConversation] = useState(conversationObj);
+  const [conversation, setConversation] = useState<Conversation | undefined | null>();
 
   useEffect(() => {
     const fetchAllCoversation = async () => {
@@ -38,8 +37,6 @@ const MessagingPage = (): JSX.Element => {
     fetchAllCoversation();
   }, []);
 
-  console.log(conversation, conversations);
-
   const handleConversationChange = async (id?: string) => {
     for (const jazz of conversations) {
       if (jazz._id === id) {
@@ -53,12 +50,23 @@ const MessagingPage = (): JSX.Element => {
   return (
     <Grid container>
       <Grid xs={4} md={4} item>
-        <Box>
-          <SendersSideWrapper conversations={conversations} handleConversationChange={handleConversationChange} />
-        </Box>
+        {conversations.length ? (
+          <Box>
+            <SendersSideWrapper conversations={conversations} handleConversationChange={handleConversationChange} />
+          </Box>
+        ) : (
+          <Box></Box>
+        )}
       </Grid>
       <Grid xs={8} md={8} item>
-        <Box>{conversation._id.length ? <ChatRoom conversation={conversation} /> : ''}</Box>
+        {conversation ? (
+          <Box>
+            {' '}
+            <ChatRoom conversation={conversation} />
+          </Box>
+        ) : (
+          <Box></Box>
+        )}
       </Grid>
     </Grid>
   );

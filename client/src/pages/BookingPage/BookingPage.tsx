@@ -1,23 +1,13 @@
+import { Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
+import { useEffect, useState } from 'react';
+import BookingCalendarWrapper from '../../components/ManageBookings/BookingCalenderWrapper/BookingCalenderWrapper';
 import BookingWrapper from '../../components/ManageBookings/BookingWrapper/BookingWrapper';
 import CurrentBookingCard from '../../components/ManageBookings/CurrentBooking/CurrentBookingCard';
-import BookingCalendarWrapper from '../../components/ManageBookings/BookingCalenderWrapper/BookingCalenderWrapper';
-import useStyles from './useStyles';
-import { useState, useEffect } from 'react';
 import { fetchAllRequest } from '../../helpers/APICalls/requests';
 import { Request } from '../../interface/manageBooking';
-
-const obj: Request = {
-  _id: 'djfkdjf',
-  start: '02/28/2022',
-  status: 'Not Available',
-  user: {
-    photo: '',
-    name: 'No Bookings',
-  },
-};
-
+import useStyles from './useStyles';
 interface RequestObj {
   accepted: Request[];
   pending: Request[];
@@ -48,21 +38,32 @@ const BookingsPage = (): JSX.Element => {
   const nextBookings: Request[] = requests.pending;
   const cancelled: Request[] = requests.cancelled;
 
-  const nextBooking: Request = nextBookings.shift() || obj;
+  const nextBooking: Request = nextBookings.shift()!;
 
   return (
     <Grid container className={classes.wrapper}>
       <Grid xs={12} md={5} lg={5} item>
         <Box className={classes.boxMargin}>
-          <CurrentBookingCard
-            start={nextBooking.start}
-            name={nextBooking.user.name}
-            photo={nextBooking.user.photo}
-            _id={nextBooking._id}
-            status={''}
-          />
-          <br />
-          <BookingWrapper requests={accepted} cancelled={cancelled} />
+          {nextBooking ? (
+            <Box>
+              <CurrentBookingCard
+                start={nextBooking.start}
+                name={nextBooking.user.name}
+                photo={nextBooking.user.photo}
+                _id={nextBooking._id}
+                status={''}
+              />
+              <br />
+              <BookingWrapper requests={accepted} cancelled={cancelled} />
+            </Box>
+          ) : (
+            <Box>
+              <Typography variant="h4" sx={{ textTransform: 'uppercase', marginLeft: '4em' }}>
+                no new Bookings
+              </Typography>
+              <BookingWrapper requests={accepted} cancelled={cancelled} />
+            </Box>
+          )}
         </Box>
       </Grid>
       <Grid xs={10} md={5} lg={5} item>
