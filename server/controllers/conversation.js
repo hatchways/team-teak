@@ -77,7 +77,7 @@ exports.getAllMessageByConversation = asyncHandler(async (req, res, next) => {
   const { conversationId } = req.params;
 
   const sentConditions = {
-    conversationId,
+    conversationId: mongoose.Types.ObjectId(conversationId),
   };
 
   const messagesReceived = await getAllMessagesOnAConversation(sentConditions);
@@ -152,11 +152,11 @@ exports.getAllConversations = asyncHandler(async (req, res, next) => {
   const profile = await Profile.findOne({ userId: req.user.id });
 
   const senderConditions = {
-    senderId: profile.id,
+    senderId: mongoose.Types.ObjectId(profile.id),
   };
 
   const receiverConditions = {
-    receiverId: profile.id,
+    receiverId: mongoose.Types.ObjectId(profile.id),
   };
 
   const senderConversations = await getAllConversations(senderConditions);

@@ -52,6 +52,10 @@ const profileSchema = new mongoose.Schema(
       enum: ["petSitter", "petOwner"],
       default: "petOwner",
     },
+    isOnline: {
+      type: Boolean,
+      default: true,
+    },
   },
   { ...options }
 );

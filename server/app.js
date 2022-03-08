@@ -60,7 +60,6 @@ app.use("/availability", availabilityRouter);
 app.use("/payments", paymentRouter);
 app.use("/request", requestRouter);
 
-
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "/client/build")));
 

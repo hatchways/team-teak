@@ -12,6 +12,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     borderWidth: '1px 0px',
     borderStyle: 'solid',
     borderColor: theme.palette.primary.dark,
+    cursor: 'pointer',
   },
   image: {
     width: '60px',

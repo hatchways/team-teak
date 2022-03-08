@@ -27,7 +27,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
   chatRoom: {
     backgroundColor: 'white',
     width: '100%',
-    height: '350px',
+    height: '70vh',
     overflowY: 'auto',
   },
 }));

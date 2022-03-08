@@ -85,7 +85,7 @@ exports.validateCreatePaymentRecord = [
   check("rate", "Rate is required").not().isEmpty(),
   check("startTime", "Start time is required").not().isEmpty(),
   check("endTime", "End time is required").not().isEmpty(),
-    (req, res, next) => {
+  (req, res, next) => {
     const errors = validationResult(req);
 
     if (!errors.isEmpty())
@@ -109,7 +109,7 @@ exports.validateCreateConversation = [
 
 exports.validatePaymentId = [
   param("paymentId", "Invalid id").isMongoId(),
-    (req, res, next) => {
+  (req, res, next) => {
     const errors = validationResult(req);
 
     if (!errors.isEmpty())
@@ -118,11 +118,10 @@ exports.validatePaymentId = [
   },
 ];
 
-
 exports.validateSendMessage = [
   check("receiverId", "Invalid id").isMongoId(),
   check("message", "please send a message").not().isEmpty(),
-    (req, res, next) => {
+  (req, res, next) => {
     const errors = validationResult(req);
 
     if (!errors.isEmpty())

@@ -97,8 +97,14 @@ exports.loginUser = asyncHandler(async (req, res, next) => {
   }
 
   const user = await User.findOne({ email });
-  const profile = await Profile.findOne({ userId: user.id });
+  const userId = user.id;
+
+  if (!user) {
+    res.status(400);
+    throw new Error("Wrong email or password!");
+  }
   const notifications = await Notification.find({ recieverId: user.id });
+  const profile = await Profile.findOneAndUpdate(userId, { isOnline: true });
 
   if (user && (await user.matchPassword(password))) {
     const token = generateToken(user._id);
@@ -154,10 +160,15 @@ exports.loadUser = asyncHandler(async (req, res, next) => {
   });
 });
 
-// @route GET /auth/logout
+// @route POST /auth/logout
 // @desc Logout user
 // @access Public
 exports.logoutUser = asyncHandler(async (req, res, next) => {
+  const profile = await Profile.findOne({ userId: req.user.id });
+
+  profile.set({ isOnline: false });
+
+  await profile.save();
   res.clearCookie("token");
 
   res.send("You have successfully logged out");
