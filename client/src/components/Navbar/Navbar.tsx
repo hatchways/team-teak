@@ -22,6 +22,7 @@ import Notifications from '../Notifications/Notifications';
 import lovingSitterLogo from '../../images/logo.svg';
 import { AccountType } from '../../types/AccountType';
 import { useStyles } from './useStyles';
+import ProfileDetail from '../../pages/ProfileDetails/ProfileDetails';
 
 const NavbarButton = styled(Button)({
   padding: '5px 0',
@@ -193,7 +194,7 @@ const Navbar: React.FC = () => {
                       </ListItemIcon>
                       <ListItemText>Settings</ListItemText>
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={handleClose}>
+                    <DropdownMenuItem component={NavLink} to="/profile/detail" onClick={handleClose}>
                       <ListItemIcon>
                         <Person fontSize="small" />
                       </ListItemIcon>
@@ -279,7 +280,7 @@ const Navbar: React.FC = () => {
                       </ListItemIcon>
                       <ListItemText>Settings</ListItemText>
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={handleClose}>
+                    <DropdownMenuItem component={NavLink} to="/profile/deatil" onClick={handleClose}>
                       <ListItemIcon>
                         <Person fontSize="small" />
                       </ListItemIcon>
