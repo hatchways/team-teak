@@ -7,6 +7,8 @@ const asyncHandler = require("express-async-handler");
 exports.editProfile = asyncHandler(async (req, res, next) => {
   const userId = req.user.id;
 
+  console.log(userId);
+
   const updatedProfile = await Profile.findOneAndUpdate(userId, {
     ...req.body,
   });
