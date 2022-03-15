@@ -8,11 +8,6 @@ const asyncHandler = require("express-async-handler");
 exports.editProfile = asyncHandler(async (req, res, next) => {
   const profile = await Profile.findOne({ userId: req.user.id });
 
-  // const updatedProfile = await Profile.findOneAndUpdate(userId, {
-  //   ...req.body,
-  // });
-
-  console.log(...req);
   if (!profile) {
     res.status(404);
     throw new Error("Profile doesn't exist");
