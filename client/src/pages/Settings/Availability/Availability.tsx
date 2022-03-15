@@ -1,39 +1,12 @@
-import React, { Fragment, useState, useContext } from 'react';
-import SettingHeader from '../../../components/SettingsHeader/SettingsHeader';
+import { Button, MenuItem, Select, Typography } from '@mui/material';
 import { Box } from '@mui/system';
-import useStyles from './makeStyle';
-import DeleteIcon from '@mui/icons-material/Delete';
-import AddIcon from '@mui/icons-material/Add';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import EventNoteSharpIcon from '@mui/icons-material/EventNoteSharp';
-import StarIcon from '@mui/icons-material/Star';
-import { SnackBarContext } from '../../../context/useSnackbarContext';
+import { Field, Formik, FormikHelpers } from 'formik';
+import React, { useContext, useState } from 'react';
+import SettingHeader from '../../../components/SettingsHeader/SettingsHeader';
 import { AuthContext } from '../../../context/useAuthContext';
+import { SnackBarContext } from '../../../context/useSnackbarContext';
+import useStyles from './makeStyle';
 import GeneerateSchedules from './ScheduleForm';
-
-import {
-  MenuItem,
-  Select,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableRow,
-  TextField,
-  Checkbox,
-  ListItemButton,
-  Typography,
-  Button,
-  InputAdornment,
-  Input,
-  IconButton,
-  ListItemIcon,
-  ListItemText,
-  Menu,
-  MenuItem as DropdownMenuItem,
-} from '@mui/material';
-
-import { Formik, FormikHelpers, Field, validateYupSchema } from 'formik';
 
 interface AvailibilityProps {
   header: string;
