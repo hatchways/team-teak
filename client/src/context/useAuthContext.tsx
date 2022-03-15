@@ -44,9 +44,9 @@ const profileObj: Profile = {
 export const AuthProvider: FunctionComponent = ({ children }): JSX.Element => {
   // default undefined before loading, once loaded provide user or null if logged out
   const [loggedInUser, setLoggedInUser] = useState<User | null | undefined>();
-
-  const [profile, setProfile] = useState<PetSitter | Profile | null | undefined>();
+  const [profile, setProfile] = useState<PetSitter | Profile | null | undefined>(profileObj);
   const [notifications, setNotifications] = useState<Notifications | null | undefined>();
+
   const history = useHistory();
 
   const updateLoginContext = useCallback(

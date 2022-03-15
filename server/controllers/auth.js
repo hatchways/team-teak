@@ -35,9 +35,14 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
   const isPetSitter = req.query.accountType === "petSitter" ? true : false;
 
   if (user) {
+    const customer = await stripe.customers.create({
+      description: `Customer name is ${name}`,
+    });
+    const { id } = customer;
     if (isPetSitter) {
       await PetSitter.create({
         userId: user._id,
+        stripeConnectId: id,
         name,
       });
     } else {
@@ -52,7 +57,6 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
         name,
       });
     }
-
     const token = generateToken(user._id);
     const secondsInWeek = 604800;
 
@@ -93,17 +97,14 @@ exports.loginUser = asyncHandler(async (req, res, next) => {
   // }
 
   const user = await User.findOne({ email });
+  const userId = user.id;
 
   if (!user) {
     res.status(400);
     throw new Error("Wrong email or password!");
   }
-  const profile = await Profile.findOne({ userId: user.id });
   const notifications = await Notification.find({ recieverId: user.id });
-
-  profile.set({ isOnline: true });
-
-  const updatedProfile = await profile.save();
+  const profile = await Profile.findOneAndUpdate(userId, { isOnline: true });
 
   if (user && (await user.matchPassword(password))) {
     const token = generateToken(user._id);

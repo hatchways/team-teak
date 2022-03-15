@@ -3,11 +3,11 @@ import ActiveChatMember from '../ActiveChatMember/ActiveChatMember';
 import ChatMessage from '../Message/ChartMessage';
 import { useEffect, useState, useRef } from 'react';
 import { useStyles } from './useStyles';
-import { ChatRoom, Message } from '../../../interface/messages';
+import { ChatRoomI, Message } from '../../../interface/messages';
 import { getAllMessages, sendMessage } from '../../../helpers/APICalls/messaging';
 import { useAuth } from '../../../context/useAuthContext';
 
-const ChatRoomMessage = ({ conversation }: ChatRoom): JSX.Element => {
+const ChatRoomMessage = ({ conversation }: ChatRoomI): JSX.Element => {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState<Message[]>([]);
   const { profile } = useAuth();

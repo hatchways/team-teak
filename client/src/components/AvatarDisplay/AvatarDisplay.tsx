@@ -1,4 +1,5 @@
 import Avatar from '@mui/material/Avatar';
+import { useAuth } from '../../context/useAuthContext';
 import { User } from '../../interface/User';
 
 interface Props {
@@ -7,7 +8,8 @@ interface Props {
 }
 
 const AvatarDisplay = ({ user }: Props): JSX.Element => {
-  return <Avatar alt="Profile Image" src={`https://robohash.org/${user.email}.png`} />;
+  const { profile } = useAuth();
+  return <Avatar alt="Profile Image" src={profile ? profile.photo : `https://robohash.org/${user.email}.png`} />;
 };
 
 export default AvatarDisplay;

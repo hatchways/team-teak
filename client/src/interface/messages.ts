@@ -30,7 +30,7 @@ export interface Conversations {
   conversations: Conversation[];
 }
 
-export interface ChatRoom {
+export interface ChatRoomI {
   conversation: Conversation;
 }
 
