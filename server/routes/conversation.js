@@ -21,7 +21,7 @@ router.route("/").get(protect, getAllConversations);
 router.route("/sendMessage").post([protect, validateSendMessage], sendMessage);
 
 router
-  .route("/getAllMessageByConversation/:receiverId")
+  .route("/getAllMessageByConversation/:conversationId")
   .get(protect, getAllMessageByConversation);
 
 module.exports = router;

@@ -1,5 +1,6 @@
 import { Logout, Person, Settings } from '@mui/icons-material';
 import {
+  Avatar,
   Button,
   Divider,
   Grid,
@@ -20,8 +21,8 @@ import { useAuth } from '../../context/useAuthContext';
 import Notifications from '../Notifications/Notifications';
 import lovingSitterLogo from '../../images/logo.svg';
 import { AccountType } from '../../types/AccountType';
-import { PetSitter, Profile } from '../../interface/Profile';
 import { useStyles } from './useStyles';
+import ProfileDetail from '../../pages/ProfileDetails/ProfileDetails';
 
 const NavbarButton = styled(Button)({
   padding: '5px 0',
@@ -49,7 +50,7 @@ const menuItems = [
   {
     item: 'My Sitters',
     resource: '/sitters',
-    canView: [AccountType.PET_OWNER, AccountType.PET_SITTER],
+    canView: [AccountType.PET_OWNER],
     authenticated: true,
   },
   {
@@ -89,13 +90,7 @@ const MenuItem: React.FC<{
 
   return (
     <Grid key={resource} sx={{ textAlign: 'center' }} xs={2} justifySelf="flex-end" item>
-      <NavLink
-        className={clsx(
-          classes.navbarItem,
-          location.pathname === '/welcome' && item === 'Become a sitter' && classes.navSitterButton,
-        )}
-        to={resource}
-      >
+      <NavLink className={classes.navbarItem} to={resource}>
         {item}
       </NavLink>
     </Grid>
@@ -106,10 +101,8 @@ const Navbar: React.FC = () => {
   const location = useLocation();
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const { loggedInUser, logout, profile } = useAuth();
+  const { loggedInUser, profile, logout } = useAuth();
   const open = Boolean(anchorEl);
-
-  console.log('navbar profile', profile);
 
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -127,9 +120,7 @@ const Navbar: React.FC = () => {
   const renderMenuItems = () => {
     return menuItems.map((menu) => {
       if (menu.authenticated) {
-        if (!profile) return loggedInUser && <MenuItem key={menu.resource} {...menu} />;
-        if (profile.type && menu?.canView?.includes(profile.type))
-          return loggedInUser && <MenuItem key={menu.resource} {...menu} />;
+        return loggedInUser && <MenuItem key={menu.resource} {...menu} />;
       } else {
         return !loggedInUser && <MenuItem key={menu.resource} {...menu} />;
       }
@@ -140,7 +131,7 @@ const Navbar: React.FC = () => {
 
   return (
     <Grid
-      className={clsx(classes.navbar, location.pathname === '/welcome' && classes.transparentNavbar)}
+      className={clsx(classes.navbar, location.pathname === '/' && classes.transparentNavbar)}
       justifyContent="space-between"
       alignItems="center"
       width="100%"
@@ -164,7 +155,10 @@ const Navbar: React.FC = () => {
                     onClick={handleMenuOpen}
                     color="inherit"
                   >
-                    <img style={{ width: 50 }} src={`https://robohash.org/${loggedInUser.email}`} />
+                    <Avatar
+                      style={{ width: 50 }}
+                      src={profile ? profile.photo : `https://robohash.org/${loggedInUser.email}`}
+                    />
                   </IconButton>
                   <Menu
                     id="menu-appbar"
@@ -187,7 +181,7 @@ const Navbar: React.FC = () => {
                       </ListItemIcon>
                       <ListItemText>Settings</ListItemText>
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={handleClose}>
+                    <DropdownMenuItem component={NavLink} to="/profile/detail" onClick={handleClose}>
                       <ListItemIcon>
                         <Person fontSize="small" />
                       </ListItemIcon>
@@ -218,7 +212,10 @@ const Navbar: React.FC = () => {
                     onClick={handleMenuOpen}
                     color="inherit"
                   >
-                    <img style={{ width: 50 }} src={`https://robohash.org/${loggedInUser.email}`} />
+                    <Avatar
+                      style={{ width: 50 }}
+                      src={profile ? profile.photo : `https://robohash.org/${loggedInUser.email}`}
+                    />
                   </IconButton>
                   <Menu
                     id="menu-appbar"
@@ -267,7 +264,7 @@ const Navbar: React.FC = () => {
                       </ListItemIcon>
                       <ListItemText>Settings</ListItemText>
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={handleClose}>
+                    <DropdownMenuItem component={NavLink} to="/profile/deatil" onClick={handleClose}>
                       <ListItemIcon>
                         <Person fontSize="small" />
                       </ListItemIcon>

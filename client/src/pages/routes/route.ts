@@ -1,12 +1,14 @@
+import { AccountType } from '../../types/AccountType';
 import BookingPage from '../BookingPage/BookingPage';
 import Dashboard from '../Dashboard/Dashboard';
-import Login from '../Login/Login';
-import SignUp from '../SignUp/SignUp';
-import { AccountType } from '../../types/AccountType';
-import NotFound from '../NotFound/NotFound';
-import Settings from '../Settings/Settings';
-import MessagingPage from '../Messaging/MessagingPage';
 import Landing from '../Landing/Landing';
+import Login from '../Login/Login';
+import MessagingPage from '../Messaging/MessagingPage';
+import NotFound from '../NotFound/NotFound';
+import ProfileDetail from '../ProfileDetails/ProfileDetails';
+import CustomerBookingList from '../Settings/CustomerBooking/CustomerBookingList';
+import Settings from '../Settings/Settings';
+import SignUp from '../SignUp/SignUp';
 
 const menuItems = [
   {
@@ -64,6 +66,20 @@ const menuItems = [
     canView: [AccountType.PET_SITTER, AccountType.PET_OWNER],
     authenticated: true,
     component: BookingPage,
+  },
+  {
+    item: 'Customer Booking',
+    resource: '/customer/booking',
+    canView: [AccountType.PET_SITTER, AccountType.PET_OWNER],
+    authenticated: true,
+    component: CustomerBookingList,
+  },
+  {
+    item: 'Profile Detail',
+    resource: '/profile/detail',
+    canView: [AccountType.PET_SITTER, AccountType.PET_OWNER],
+    authenticated: true,
+    component: ProfileDetail,
   },
   {
     item: 'Settings',

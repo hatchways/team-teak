@@ -18,6 +18,11 @@ const requestSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
+  status: {
+    type: String,
+    enum: ["pending", "accepted", "cancelled"],
+    default: "pending",
+  },
   accepetd: {
     type: Boolean,
     default: false,
@@ -32,4 +37,4 @@ const requestSchema = new mongoose.Schema({
   },
 });
 
-module.exports = RequestSchema = mongoose.model("Request", requestSchema);
+module.exports = Request = mongoose.model("Request", requestSchema);

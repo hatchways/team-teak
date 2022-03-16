@@ -54,8 +54,4 @@ export const useStyles = makeStyles((theme: Theme) => ({
   navbarLogo: {
     width: 180,
   },
-  navSitterButton: {
-    color: theme.palette.primary.light,
-    textDecoration: 'underline',
-  },
 }));
