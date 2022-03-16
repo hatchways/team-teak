@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { useStyles } from './useStyles';
 
 interface props {
@@ -13,12 +13,12 @@ const ChatMessage = ({ sender, message }: props): JSX.Element => {
 
   return (
     <>
-      <div className={`message ${messageClass}`}>
+      <Box className={`message ${messageClass}`}>
         <img src="https://cdn.pixabay.com/photo/2021/09/12/18/07/robin-6619184_960_720.jpg" />
         <Typography className={textStyle} sx={{ fontSize: '15px', fontWeight: 'bold' }}>
           {message}
         </Typography>
-      </div>
+      </Box>
     </>
   );
 };

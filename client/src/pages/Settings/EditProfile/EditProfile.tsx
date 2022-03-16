@@ -8,19 +8,34 @@ import { User } from '../../../interface/User';
 import { Profile } from '../../../interface/Profile';
 
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import { makeStyles } from '@mui/styles';
+import { createStyles, makeStyles } from '@mui/styles';
 import editProfile from '../../../helpers/APICalls/editProfile';
 import { useSnackBar } from '../../../context/useSnackbarContext';
+import { Theme } from '@mui/material';
 
-const useStyles = makeStyles({
-  dateInput: {
-    borderRadius: 8,
-    border: '1px solid #dbdbdb',
-    fontSize: 16,
-    width: '100%',
-    padding: '15px',
-  },
-});
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    dateInput: {
+      borderRadius: 8,
+      border: '1px solid #dbdbdb',
+      fontSize: 16,
+      width: '100%',
+      padding: '15px',
+    },
+    header: {
+      [theme.breakpoints.down('sm')]: {
+        width: '100px',
+      },
+    },
+    box: {
+      width: 600,
+      margin: '0 auto',
+      [theme.breakpoints.down('sm')]: {
+        width: 300,
+      },
+    },
+  }),
+);
 
 interface EditProfileProps {
   header: string;
@@ -77,8 +92,7 @@ const EditProfile: React.FC<EditProfileProps> = ({ header, currentUser, currentP
   return (
     <Box
       sx={{
-        width: 600,
-        margin: '0 auto',
+        width: '100%',
       }}
     >
       <SettingHeader header={header} />

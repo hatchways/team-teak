@@ -52,8 +52,8 @@ const profileSchema = new mongoose.Schema(
       enum: ["petSitter", "petOwner"],
       default: "petOwner",
     },
-  },
   { ...options }
 );
+
 
 module.exports = Profile = mongoose.model("Profile", profileSchema);
