@@ -1,6 +1,7 @@
 import { User } from './User';
 
 export interface Profile {
+  id?: string;
   _id: string;
   type?: string;
   userId: User;
@@ -15,14 +16,18 @@ export interface Profile {
 }
 
 export interface PetSitter extends Profile {
-  type: string;
-  stripeConnectId: string;
-  availabilityId: string;
-  activatedAvailabilitySchedule: string;
-  rate: string;
+  stripeConnectId?: string;
+  availabilityId?: string;
+  activatedAvailabilitySchedule?: string;
+  rate?: string;
 }
 
 export interface SearchProfileApiData {
   users?: Profile[];
+  error?: { message: string };
+}
+
+export interface ApiUsersData<T> {
+  users?: T[];
   error?: { message: string };
 }

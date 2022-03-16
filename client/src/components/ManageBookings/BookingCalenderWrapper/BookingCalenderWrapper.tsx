@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
-import { Box, Container } from '@mui/material';
-import BookingCalendar, { Booking } from '../BookingCalendar/BookingCalendar';
+import { Box } from '@mui/material';
+import React from 'react';
 import { Request } from '../../../interface/manageBooking';
+import BookingCalendar from '../BookingCalendar/BookingCalendar';
 
 // return a filtered array AND remove filtered values from the original
 

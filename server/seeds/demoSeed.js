@@ -1,9 +1,12 @@
 const User = require("../models/User");
 const connectDB = require("../db");
 const Profile = require("../models/Profile");
+const mongoose = require("mongoose");
+require("dotenv").config();
 
 const createDemoUserDetails = async () => {
-  connectDB();
+  console.log(process.env.MONGO_URI);
+  await mongoose.connect(process.env.MONGO_URI);
 
   const email = process.env.DEMO_USER_EMAIL;
   const password = process.env.DEMO_USER_PASSWORD;
